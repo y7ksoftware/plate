@@ -1,0 +1,14 @@
+@import 'config'; // All configs
+
+// General mixins
+@import "general/helpers"; // Useful, general mixins
+@import 'general/fonts'; // Webfonts
+@import 'general/typo'; // Typo and Fonts
+@import "general/defaults"; // Resets and Defaults
+@import "general/layout"; // Main Layout and Grid classes
+
+//Import components here
+//@import "components/*";
+
+//Import pages here
+//@import "pages/*";

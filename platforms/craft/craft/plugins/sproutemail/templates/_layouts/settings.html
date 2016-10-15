@@ -1,0 +1,55 @@
+{% extends "_layouts/cp" %}
+
+{% set subnav = {
+	entries: {
+		label: "Email"|t,
+		url: url('sproutemail/entries')
+	},
+	sentemails: {
+		label: "Sent Email"|t,
+		url: url('sproutemail/sentemails')
+	},
+	recipients: {
+		label: "Recipients"|t,
+		url: url('sproutemail/recipients')
+	}
+} %}
+
+{% if currentUser.can('editSproutEmailSettings') %}
+	{% set subnav = subnav|merge({
+		settings: {
+			label: "Settings"|t,
+			url: url('sproutemail/settings')
+		}
+	}) %}
+{% endif %}
+
+{% set selectedSubnavItem = craft.request.segment(2) %}
+{% set selectedSidebarItem = craft.request.segment(3) %}
+
+{% set fullPageForm = true %}
+
+{% block saveButton %}{% endblock %}
+
+{# @todo - improve naming convention, not clear what this does #}
+{% set models = craft.session.hasFlash('models') ? craft.session.getFlash('models') : null %}
+
+{% set sidebar %}
+
+	<nav class="last">
+		<ul>
+			<li><a href="{{ url('sproutemail/settings/general') }}" {% if selectedSidebarItem == 'general'
+				%}class="sel"{% endif %}>General</a></li>
+			<li><a href="{{ url('sproutemail/settings/mailers') }}" {% if selectedSidebarItem == 'mailers' %}class="sel"{% endif
+				%}>Mailers</a></li>
+			<li class="heading"><span>Content</span></li>
+			<li><a href="{{ url('sproutemail/settings/campaigns') }}" {% if selectedSidebarItem == 'campaigns' %}class="sel"{% endif
+				%}>Campaigns</a></li>
+			<li><a href="{{ url('sproutemail/settings/notifications') }}" {% if selectedSidebarItem == 'notifications' %}class="sel"{%
+				endif %}>Notifications</a></li>
+			<li><a href="{{ url('sproutemail/settings/examples') }}" {% if selectedSidebarItem == 'examples'
+				%}class="sel"{% endif %}>Examples</a></li>
+		</ul>
+	</nav>
+
+{% endset %}

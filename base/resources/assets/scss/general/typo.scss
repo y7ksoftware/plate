@@ -1,0 +1,55 @@
+// Define every font setting here and include mixin where needed. This way we can combine font families, sizes and weights
+// in one single setting.
+
+@mixin font-title-1() {
+    font-family: $f-title;
+    font-size: $f-size-title-1;
+    font-weight: bold;
+}
+
+@mixin font-body-1() {
+    font-family: $f-body;
+    font-size: $f-size-body-1;
+}
+
+a, a:visited {
+    color: $c-text;
+    text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    @include font-title-1();
+    @extend .space-bottom;
+}
+
+h2 {
+    @include font-title-1();
+    @extend .space-bottom--small;
+}
+
+h3 {
+    @include font-title-1();
+    @extend .space-bottom--small;
+}
+
+h4 {
+    @include font-title-1();
+}
+
+h5 {
+    @include font-title-1();
+}
+
+h6 {
+    @include font-title-1();
+}
+
+
+
+
+

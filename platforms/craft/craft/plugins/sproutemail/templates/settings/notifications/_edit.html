@@ -1,0 +1,105 @@
+{% extends "sproutemail/_layouts/base" %}
+{% import "_includes/forms" as forms %}
+
+{% set title = "Edit Notification"|t %}
+{% set campaign = craft.sproutEmail.getCampaignById(campaignId) %}
+
+{% set crumbs = [
+	{ label: "Settings"|t, url: url('sproutemail/settings') },
+	{ label: "Notifications", url: url('sproutemail/settings/notifications') },
+] %}
+
+{% set fullPageForm = true %}
+{% set saveShortcutRedirect = url('sproutemail/settings/notifications/edit/{id}') %}
+
+{% block saveButton %}
+
+	<div class="buttons">
+		<div class="btngroup">
+			<input class="btn submit" type="submit" value="{{ 'Save'|t }}">
+
+			{% if campaign.type is defined and campaign.type == "notification" %}
+
+				{% set entry = craft.sproutemail.getNotificationEntryByCampaignId(campaign.id) %}
+
+			{% if entry.id is defined %}
+				<div class="btn submit menubtn"></div>
+				<div class="menu">
+					<ul>
+
+						{% set dataSaveEditRedirect = cpUrl('sproutemail/entries/edit/' ~ entry.id) %}
+
+						<li><a class="formsubmit" data-redirect="{{ dataSaveEditRedirect }}" title="{{ "Save and edit notification entry"|t }}">{{ "Save and edit notification entry"|t }}</a></li>
+						<li><a class="formsubmit" data-redirect="{{ cpUrl('sproutemail/settings/notifications/edit/new') }}">{{ "Save and add another"|t }}</a></li>
+
+					</ul>
+				</div>
+				{% endif %}
+
+			{% endif %}
+
+		</div>
+
+		<div class="secondary-buttons" style="float:left;">
+		{% if entry is defined %}
+			<a class="btn icon add submit" href="{{ cpUrl('sproutemail/entries/edit/' ~ entry.id) }}" title="{{ "Edit Notification Email"|t }}" style="float:none;margin:0;">{{ "Edit Notification Email"|t }}</a>
+		{% endif %}
+		</div>
+	</div>
+
+{% endblock %}
+
+{% set content %}
+
+	{% if isMailerInstalled %}
+
+		<input type="hidden" name="action" value="sproutEmail/campaign/saveCampaign">
+
+		{% if entry['id'] is defined %}
+			<input type="hidden" name="redirect" value="sproutemail/settings/notifications">
+		{% else %}
+			<input type="hidden" name="redirect" value="sproutemail/settings/notifications/edit/{id}">
+		{% endif %}
+
+		<input type="hidden" name="sproutEmail[id]" value="{{ campaignId }}">
+		<input type="hidden" name="sproutEmail[mailer]" value="defaultmailer">
+		<input type="hidden" name="sproutEmail[type]" value="notification">
+
+		{{ forms.textField({
+			label: "Notification Name"|t,
+			id: 'name',
+			name: 'sproutEmail[name]',
+			instructions: "Human readable notification name"|t,
+			value: (campaign is defined ? campaign.name : null),
+			autofocus: true,
+			required: true,
+			first: true,
+			errors: (campaign is defined ? campaign.getErrors('name') : null)
+		}) }}
+
+		{{ forms.textField({
+			label: "Entry Template"|t,
+			id: 'template',
+			name: 'sproutEmail[template]',
+			instructions: "The template to use when an Entry's URL is requested.  The text version of the Email will use the same template name and append .txt"|t,
+			placeholder: 'email/_emailtemplate',
+			value: (campaign is defined ? campaign.template : null),
+			errors: (campaign is defined ? campaign.getErrors('template') : null)
+		}) }}
+
+		<hr>
+
+		{% include "_includes/fieldlayoutdesigner" with {fieldLayout: campaign.getFieldLayout() } only %}
+
+	{% else %}
+
+		<h2>{{ "Sprout Mailer Required"|t }}</h2>
+		<p>{{ "Before you can create notifications, please install our mailer."|t }}</p>
+
+	</form>
+
+	{% endif %}
+
+{% endset %}
+
+{% includeJsResource "sproutemail/js/sproutemail.js" %}

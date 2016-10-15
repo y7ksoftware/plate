@@ -1,0 +1,32 @@
+#!/usr/bin/env php
+<?php
+
+/**
+ * This file enables interacting with the yii command runner.
+ * From the projec root, run 'php bin/console help'.
+ */
+
+$basePath = __DIR__ ;
+
+// Load Composer Dependencies
+if (file_exists($basePath . '/vendor/autoload.php')) {
+    require_once($basePath . '/vendor/autoload.php');
+}
+
+// Load Dotenv Variables
+$dotenv = new Dotenv\Dotenv($basePath);
+$dotenv->load();
+
+// Set correct Paths for Craft
+$craftPath = $basePath . '/craft';
+
+define('CRAFT_BASE_PATH',         $basePath . '/craft/');
+define('CRAFT_APP_PATH',          $craftPath . '/app/');
+define( 'CRAFT_STORAGE_PATH', $basePath . '/storage/' );
+
+// Fix for console task not having URI
+$_SERVER['HTTP_X_REWRITE_URL'] = '/';
+$_SERVER['HTTP_HOST'] = 'localhost';
+
+// Yii command runner
+require_once($craftPath . '/app/etc/console/yiic.php');

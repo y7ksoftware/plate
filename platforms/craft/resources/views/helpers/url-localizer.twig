@@ -1,0 +1,11 @@
+{#
+ # URL Localizer
+ # ---------------
+ #
+ # Returns the URI of a entry in another locale
+ #
+ #}
+
+{% macro gerLocalizedEntryUrl(entry, targetLocale) %}
+    {% return craft.entries.id(entry.id).locale(targetLocale).first().getUrl() %}
+{% endmacro %}

@@ -1,0 +1,29 @@
+{% extends "_layouts/elementindex" %}
+
+{% set bodyClass = craft.request.getSegments()|slice(0, 3)|join(' ') %}
+
+{% set subnav = {
+	entries: {
+		label: "Email"|t,
+		url: url('sproutemail/entries')
+	},
+	sentemails: {
+		label: "Sent Email"|t,
+		url: url('sproutemail/sentemails')
+	},
+	recipients: {
+		label: "Recipients"|t,
+		url: url('sproutemail/recipients')
+	}
+} %}
+
+{% if currentUser.can('editSproutEmailSettings') %}
+	{% set subnav = subnav|merge({
+		settings: {
+			label: "Settings"|t,
+			url: url('sproutemail/settings')
+		}
+	}) %}
+{% endif %}
+
+{% set selectedSubnavItem = craft.request.segment(2) %}

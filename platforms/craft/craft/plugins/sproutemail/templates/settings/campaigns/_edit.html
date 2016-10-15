@@ -1,0 +1,194 @@
+{% extends "sproutemail/_layouts/base" %}
+{% import "_includes/forms" as forms %}
+{% set title = "Edit Campaign"|t %}
+
+{% set crumbs = [
+	{ label: "Settings"|t, url: url('sproutemail/settings') },
+	{ label: "Campaigns", url: url('sproutemail/settings/campaigns') },
+] %}
+
+{% if craft.request.getSegment(6) %}
+	{% set selectedTab = craft.request.getSegment(6) %}
+{% endif %}
+
+{% set fullPageForm = true %}
+{% set saveShortcutRedirect = campaignId != 'new' ? 'sproutemail/settings/campaigns/edit/' ~ campaignId : 'sproutemail/settings/campaigns/edit/{id}' %}
+
+{% block saveButton %}
+	<div class="btngroup submit first">
+		<input type="submit" class="btn submit" value="{{ 'Save Campaign'|t }}">
+		{% if campaign.id != null %}
+			<div class="btn submit menubtn"></div>
+			<div class="menu">
+				<ul>
+					<li><a class="formsubmit" data-param='saveAsNew' data-value="true">{{ "Save as a new campaign"|t }}</a></li>
+				</ul>
+			</div>
+		{% endif %}
+	</div>
+{% endblock %}
+
+{% set content %}
+
+	<input type="hidden" name="action" value="sproutEmail/campaign/saveCampaign">
+	<input type="hidden" name="redirect" value="sproutemail/settings/campaigns">
+	<input type="hidden" name="sproutEmail[id]" value="{{ campaignId }}">
+	<input type="hidden" name="sproutEmail[type]" value="email">
+
+	{% set mailers = craft.sproutemail.getCampaignMailers() %}
+
+	{% if mailers %}
+
+		{{ forms.textField({
+			label: "Campaign Name"|t,
+			id: 'name',
+			name: 'sproutEmail[name]',
+			instructions: "Human readable name for this type of Entry"|t,
+			value: (campaign is defined ? campaign.name : null),
+			autofocus: true,
+			required: true,
+			first: true,
+			errors: (campaign is defined ? campaign.getErrors('name') : null)
+		}) }}
+
+		{{ forms.textField({
+			label: "Campaign Handle"|t,
+			id: 'handle',
+			name: 'sproutEmail[handle]',
+			instructions: "How you'll refer to this section in the templates."|t,
+			value: (campaign is defined ? campaign.handle : null),
+			required: true,
+			errors: (campaign is defined ? campaign.getErrors('handle') : null)
+		}) }}
+
+		{{ forms.selectField({
+			label: "How would you like to send this email"|t,
+			instructions: 'Select the Mailer you will use to send Email Campaigns. <a href="' ~ url('sproutemail/settings/mailers') ~ '">Edit Mailer settings</a>.'|t,
+			id: 'mailer',
+			name: 'sproutEmail[mailer]',
+			required: true,
+			options : mailers,
+			value: (campaign is defined ? campaign.mailer : null),
+			errors: (campaign is defined ? campaign.getErrors('mailer') : null)
+		}) }}
+
+		{{ forms.textField({
+			label: "Entry Template"|t,
+			id: 'template',
+			name: 'sproutEmail[template]',
+			instructions: "The template to use when an Entry's URL is requested.  The text version of the Email will use the same template name and append .txt"|t,
+			placeholder: '_emails/emailtemplate',
+			value: (campaign is defined ? campaign.template : null),
+			errors: (campaign is defined ? campaign.getErrors('template') : null)
+		}) }}
+
+		{{ forms.textField({
+			label: "Entry Copy/Paste Template"|t,
+			id: 'templateCopyPaste',
+			name: 'sproutEmail[templateCopyPaste]',
+			instructions: "The template to use if you want to copy only part of your template.  The text version of the Copy/Paste content will use the same template name and append .txt"|t,
+			placeholder: 'email/copypaste-template',
+			value: (campaign is defined ? campaign.templateCopyPaste : null),
+			errors: (campaign is defined ? campaign.getErrors('templateCopyPaste') : null)
+		}) }}
+
+		<hr>
+
+		{{ forms.checkboxField({
+			label: "Entries of this type have their own URLs"|t,
+			id: 'hasUrls',
+			name: 'sproutEmail[hasUrls]',
+			checked: (campaign is defined ? campaign.hasUrls : 0),
+			toggle: 'url-settings'
+		}) }}
+
+		<div id="url-settings" class="nested-fields{% if not campaign.hasUrls %} hidden{% endif %}">
+
+			{{ forms.textField({
+				label: "Entry URL Format"|t,
+				instructions: 'What the online version of the Entry URLs should look like. You can include tags that output entry properties, such as {slug} or {postDate|date("Y")}.'|t,
+				placeholder: 'email/{slug}',
+				name: 'sproutEmail[urlFormat]',
+				value: (campaign is defined ? campaign.urlFormat : null),
+				errors: (campaign is defined ? campaign.getErrors('urlFormat') : null)
+			}) }}
+
+		</div>
+
+		<hr>
+
+		{{ forms.checkboxField({
+			label: "Add a custom format to the Title field?"|t,
+			id: 'hasAdvancedTitles',
+			name: 'sproutEmail[hasAdvancedTitles]',
+			checked: (campaign is defined ? campaign.hasAdvancedTitles : 0),
+			toggle: 'advancedtitle-settings'
+		}) }}
+
+		<div id="advancedtitle-settings" class="nested-fields{% if not campaign.hasAdvancedTitles %} hidden{% endif %}">
+
+			{{ forms.textField({
+				label: "Title Format"|t,
+				instructions: "What the auto-generated Entry titles should look like. You can include tags that output entry properties, such as {ex}."|t({ ex: '<code>{myCustomField}</code>' }),
+				id: 'titleFormat',
+				name: 'sproutEmail[titleFormat]',
+				value: (campaign is defined ? campaign.titleFormat : null),
+				errors: (campaign is defined ? campaign.getErrors('titleFormat') : null),
+			}) }}
+
+		</div>
+
+		<hr>
+
+		{% include "_includes/fieldlayoutdesigner" with {fieldLayout: campaign.getFieldLayout()} only %}
+
+	{% else %}
+
+		<h2>{{ "Setup your first campaign."|t }}</h2>
+
+		<p>Install and setup a Mailer Service to create your first Campaign. Mailers are available as
+		separate plugins
+		and can be downloaded from the links listed in the <a href="{{ url('sproutemail/settings/mailers') }}">Mailer
+		Setttings</a>
+		.</p>
+
+	{% endif %}
+
+{% endset %}
+
+{% includeJsResource "sproutemail/js/sproutemail.js" %}
+
+{% set js %}
+
+	(function() {
+
+		function toggleCopyPasteField(selectedOption)
+		{
+			if (selectedOption == 'copypaste')
+			{
+				$('#templateCopyPaste-field').show();
+			}
+			else
+			{
+				$('#templateCopyPaste-field input').val('');
+				$('#templateCopyPaste-field').hide();
+			}
+		}
+
+		// Setup listener for copy/paste field
+		$('#mailer').change(function() {
+			toggleCopyPasteField($('#mailer').val());
+		});
+
+		// Show/hide copy/paste field on page load
+		toggleCopyPasteField($('#mailer').val());
+
+		{% if campaign is not defined or not campaign.handle %}
+			new Craft.HandleGenerator('#name', '#handle');
+		{% endif %}
+
+	})();
+
+{% endset %}
+
+{% includeJs js %}

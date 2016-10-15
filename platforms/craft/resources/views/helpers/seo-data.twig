@@ -1,0 +1,78 @@
+ {#
+ # SEO Data
+ # ---------------
+ #
+ # This SEO block can be added to every page template to put SEO meta tags to the page.
+ # You can control, which title, description etc. of the page is used
+ #
+ # IMPORTANT: Following Plugins are mandatory:
+ # - Sprout SEO
+ # - HDTextRank
+ #}
+
+{# Facebook Opengraph need the exact locale #}
+{% if craft.locale == 'en' %}
+    {% set locale = 'en_US' %}
+{% elseif craft.locale == 'de' %}
+    {% set locale = 'de_DE' %}
+{% endif %}
+
+{# Get Sprout SEO default Meta #}
+{% set defaultMeta = craft.sproutSeo.getDefaultByHandle('default') %}
+
+{# Always add this basics #}
+{% set metaInfos = {
+    default: 'default',
+    ogType: 'article',
+    ogLocale: locale,
+    ogUrl: craft.request.getUrl(),
+} %}
+
+{# Update the title (use default instead) #}
+{% if title is defined and title %}
+    {% set metaInfos = metaInfos|merge({
+        title: title,
+        ogTitle: title,
+        twitterTitle: title,
+    }) %}
+{% endif %}
+
+{# Update the description (use default instead) #}
+{% if mainText is defined and mainText %}
+
+
+    {% set description =  craft.hdtextrank.summary(mainText, 157, false)|trim|replace({"\n":' ', "\r":''}) %} {# HD TextRank makes a smart summary of the text #}
+    {% set keywords =  craft.hdtextrank.keywords(mainText, true)|join(', ')|lower ~ ', ' ~ defaultMeta.keywords  %} {# HD TextRank takes the best keywords from the text #}
+
+    {% set metaInfos = metaInfos|merge({
+        keywords: keywords,
+        description: description,
+        ogDescription: description,
+        twitterDescription: description,
+    }) %}
+{% endif %}
+
+{# Update the image (use default instead)
+   Use the best FB image format (1200 width and Ratio 1.91/1) #}
+{% if image is defined and image %}
+
+    {% set transform = {
+        width: 1200,
+        height: 1200 / 1.91 * 1,
+        mode: 'crop',
+        position: 'center-center',
+        format: 'jpg'
+    } %}
+
+    {% set metaInfos = metaInfos|merge({
+        ogImage: url(image.getUrl(transform)),
+        ogImageHeight: image.getHeight(transform),
+        ogImageWidth: image.getWidth(transform),
+        ogImageType: 'image/jpeg',
+        twitterImage: url(image.getUrl(transform))
+    }) %}
+{% endif %}
+
+{# Add Meta Tags #}
+{% do craft.sproutSeo.meta(metaInfos) %}
+

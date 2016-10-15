@@ -1,0 +1,17 @@
+{% import '_includes/forms' as forms %}
+
+<p class="first">Choose the user groups that should be allowed to allocate permissions below.</p>
+<hr>
+<h2>User Groups</h2>
+<ul>
+  {% for value, label in userGroupOptions %}
+    <li>
+      {{ forms.checkbox({
+        label: label,
+        name: 'canSetPermissions[]',
+        value: value,
+        checked: value in settings.canSetPermissions
+      }) }}
+    </li>
+  {% endfor %}
+</ul>

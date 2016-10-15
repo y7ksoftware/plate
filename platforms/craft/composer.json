@@ -1,0 +1,15 @@
+{
+    "name": "craft-plate",
+    "description": "Y7K Craft CMS Boilerplate",
+    "require": {
+        "vlucas/phpdotenv": "^2.0"
+    },
+    "scripts": {
+        "post-root-package-install": [
+            "php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ]
+    },
+    "config": {
+        "preferred-install": "dist"
+    }
+}

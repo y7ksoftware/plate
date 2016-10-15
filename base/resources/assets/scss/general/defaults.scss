@@ -1,0 +1,30 @@
+*, *:before, *:after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+
+}
+
+body {
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+}
+
+button {
+    appearance: none;
+    background: none;
+    border: 0;
+    outline: 0;
+    user-select: none;
+}
+
+abbr {
+    appearance: none;
+    text-decoration: none;
+}
+
+figure, figcaption { margin: 0; }
+
