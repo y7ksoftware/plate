@@ -1,6 +1,6 @@
 {
-    "name": "craft-plate",
-    "description": "Y7K Craft CMS Boilerplate",
+    "name": "plate",
+    "description": "Y7K Boilerplate",
     "require": {
         "vlucas/phpdotenv": "^2.0"
     },
