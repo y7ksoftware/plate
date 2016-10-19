@@ -1,37 +1,12 @@
-import BugsnagHandler from './helpers/BugsnagHandler';
-import PolyfillsHandler from './helpers/PolyfillsHandler';
+import Vue from 'vue';
+import Example from 'components/Example.vue';
+import {initBugsang} from 'errorhandling/BugsnagHandler';
 
-import ExampleComponent from './components/ExampleComponent';
+initBugsang();
 
-
-export default class App {
-
-    construct() {
-        this.super(...arguments);
+const app = new Vue({
+    el: '#app',
+    components: {
+        Example
     }
-
-    run() {
-
-        BugsnagHandler.init();
-        PolyfillsHandler.init();
-
-        switch (document.body.getAttribute('data-page')) {
-            case 'home':
-                this.homepage();
-                break;
-            default:
-                break;
-        }
-    }
-
-
-    homepage() {
-        let exampleComponent = new ExampleComponent();
-        exampleComponent.init();
-    }
-
-}
-
-let app = new App();
-app.run();
-
+});

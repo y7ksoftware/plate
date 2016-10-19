@@ -1,4 +1,8 @@
+import project from '../../../../project.json';
 
-export const APP_DEBUG = window.App.constants.APP_DEBUG;
-export const BUGSNAG_API_KEY = window.App.constants.BUGSNAG_API_KEY;
-export const BUGSNAG_NOTIFY_RELEASE_STAGES = window.App.constants.BUGSNAG_NOTIFY_RELEASE_STAGES;
+const constants = window.App.constants;
+
+export const APP_VERISON = project.version;
+export const APP_DEBUG = constants.APP_DEBUG;
+export const BUGSNAG_API_KEY = constants.BUGSNAG_API_KEY;
+export const BUGSNAG_NOTIFY_RELEASE_STAGES = constants.BUGSNAG_NOTIFY_RELEASE_STAGES;
