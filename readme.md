@@ -27,12 +27,12 @@ Installs the Laravel Framework.
 2. [Base](base) Files, **excluding:** `composer.json`, `composer.lock` and `.gitignore`
 2. [Laravel](platforms/laravel) Boilerplate Files
 
-### Static
+### Plain
 
-Go with a plain ol' HTML file as starting point.
+Go with a plain ol' static HTML file as starting point.
 
 1. [Base](base) Files
-2. [Static](platforms/static) Boilerplate Files
+2. [Plain](platforms/plain) Boilerplate Files
 
 
 
