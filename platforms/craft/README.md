@@ -36,7 +36,7 @@ Run `gulp watch` for development and livereloading via browser-sync. Visit [http
 ### Build assets
 
 - Run `gulp `  for development build of all assets (non-minified)
-- Run `gulp --production` for production build (minified sources and minified images) 
+- Run `npm run prod` for production build (minified sources and minified images) 
 
 ### Device and API testing
 
@@ -53,7 +53,7 @@ You can use [localtunnel](http://http://localtunnel.me/) to serve your local dev
 
 - Point public webfolder to `public/`
 - Run all tasks described at [Installation](#user-content-installation))
-- Use `gulp --production` for production build (minified sources and minified images)
+- Run `npm run prod` for production build (minified sources and minified images)
 
 ### Multilanguage NGINX Setup
 
