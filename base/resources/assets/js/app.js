@@ -1,8 +1,6 @@
-import Vue from 'vue';
+import { Vue } from 'boot';
 import Example from 'components/Example.vue';
-import {initBugsang} from 'errorhandling/BugsnagHandler';
 
-initBugsang();
 
 const app = new Vue({
     el: '#app',

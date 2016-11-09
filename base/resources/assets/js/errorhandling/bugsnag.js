@@ -2,13 +2,13 @@ import Bugsnag from 'bugsnag-js';
 import * as config from 'config';
 
 /*
-Initialize Bugsnag Error Handler
+ Initialize Bugsnag Error Handler
  */
-export function initBugsnag() {
+export function init() {
     Bugsnag.apiKey = config.BUGSNAG_API_KEY_JS;
     Bugsnag.releaseStage = detectReleaseStage();
     Bugsnag.appVersion = config.APP_VERSION;
-    Bugsnag.notifyReleaseStages = (config.BUGSNAG_NOTIFY_RELEASE_STAGES) ? config.BUGSNAG_NOTIFY_RELEASE_STAGES : ['staging', 'playground', 'production'];
+    Bugsnag.notifyReleaseStages = (config.BUGSNAG_NOTIFY_RELEASE_STAGES) ? config.BUGSNAG_NOTIFY_RELEASE_STAGES : ['staging', 'acceptance', 'production'];
 }
 
 function detectReleaseStage() {
