@@ -49,12 +49,16 @@
 
 // SETTINGS
 @import "settings/core";
+@import 'node_modules/dialog-size/dialog-size';
+@import "settings/sizes";
+@import "settings/typo";
+@import "settings/colors";
 
 // TOOLS
 @import "tools/rem";
 @import "tools/clearfix";
 @import "tools/hidden";
-@import "sass-mq/mq";
+@import "node_modules/sass-mq/mq";
 
 // GENERIC
 @import "generic/box-sizing";
