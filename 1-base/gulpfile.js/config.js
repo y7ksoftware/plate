@@ -7,6 +7,10 @@ require('dotenv').load();
 // Set Elixir Config
 Elixir.config.publicPath = 'public/build';
 Elixir.config.css.sass.folder = 'scss';
+Elixir.config.css.sass.pluginOptions.includePaths = [
+    path.resolve(__dirname + '/../resources/assets/scss'),
+    path.resolve(__dirname + '/../node_modules')
+];
 
 var config = {
 
@@ -22,7 +26,8 @@ var config = {
 
     browserSync: {
         proxy: process.env.APP_URL,
-        notify: false
+        notify: false,
+        browser: 'google-chrome'
     },
 
     eslint: {

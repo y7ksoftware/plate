@@ -49,7 +49,7 @@
 
 // SETTINGS
 @import "settings/core";
-@import 'node_modules/dialog-size/dialog-size';
+@import 'dialog-size/dialog-size';
 @import "settings/sizes";
 @import "settings/typo";
 @import "settings/colors";
@@ -58,33 +58,33 @@
 @import "tools/rem";
 @import "tools/clearfix";
 @import "tools/hidden";
-@import "node_modules/sass-mq/mq";
+@import "sass-mq/mq";
 
 // GENERIC
 @import "generic/box-sizing";
 @import "generic/normalize";
 @import "generic/reset";
-@import "generic/shared";
+//@import "generic/shared";
 
 // ELEMENTS
-@import "elements/page";
-@import "elements/headings";
-@import "elements/images";
-@import "elements/tables";
+//@import "elements/page";
+//@import "elements/headings";
+//@import "elements/images";
+//@import "elements/tables";
 
 
 
 
 // COMPONENTS
 // Build and include  Compoments here.
-@import "components/buttons";
+//@import "components/buttons";
 
 
 
 // UTILITIES
-@import "utilities/clearfix";
-@import "utilities/widths";
-@import "utilities/headings";
-@import "utilities/spacing";
-@import "utilities/print";
-@import "utilities/hide";
+//@import "utilities/clearfix";
+//@import "utilities/widths";
+//@import "utilities/headings";
+//@import "utilities/spacing";
+//@import "utilities/print";
+//@import "utilities/hide";

@@ -62,7 +62,7 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
 
     <title>Y7K New Awesome Project</title>
 
-    <link rel="stylesheet" type="text/css" href="build/css/vendor.css">
+<!--    <link rel="stylesheet" type="text/css" href="build/css/vendor.css">-->
     <link rel="stylesheet" type="text/css" href="build/css/main.css">
 
 </head>
