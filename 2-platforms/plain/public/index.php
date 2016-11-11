@@ -76,8 +76,8 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
     window.App = {
         constants: {
             APP_DEBUG: <?php echo getenv('APP_DEBUG'); ?>,
-            APP_ENV: <?php echo getenv('APP_ENV'); ?>,
-            APP_ENV: <?php echo getenv('APP_ENV'); ?>,
+            APP_ENV: '<?php echo getenv('APP_ENV'); ?>',
+            BUGSNAG_API_KEY_JS: '<?php echo getenv('BUGSNAG_API_KEY_JS'); ?>',
         }
     }
 </script>
