@@ -1,0 +1,48 @@
+/* ==========================================================================
+   #SPACING
+   ========================================================================== */
+
+/**
+ * Utility classes to put specific spacing values onto elements. The below loop
+ * will generate us a suite of classes like:
+ *
+ *   .u-margin-top {}
+ *   .u-padding-left-large {}
+ *   .u-margin-right-small {}
+ *   .u-padding {}
+ *   .u-padding-right-none {}
+ */
+
+/* stylelint-disable string-quotes */
+
+$spacing-directions: (
+    null: null,
+    '-top': '-top',
+    '-right': '-right',
+    '-bottom': '-bottom',
+    '-left': '-left',
+) !default;
+
+$spacing-properties: (
+    'padding': 'padding',
+    'margin': 'margin',
+) !default;
+
+
+@each $property, $property-namespace in $spacing-properties {
+
+    @each $direction, $direction-namespace in $spacing-directions {
+
+        @each $value, $size in $spacing {
+
+            .u-#{$property-namespace}#{$direction-namespace}-#{$size} {
+                #{$property}#{$direction}: $value !important;
+            }
+
+        }
+
+    }
+
+}
+
+/* stylelint-enable string-quotes */

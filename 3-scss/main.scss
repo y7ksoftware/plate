@@ -47,10 +47,13 @@
  * Hide.................Helper classes to hide content
  */
 
-// SETTINGS
-@import "settings/core";
+// LIBRARIES
 @import "dialog-size/dialog-size";
+
+// SETTINGS
 @import "settings/sizes";
+@import "settings/spacing";
+@import "settings/core";
 @import "settings/typo";
 @import "settings/colors";
 
@@ -64,7 +67,7 @@
 @import "generic/box-sizing";
 @import "generic/normalize";
 @import "generic/reset";
-//@import "generic/shared";
+@import "generic/shared";
 
 // ELEMENTS
 //@import "elements/page";
@@ -85,6 +88,6 @@
 //@import "utilities/clearfix";
 //@import "utilities/widths";
 //@import "utilities/headings";
-//@import "utilities/spacing";
+@import "utilities/spacing";
 //@import "utilities/print";
 //@import "utilities/hide";
