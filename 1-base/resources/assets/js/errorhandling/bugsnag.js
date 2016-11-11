@@ -8,13 +8,18 @@ export function init() {
     Bugsnag.apiKey = config.BUGSNAG_API_KEY_JS;
     Bugsnag.releaseStage = detectReleaseStage();
     Bugsnag.appVersion = config.APP_VERSION;
-    Bugsnag.notifyReleaseStages = (config.BUGSNAG_NOTIFY_RELEASE_STAGES) ? config.BUGSNAG_NOTIFY_RELEASE_STAGES : ['staging', 'acceptance', 'production'];
+
+    if(typeof config.BUGSNAG_NOTIFY_RELEASE_STAGES !== 'undefined') {
+        Bugsnag.notifyReleaseStages = config.BUGSNAG_NOTIFY_RELEASE_STAGES;
+    } else {
+        Bugsnag.notifyReleaseStages = ['staging', 'acceptance', 'production'];
+    }
 }
 
 function detectReleaseStage() {
 
     // Return the env if one is set in the Config
-    if (config.APP_ENV) return config.APP_ENV;
+    if (typeof config.APP_ENV !== 'undefined') return config.APP_ENV;
 
     const href = window.location.href;
 
