@@ -33,10 +33,6 @@ var config = {
     },
 
     webpack: {
-        babel: {
-            presets: ['es2015', 'stage-2'],
-            plugins: ['transform-runtime'],
-        },
         resolve: {
             modules: [
                 path.resolve(__dirname + '/../resources/assets/js'),
