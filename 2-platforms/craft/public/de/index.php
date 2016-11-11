@@ -28,7 +28,7 @@ try {
     $dotenv->load();
     $dotenv->required(['DB_NAME', 'DB_USER', 'DB_PASSWORD']);
 } catch (Exception $e) {
-    exit('Could not find a .env file.');
+    exit('Could not find a .env file or required values are not set.');
 }
 
 require_once $craftApp;

@@ -8,9 +8,9 @@ require_once $basePath . '/vendor/autoload.php';
 try {
     $dotenv = new Dotenv\Dotenv($basePath);
     $dotenv->load();
-    $dotenv->required(['DB_NAME', 'DB_USER', 'DB_PASSWORD']);
+    $dotenv->required(['APP_ENV', 'APP_DEBUG']);
 } catch (Exception $e) {
-    exit('Could not find a .env file.');
+    exit('Could not find a .env file or required values are not set.');
 }
 
 ?>
@@ -68,6 +68,7 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
 </head>
 <body>
 
+<h1>おはよう！</h1>
 
 <div id="app"></div>
 
