@@ -60,7 +60,7 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
     <meta name="msapplication-TileImage" content="/build/images/meta/mstile-144x144.png">
     <meta name="theme-color" content="#ffffff">
 
-    <title>Y7K New Awesome Project</title>
+    <title>Y7K Awesome Project</title>
 
 <!--    <link rel="stylesheet" type="text/css" href="build/css/vendor.css">-->
     <link rel="stylesheet" type="text/css" href="build/css/main.css">
