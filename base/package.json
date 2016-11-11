@@ -1,33 +1,33 @@
 {
-    "name": "y7k-plate",
-    "private": true,
-    "description": "Y7K Boilerplate",
-    "author": {
-        "name": "Y7K",
-        "url": "http://y7k.com"
-    },
-    "license": "UNLICENSED",
-    "scripts": {
-        "prod": "gulp --production",
-        "dev": "gulp watch"
-    },
-    "dependencies": {
-        "bugsnag-js": "^3.0.6",
-        "vue": "^2.0"
-    },
-    "devDependencies": {
-        "babel-eslint": "^7.1.0",
-        "babel-preset-stage-2": "^6.18.0",
-        "dotenv": "^2.0.0",
-        "eslint-plugin-vue": "^1.0.0",
-        "gulp": "^3.9.1",
-        "json-loader": "^0.5.4",
-        "laravel-elixir": "^6.0.0-14",
-        "laravel-elixir-browsersync-official": "^1.0.0",
-        "laravel-elixir-eslint": "^3.0.2",
-        "laravel-elixir-imagemin": "^0.2.3",
-        "laravel-elixir-vue-2": "^0.2.0",
-        "laravel-elixir-webpack-official": "^1.0.9",
-        "webpack-stream": "github:jeroennoten/webpack-stream#patch-1"
-    }
+  "name": "y7k-plate",
+  "private": true,
+  "description": "Y7K Boilerplate",
+  "author": {
+    "name": "Y7K",
+    "url": "http://y7k.com"
+  },
+  "license": "UNLICENSED",
+  "scripts": {
+    "prod": "gulp --production",
+    "dev": "gulp watch"
+  },
+  "dependencies": {
+    "bugsnag-js": "^3.0.6",
+    "vue": "^2.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^7.1.0",
+    "babel-preset-stage-2": "^6.18.0",
+    "dotenv": "^2.0.0",
+    "eslint-plugin-vue": "^1.0.0",
+    "gulp": "^3.9.1",
+    "json-loader": "^0.5.4",
+    "laravel-elixir": "^6.0.0-14",
+    "laravel-elixir-browsersync-official": "^1.0.0",
+    "laravel-elixir-eslint": "^4.0.0-4",
+    "laravel-elixir-imagemin": "^0.2.3",
+    "laravel-elixir-vue-2": "^0.2.0",
+    "laravel-elixir-webpack-official": "^1.0.9",
+    "webpack-stream": "github:jeroennoten/webpack-stream#patch-1"
+  }
 }
