@@ -13,8 +13,8 @@ Elixir(function (mix) {
         .imagemin()
 
         // Build CSS
-        .sass('vendor.scss')
         .sass('main.scss')
+        // .sass('vendor.scss')
 
         // Lint code for errors
         .eslint(config.eslint.paths)
@@ -22,13 +22,10 @@ Elixir(function (mix) {
         // Build Javascript with Webpack
         .webpack('app.js')
 
-        // Copy font files to build folder
-        // .copy(config.fonts.assets, config.fonts.build)
-
-        // Concatenate all js FILES inside "js/vendor/" - *including* files in  subfolders - to "build/js/vendor.js" to include all at once
+        // Concatenate all js FILES inside "js/vendor/" - including files in  subfolders - to "build/js/vendor.js"
         // .scriptsIn(config.vendorjs.assets.folder, config.vendorjs.build.file)
 
-        // Concatenate all js files inside "js/vendor/" - *excluding* its subfolders - to "build/js/vendor.js"
+        // Concatenate all js files inside "js/vendor/" - excluding its subfolders - to "build/js/vendor.js"
         // .scripts(config.vendorjs.assets.folder + '/*.js', config.vendorjs.build.file)
 
         // Copy any FOLDER inside "js/vendor/" to "build/js/vendor" untouched (for separate, single script import)

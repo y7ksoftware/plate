@@ -10,11 +10,6 @@ Elixir.config.css.sass.folder = 'scss';
 
 var config = {
 
-    fonts: {
-        assets: Elixir.config.assetsPath + '/fonts',
-        build: Elixir.config.publicPath + '/fonts'
-    },
-
     vendorjs: {
         assets: {
             folder: Elixir.config.get('assets.js.folder') + '/vendor'
