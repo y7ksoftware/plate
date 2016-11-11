@@ -1,4 +1,4 @@
-# Y7K Project Boilerplates
+# Y7K Project Boilerplate
 
 Version: See [project.json](project.json)
 Changelog: See [changelog.md](changelog.md)
@@ -7,13 +7,11 @@ Changelog: See [changelog.md](changelog.md)
 
 This repository contains the boilerplate code, which is fetched by the [Y7K CLI](https://github.com/Y7K/cli).
 
-Depending on the configuration, the CLI loads the content of a set of folders, whereas existing files are replaced.
-
-## Available Platforms
+## Platforms
 
 ### Craft CMS
 
-Installs Craft CMS along with some Y7K Magic.
+Installs Craft CMS along with some Magic.
 
 1. [Base](base) Files
 2. [Craft](platforms/craft) Boilerplate Files
@@ -29,10 +27,16 @@ Installs the Laravel Framework.
 
 ### Plain
 
-Go with a plain ol' static HTML file as starting point.
+Plain ol' static HTML file as starting point.
 
 1. [Base](base) Files
 2. [Plain](platforms/plain) Boilerplate Files
+
+
+
+## Roadmap
+
+- Add Error Pages for 404/503/500 to Craft Plate
 
 
 
