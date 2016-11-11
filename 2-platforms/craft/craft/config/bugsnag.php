@@ -2,7 +2,7 @@
 
 return [
 
-    'serverApiKey' => getenv('BUGSNAG_API_KEY'),
+    'serverApiKey' => getenv('BUGSNAG_API_KEY_CRAFT'),
     'environment' => getenv('APP_ENV'),
     'notifyReleaseStages' => ['staging', 'production'],
 

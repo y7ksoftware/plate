@@ -1,3 +1,19 @@
+<?php
+$basePath = __DIR__ . '/..';
+
+// Load Composer Dependencies
+require_once $basePath . '/vendor/autoload.php';
+
+// Load Dotenv Variables
+try {
+    $dotenv = new Dotenv\Dotenv($basePath);
+    $dotenv->load();
+    $dotenv->required(['DB_NAME', 'DB_USER', 'DB_PASSWORD']);
+} catch (Exception $e) {
+    exit('Could not find a .env file.');
+}
+
+?>
 <!doctype html>
 <!--
 
@@ -55,6 +71,15 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
 
 <div id="app"></div>
 
+<script>
+    window.App = {
+        constants: {
+            APP_DEBUG: <?php echo getenv('APP_DEBUG'); ?>,
+            APP_ENV: <?php echo getenv('APP_ENV'); ?>,
+            APP_ENV: <?php echo getenv('APP_ENV'); ?>,
+        }
+    }
+</script>
 
 <!--<script src="build/js/vendor.js" type="text/javascript"></script>-->
 <script src="build/js/app.js" type="text/javascript"></script>
