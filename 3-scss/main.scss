@@ -13,7 +13,6 @@
  *
  * TOOLS
  * Rem..................Tools for converting pixel inputs into their rem equivalents.
- * Font-size............A mixin which guarantees baseline-friendly line-heights.
  * Clearfix.............Micro clearfix mixin.
  * Hidden...............Mixin for hiding elements.
  * Sass MQ..............Media query manager.
@@ -53,7 +52,6 @@
 
 // TOOLS
 @import "tools/rem";
-@import "tools/font-size";
 @import "tools/clearfix";
 @import "tools/hidden";
 @import "sass-mq/mq";
