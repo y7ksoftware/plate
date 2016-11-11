@@ -38,6 +38,11 @@ var config = {
                 path.resolve(__dirname + '/../resources/assets/js'),
                 path.resolve(__dirname + '/../node_modules')
             ]
+        },
+        module: {
+            loaders: [
+                {test: /\.json$/, loader: "json"}
+            ]
         }
     }
 
