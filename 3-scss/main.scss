@@ -56,9 +56,9 @@
 @import "settings/core";
 @import "settings/typo";
 @import "settings/colors";
+@import "settings/breakpoints";
 
 // TOOLS
-@import "tools/rem";
 @import "tools/clearfix";
 @import "tools/hidden";
 @import "sass-mq/mq";
