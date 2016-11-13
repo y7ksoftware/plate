@@ -15,6 +15,11 @@
 
 /* stylelint-disable string-quotes */
 
+
+// use the dialog-sizes array to generate the spacing classes
+// change this to another sizes array if desired
+$spacing: $dialog-sizes;
+
 $spacing-directions: (
     null: null,
     '-top': '-top',

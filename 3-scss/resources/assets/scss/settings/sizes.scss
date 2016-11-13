@@ -30,6 +30,7 @@
 * size(9rem) will return 10rem since it's the closest in your system
 **/
 
+// default sizes array
 $dialog-sizes:
     (0.2rem tiny)                   // size(-1)
     0.5rem
@@ -42,3 +43,15 @@ $dialog-sizes:
     5rem
     (10rem huge)
     20rem;                                // size(1)
+
+/*
+* If desired, other stacks of sizes can be defined, and  be retrieved like so:
+*
+* size(0, $spacing)
+*/
+
+//$spacing:
+//    (1rem small) // size(-1, $spacing)
+//    (2rem medium isBase)    // size(0, $spacing)
+//    3rem
+//    (5rem large); // size(1, $spacing)
