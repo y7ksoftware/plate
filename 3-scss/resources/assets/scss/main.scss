@@ -48,17 +48,19 @@
  */
 
 // LIBRARIES
-@import "dialog-size/dialog-size";
+@import "dialog-size/dist/dialog-size";
 
 // SETTINGS
 @import "settings/core";
 @import "settings/sizes";
+@import "settings/spacing";
 @import "settings/typo";
 @import "settings/colors";
 @import "settings/breakpoints";
 
 // TOOLS
 @import "tools/clearfix";
+@import "tools/font-size";
 @import "tools/hidden";
 @import "sass-mq/mq";
 

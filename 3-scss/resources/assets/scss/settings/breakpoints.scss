@@ -8,9 +8,10 @@
 */
 
 $mq-breakpoints: (
-    mobile:  320px,
-    tablet:  740px,
-    desktop: 980px,
+    fallback: 0px,
+    small:  320px,
+    medium:  740px,
+    large: 980px,
     wide:    1300px
 ) !default;
 

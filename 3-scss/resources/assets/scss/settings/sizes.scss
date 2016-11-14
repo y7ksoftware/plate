@@ -30,28 +30,16 @@
 * size(9rem) will return 10rem since it's the closest in your system
 **/
 
-// default sizes array
+// Font Sizes
 $dialog-sizes:
-    (0.2rem tiny)                   // size(-1)
-    0.5rem
-    (0.75rem small)
-    0.8rem
-    (1rem medium isBase)    // size(0)
-    1.2rem
-    (1.5rem large)
-    3.5rem
-    5rem
-    (10rem huge)
-    20rem;                                // size(1)
-
-/*
-* If desired, other stacks of sizes can be defined, and  be retrieved like so:
-*
-* size(0, $spacing)
-*/
-
-//$spacing:
-//    (1rem small) // size(-1, $spacing)
-//    (2rem medium isBase)    // size(0, $spacing)
-//    3rem
-//    (5rem large); // size(1, $spacing)
+    (6px tiny)                   // size(-1)
+    8px
+    (10px small)
+    14px
+    (16px medium isBase)    // size(0)
+    18px
+    (20px large)
+    24px
+    28px
+    (32px huge)
+    36px;                                // size(1)

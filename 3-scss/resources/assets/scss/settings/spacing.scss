@@ -1,0 +1,33 @@
+/* ========================================================================
+   SPACING
+   ======================================================================== */
+
+/**
+* Utilizing: https://github.com/meodai/dialog-size
+*
+* Usage:
+* The size() function can be used in three different ways, see sizes.scss.
+* Append the desired values you want to retrieve as second parameter like so:
+*
+* size(0, $spacing)
+*/
+
+$spacing:
+        (1rem small) // size(-1, $spacing)
+        (2rem medium isBase) // size(0, $spacing)
+        (3rem large)
+        (5rem huge); // size(1, $spacing)
+
+$spacing-small:
+        (0.5rem small) // size(-1, $spacing-mobile)
+        (1rem medium isBase) // size(0, $spacing-mobile)
+        (2rem large)
+        (4rem large); // size(1, $spacing-mobile)
+
+$spacing-breakpoints: (
+    fallback: $spacing-small,
+    small: $spacing-small,
+    medium:  $spacing,
+    //large: $spacing-large,
+    //huge: $spacing-huge
+);
