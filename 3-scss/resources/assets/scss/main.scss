@@ -68,6 +68,7 @@
 @import "generic/box-sizing";
 @import "generic/normalize";
 @import "generic/reset";
+@import "generic/print";
 @import "generic/shared";
 
 // ELEMENTS
@@ -77,16 +78,13 @@
 //@import "elements/tables";
 
 
-
-
 // COMPONENTS
 // Build and include  Compoments here.
 //@import "components/buttons";
 
 
-
 // UTILITIES
 @import "utilities/clearfix";
 @import "utilities/spacing";
-@import "utilities/print";
 @import "utilities/hide";
+@import "utilities/headings";
