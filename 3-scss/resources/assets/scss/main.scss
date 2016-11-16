@@ -77,10 +77,17 @@
 @import "elements/images";
 @import "elements/tables";
 
+// META
+@import "meta/_index";
+
+// MODULES
+@import "modules/_index";
 
 // COMPONENTS
-// Build and include  Compoments here.
-//@import "components/buttons";
+@import "components/_index";
+
+// ANIMATIONS
+@import "animations/_index";
 
 
 // UTILITIES

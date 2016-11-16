@@ -1,1 +1,8 @@
-public/build
+# Config
+.env
+
+# Build Folder
+/public/build
+
+# Node Modules
+/node_modules
