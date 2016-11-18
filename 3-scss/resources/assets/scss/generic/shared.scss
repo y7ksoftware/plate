@@ -21,7 +21,7 @@ figure,
 hr,
 table,
 fieldset {
-    margin-bottom: size(0, $spacing);
+    margin-bottom: 1.5rem;
 }
 
 
@@ -30,7 +30,7 @@ fieldset {
  */
 
 dd, ol, ul {
-    margin-left: size(0, $spacing);
+    margin-left: 1.5rem;
 }
 
 /* stylelint-enable selector-list-comma-newline-after */

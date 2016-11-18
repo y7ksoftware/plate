@@ -8,11 +8,11 @@
 */
 
 $mq-breakpoints: (
-    fallback: 0px,
-    small:  320px,
-    medium:  740px,
-    large: 980px,
-    wide:    1300px
+    bp-fallback: 0px,
+    bp-small:  320px,
+    bp-medium:  740px,
+    bp-large: 980px,
+    bp-wide:    1300px
 ) !default;
 
 $mq-show-breakpoints: () !default;

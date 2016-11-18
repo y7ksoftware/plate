@@ -24,25 +24,20 @@ $spacing-directions: (
 ) !default;
 
 $spacing-properties: (
-    'padding': '-inner',
     'margin': null,
+    'padding': '-inner',
 ) !default;
 
-// Loop through directions, properties and spacings per breakpoint
+// Loop through directions, properties and breakpoints per spacing
 @each $property, $property-namespace in $spacing-properties {
     @each $direction, $direction-namespace in $spacing-directions {
-        @each $bp-name, $bp-spacings in $spacing-breakpoints {
-            @each $value, $size in $bp-spacings {
+        @each $spacing-name, $spacing-list in $generate-spacing-classes {
+            @each $value, $breakpoint-name in $spacing-list {
 
-                // only output a class if a name for the size is defined
-                @if ($size) {
-
-                    @include mq($from: $bp-name) {
-                        .u-space#{$property-namespace}#{$direction-namespace}-#{$size} {
-                            #{$property}#{$direction}: $value;
-                        }
+                @include mq($from: $breakpoint-name) {
+                    .u-space#{$property-namespace}#{$direction-namespace}-#{$spacing-name} {
+                        #{$property}#{$direction}: $value;
                     }
-
                 }
 
             }
