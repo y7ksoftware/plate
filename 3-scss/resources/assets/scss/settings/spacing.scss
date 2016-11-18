@@ -13,19 +13,19 @@
 */
 
 
-$s-small:
+$space-small:
         (0.5rem bp-fallback)
         (1rem bp-small)
         (2rem bp-medium isBase)
         (3rem bp-large);
 
-$s-medium:
+$space-medium:
         (1rem bp-fallback)
         (2rem bp-small)
         (3rem bp-medium isBase)
         (5rem bp-large);
 
 $generate-spacing-classes: (
-    small: $s-small,
-    medium: $s-medium
+    small: $space-small,
+    medium: $space-medium
 );

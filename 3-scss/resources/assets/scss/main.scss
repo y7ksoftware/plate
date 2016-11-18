@@ -78,7 +78,7 @@
 @import "elements/tables";
 
 // META
-@import "meta/_index";
+@import "placeholders/_index";
 
 // MODULES
 @import "modules/_index";
@@ -93,6 +93,7 @@
 // UTILITIES
 @import "utilities/clearfix";
 @import "utilities/spacing";
+@import "utilities/typo";
 @import "utilities/hide";
 @import "utilities/headings";
 
