@@ -17,7 +17,6 @@
   },
   "devDependencies": {
     "babel-eslint": "^7.1.0",
-    "dialog-size": "^1.2.1",
     "dotenv": "^2.0.0",
     "eslint-plugin-vue": "^1.0.0",
     "gulp": "^3.9.1",
@@ -27,7 +26,6 @@
     "laravel-elixir-eslint": "^4.0.0-4",
     "laravel-elixir-imagemin": "^0.2.3",
     "laravel-elixir-vue-2": "^0.2.0",
-    "laravel-elixir-webpack-official": "^1.0.9",
-    "sass-mq": "^3.3.1"
+    "laravel-elixir-webpack-official": "^1.0.9"
   }
 }

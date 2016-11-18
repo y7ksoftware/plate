@@ -1,0 +1,6 @@
+{
+  "devDependencies": {
+    "dialog-size": "^1.2.1",
+    "sass-mq": "^3.3.1"
+  }
+}
