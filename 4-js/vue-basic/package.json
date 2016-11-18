@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "bugsnag-js": "^3.0.6",
+    "vue": "^2.0"
+  }
+}
