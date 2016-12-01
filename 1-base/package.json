@@ -11,6 +11,10 @@
     "prod": "gulp --production",
     "dev": "gulp watch"
   },
+  "dependencies": {
+    "dialog-size": "^1.2.1",
+    "sass-mq": "^3.3.1"
+  },
   "devDependencies": {
     "babel-eslint": "^7.1.0",
     "dotenv": "^2.0.0",
