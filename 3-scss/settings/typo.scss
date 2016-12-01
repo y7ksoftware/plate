@@ -5,29 +5,24 @@
 $font-title: Helvetica, Arial, sans-serif;
 $font-text: Helvetica, Arial, sans-serif;
 
-$font-size-h1:  size(1) !default;
-$font-size-h2:  size(0.8) !default;
-$font-size-h3:  size(0.6) !default;
-$font-size-h4:  size(0.4) !default;
-$font-size-h5:  size(0.2) !default;
-$font-size-h6:  size(0) !default;
+$font-size-h1: size(1) !default;
+$font-size-h2: size(0.8) !default;
+$font-size-h3: size(0.6) !default;
+$font-size-h4: size(0.4) !default;
+$font-size-h5: size(0.2) !default;
+$font-size-h6: size(0) !default;
 
 
-$font-size-small: (
-        bp-fallback: 8px,
-        bp-phone: 10px,
-        bp-tablet: 12px,
-);
+/*
+Make your own mixins for font-sizes if needed
+ */
 
+@mixin font-size-small() {
 
-$font-size-medium: (
-        bp-fallback: 10px,
-        bp-phone: 14px,
-        bp-tablet: 16px,
-);
+    @include font-size(size(small));
 
+    @include mq($from: bp-tablet) {
+        @include font-size(size(medium));
+    }
 
-$generate-font-size-classes: (
-    small: $font-size-small,
-    medium: $font-size-medium
-);
+}

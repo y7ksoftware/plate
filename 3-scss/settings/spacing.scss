@@ -3,15 +3,8 @@
    ======================================================================== */
 
 /**
-* Utilizing: https://github.com/meodai/dialog-size
-*
-* Usage:
-* The size() function can be used in three different ways, see sizes.scss.
-* Append the desired values you want to retrieve as second parameter like so:
-*
-* size(0, $s-medium)
+* TODO
 */
-
 
 $space-small: (
         bp-fallback: 0.5rem,
@@ -26,6 +19,6 @@ $space-medium: (
 );
 
 $generate-spacing-classes: (
-    small: $space-small,
-    small: $space-medium,
+        small: $space-small,
+        small: $space-medium,
 );
