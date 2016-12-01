@@ -20,13 +20,16 @@ $dotenv->load();
 // Set correct Paths for Craft
 $craftPath = $basePath . '/craft';
 
-define('CRAFT_BASE_PATH',         $basePath . '/craft/');
-define('CRAFT_APP_PATH',          $craftPath . '/app/');
-define( 'CRAFT_STORAGE_PATH', $basePath . '/storage/' );
+define('CRAFT_BASE_PATH',                       $basePath . '/craft/');
+define('CRAFT_APP_PATH',                         $craftPath . '/app/');
+define( 'CRAFT_STORAGE_PATH',               $basePath . '/storage/' );
+define( 'CRAFT_TEMPLATES_PATH',           $basePath . '/resources/views/' );
+define( 'CRAFT_TRANSLATIONS_PATH',    $basePath . '/resources/lang/' );
 
 // Fix for console task not having URI
 $_SERVER['HTTP_X_REWRITE_URL'] = '/';
 $_SERVER['HTTP_HOST'] = 'localhost';
+$_SERVER['REMOTE_ADDR'] = 'localhost';
 
 // Yii command runner
 require_once($craftPath . '/app/etc/console/yiic.php');
