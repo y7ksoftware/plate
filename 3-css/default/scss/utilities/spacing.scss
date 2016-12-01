@@ -32,7 +32,7 @@ $spacing-properties: (
 @each $property, $property-namespace in $spacing-properties {
     @each $direction, $direction-namespace in $spacing-directions {
         @each $spacing-name, $spacing-list in $generate-spacing-classes {
-            @each $value, $breakpoint-name in $spacing-list {
+            @each $breakpoint-name, $value in $spacing-list {
 
                 @include mq($from: $breakpoint-name) {
                     .u-space#{$property-namespace}#{$direction-namespace}-#{$spacing-name} {

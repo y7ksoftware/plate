@@ -12,17 +12,20 @@ $font-size-h4:  size(0.4) !default;
 $font-size-h5:  size(0.2) !default;
 $font-size-h6:  size(0) !default;
 
-$font-size-small:
-        (8px bp-fallback)
-        (10px bp-small)
-        (14px bp-medium isBase)
-        (14px bp-large);
 
-$font-size-medium:
-        (12px bp-fallback)
-        (16px bp-small)
-        (18px bp-medium isBase)
-        (20px bp-large);
+$font-size-small: (
+        bp-fallback: 8px,
+        bp-phone: 10px,
+        bp-tablet: 12px,
+);
+
+
+$font-size-medium: (
+        bp-fallback: 10px,
+        bp-phone: 14px,
+        bp-tablet: 16px,
+);
+
 
 $generate-font-size-classes: (
     small: $font-size-small,

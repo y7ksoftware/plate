@@ -13,7 +13,7 @@
 /* stylelint-disable string-quotes */
 
 @each $font-size-name, $font-size-list in $generate-font-size-classes {
-    @each $value, $breakpoint-name in $font-size-list {
+    @each $breakpoint-name, $value in $font-size-list {
 
         @include mq($from: $breakpoint-name) {
             .u-font-size-#{$font-size-name} {

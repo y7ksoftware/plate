@@ -13,19 +13,19 @@
 */
 
 
-$space-small:
-        (0.5rem bp-fallback)
-        (1rem bp-small)
-        (2rem bp-medium isBase)
-        (3rem bp-large);
+$space-small: (
+        bp-fallback: 0.5rem,
+        bp-phone: 0.5rem,
+        bp-tablet: 1rem,
+);
 
-$space-medium:
-        (1rem bp-fallback)
-        (2rem bp-small)
-        (3rem bp-medium isBase)
-        (5rem bp-large);
+$space-medium: (
+        bp-fallback: 1rem,
+        bp-phone: 2rem,
+        bp-tablet: 3rem,
+);
 
 $generate-spacing-classes: (
     small: $space-small,
-    medium: $space-medium
+    small: $space-medium,
 );
