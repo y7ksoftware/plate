@@ -22,9 +22,9 @@ $craftPath = $basePath . '/craft';
 
 define('CRAFT_BASE_PATH',                       $basePath . '/craft/');
 define('CRAFT_APP_PATH',                         $craftPath . '/app/');
-define( 'CRAFT_STORAGE_PATH',               $basePath . '/storage/' );
-define( 'CRAFT_TEMPLATES_PATH',           $basePath . '/resources/views/' );
-define( 'CRAFT_TRANSLATIONS_PATH',    $basePath . '/resources/lang/' );
+define('CRAFT_STORAGE_PATH',                $basePath . '/storage/' );
+define('CRAFT_TEMPLATES_PATH',            $basePath . '/resources/views/' );
+define('CRAFT_TRANSLATIONS_PATH',     $basePath . '/resources/lang/' );
 
 // Fix for console task not having URI
 $_SERVER['HTTP_X_REWRITE_URL'] = '/';
