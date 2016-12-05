@@ -1,6 +1,6 @@
 import project from '../../../../project.json';
 
-const constants = window.App.constants;
+const constants = JSON.parse(JSON.stringify(window.App.constants));
 
 export const APP_VERSION = project.version;
 export const APP_ENV = constants.APP_ENV;

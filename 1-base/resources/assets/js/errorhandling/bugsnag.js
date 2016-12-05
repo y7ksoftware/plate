@@ -9,11 +9,7 @@ export function init() {
     Bugsnag.releaseStage = detectReleaseStage();
     Bugsnag.appVersion = config.APP_VERSION;
 
-    if(typeof config.BUGSNAG_NOTIFY_RELEASE_STAGES !== 'undefined') {
-        Bugsnag.notifyReleaseStages = config.BUGSNAG_NOTIFY_RELEASE_STAGES;
-    } else {
-        Bugsnag.notifyReleaseStages = ['staging', 'acceptance', 'production'];
-    }
+    Bugsnag.notifyReleaseStages = ['develop', 'staging', 'production'];
 }
 
 function detectReleaseStage() {
@@ -24,7 +20,7 @@ function detectReleaseStage() {
     const href = window.location.href;
 
     return (
-    href.indexOf(".pizza") !== -1 ) ? "staging"
+    href.indexOf(".pizza") !== -1 ) ? "develop"
         : ( href.indexOf(".dev") !== -1 || href.indexOf("localhost") !== -1 ) ? "local"
         : "production";
 }

@@ -1,10 +1,12 @@
-import { Vue } from 'boot';
-import Example from 'components/Example.vue';
+import {
+    Vue,
+    store,
+    router
+} from 'boot';
+import App from 'components/App.vue';
 
-
-const app = new Vue({
-    el: '#app',
-    components: {
-        Example
-    }
-});
+new Vue({
+    router,
+    store,
+    render: h => h(App)
+}).$mount('#app');
