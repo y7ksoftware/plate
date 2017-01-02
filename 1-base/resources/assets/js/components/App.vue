@@ -4,6 +4,11 @@
 
         name: 'App',
 
+        created() {
+            // Go to first screen
+            if(this.$router.mode == 'abstract') this.$router.replace('/');
+        },
+
         mounted() {
             console.log('Component ready.')
         }

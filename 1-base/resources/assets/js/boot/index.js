@@ -5,8 +5,6 @@ import {init as initErrorhandling} from 'boot/bugsnag';
 // Load Vue and extensions
 import Vue from 'vue';
 import VueI18n from 'vue-i18n';
-import Vuex from 'vuex';
-import VueRouter from 'vue-router';
 import axios from 'axios';
 
 import store from 'store';
@@ -20,9 +18,7 @@ initErrorhandling();
 axios.defaults.baseURL = config.API_PREFIX;
 // axios.defaults.headers.common['Authorization'] = 'Bearer ' + config.API_TOKEN;
 
-Vue.use(Vuex);
 Vue.use(VueI18n);
-Vue.use(VueRouter);
 
 // Load the Language Data
 Vue.config.lang = 'en';

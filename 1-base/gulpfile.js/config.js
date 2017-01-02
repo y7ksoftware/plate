@@ -13,7 +13,6 @@ Elixir.config.css.sass.pluginOptions.includePaths = [
 ];
 
 var config = {
-
     vendorjs: {
         assets: {
             folder: Elixir.config.get('assets.js.folder') + '/vendor'
@@ -26,8 +25,7 @@ var config = {
 
     browserSync: {
         proxy: process.env.APP_URL,
-        notify: false,
-        browser: 'google-chrome'
+        notify: false
     },
 
     eslint: {
