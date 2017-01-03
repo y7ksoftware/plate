@@ -9,20 +9,9 @@
 <script type="text/javascript">
 
     window.App = {};
-    window.App.constants = {};
-
-    window.App.constants.APP_DEBUG = {{ _self.config('devMode') }};
-    window.App.constants.BUGSNAG_API_KEY = {{ _self.config('BUGSNAG_API_KEY', 'bugsnag') }};
-    window.App.constants.BUGSNAG_NOTIFY_RELEASE_STAGES = {{ _self.config('BUGSNAG_NOTIFY_RELEASE_STAGES', 'bugsnag') }};
+    window.App.constants = {{ {
+        'APP_DEBUG': craft.config.get('devMode'),
+        'BUGSNAG_API_KEY': craft.config.get('BUGSNAG_API_KEY', 'bugsnag'),
+    }|json_encode|raw }};
 
 </script>
-
-{% macro config(name, file) %}
-    {% spaceless %}
-        {% if file is empty %}
-            {% set file = 'general' %}
-        {% endif %}
-
-        {{ craft.config.get(name, file)|json_encode|raw }}
-    {% endspaceless %}
-{% endmacro %}
