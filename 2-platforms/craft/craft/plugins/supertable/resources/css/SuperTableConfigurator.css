@@ -153,5 +153,10 @@ body.rtl .supertable-configurator .stc-settings {
     display: flex;
 }
 
+.matrix-configurator > .field > .input > .field-settings {
+    width: 100%;
+}
+
+
 
 
