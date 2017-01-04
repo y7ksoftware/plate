@@ -25,7 +25,11 @@ var config = {
 
     browserSync: {
         proxy: process.env.APP_URL,
-        notify: false
+        notify: false,
+        files: [
+            Elixir.config.publicPath + '/**/*',
+            Elixir.config.viewPath + '/**/*.{twig,php}'
+        ]
     },
 
     eslint: {
