@@ -22,7 +22,7 @@ Installs Craft CMS along with some Magic.
 Installs the Laravel Framework.
 
 1. [Laravel Repository](https://github.com/laravel/laravel)
-2. [Base](base) Files, **excluding:** `composer.json`, `composer.lock` and `.gitignore`
+2. [Base](base) Files, **excluding:** `.gitignore`
 2. [Laravel](platforms/laravel) Boilerplate Files
 
 ### Kirby CMS
