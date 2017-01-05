@@ -34,7 +34,7 @@ Elixir(function (mix) {
         // Version Files
         // .version(['css/main.css', 'js/app.js'])
 
-        // Start browsersync if appliable
+        // Start browsersync
         .browserSync(config.browserSync);
 
 });
