@@ -25,14 +25,33 @@ Installs the Laravel Framework.
 2. [Base](base) Files, **excluding:** `composer.json`, `composer.lock` and `.gitignore`
 2. [Laravel](platforms/laravel) Boilerplate Files
 
-### Plain
+### Plain PHP
 
-Plain ol' static HTML file as starting point.
+Plain PHP index file as starting point, with environment Variables loaded.
 
 1. [Base](base) Files
-2. [Plain](platforms/plain) Boilerplate Files
+2. [Plain PHP](platforms/plain-php) Boilerplate Files
 
+### Plain HTML
 
+Plain static HTML file, for static webhosts.
+
+1. [Base](base) Files
+2. [Plain HTML](platforms/plain-html) Boilerplate Files
+
+## Javascript
+
+### Basic
+
+A config file, Vue.js and a simple `app.js`, no fancy stuff.
+
+### Single Page App
+
+Full setup for an SPA, with Router, Vuex and Localisation.
+
+### Pjax with Page-Transitions
+
+Page-Transitions with [Barba.js](http://barbajs.org), ideal for CMS-based sites.
 
 ## Roadmap
 
