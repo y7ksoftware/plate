@@ -12,15 +12,8 @@
         "dev": "gulp watch"
     },
     "dependencies": {
-        "axios": "^0.15.3",
-        "bugsnag-js": "^3.0.7",
         "dialog-size": "^1.2.1",
-        "promise-polyfill": "^6.0.2",
-        "sass-mq": "^3.3.1",
-        "vue": "^2.1.4",
-        "vue-i18n": "^4.7.4",
-        "vue-router": "^2.1.1",
-        "vuex": "^2.0.0"
+        "sass-mq": "^3.3.1"
     },
     "devDependencies": {
         "babel-eslint": "^7.1.0",

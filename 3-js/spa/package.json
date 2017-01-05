@@ -1,0 +1,11 @@
+{
+    "dependencies": {
+        "axios": "^0.15.3",
+        "bugsnag-js": "^3.0.7",
+        "promise-polyfill": "^6.0.2",
+        "vue": "^2.1.4",
+        "vue-i18n": "^4.7.4",
+        "vue-router": "^2.1.1",
+        "vuex": "^2.0.0"
+    }
+}
