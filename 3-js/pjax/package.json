@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "axios": "^0.15.3",
+    "barba.js": "^1.0.0",
+    "bugsnag-js": "^3.0.7",
+    "promise-polyfill": "^6.0.2",
+    "vue": "^2.1.4",
+    "vue-i18n": "^4.7.4"
+  }
+}
