@@ -12,7 +12,7 @@
         "installer-paths": {
             "./public/kirby": ["getkirby/kirby"],
             "./public/kirby/toolkit": ["getkirby/toolkit"],
-            "./public/panel": ["getkirby/panel"]
+            "./public/admin": ["getkirby/panel"]
         }
     },
     "autoload": {
