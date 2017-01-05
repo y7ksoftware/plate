@@ -25,6 +25,14 @@ Installs the Laravel Framework.
 2. [Base](base) Files, **excluding:** `composer.json`, `composer.lock` and `.gitignore`
 2. [Laravel](platforms/laravel) Boilerplate Files
 
+### Kirby CMS
+
+Installs Kirby CMS plus boilerplate.
+
+1. [Base](base) Files
+2. [Kirby](platforms/kirby) Boilerplate Files
+3. Kirby app and panel  through composer to the `public` folder.
+
 ### Plain PHP
 
 Plain PHP index file as starting point, with environment Variables loaded.

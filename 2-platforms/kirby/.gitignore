@@ -1,0 +1,18 @@
+# Craft Storage Folder and License
+/craft/config/license.key
+
+# Config
+.env
+
+# npm Modules
+/node_modules
+
+# Vendor Folder
+/vendor
+
+# build folder
+/public/build
+
+# Kirby Folders
+/public/kirby
+/public/panel
