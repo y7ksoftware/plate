@@ -1,6 +1,6 @@
 {
-    "name": "plate",
-    "description": "Y7K Boilerplate",
+    "name": "{name}",
+    "description": "Y7K Project",
     "require": {
         "vlucas/phpdotenv": "^2.0"
     },

@@ -1,7 +1,7 @@
 {
-    "name": "y7k-plate",
+    "name": "{name}",
     "private": true,
-    "description": "Y7K Boilerplate",
+    "description": "Y7K Project",
     "author": {
         "name": "Y7K",
         "url": "http://y7k.com"
