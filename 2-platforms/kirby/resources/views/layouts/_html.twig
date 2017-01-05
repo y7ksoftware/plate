@@ -1,0 +1,101 @@
+
+{# Tell the browser to cache this page (every page) for 2 minutes, this is needed to allow link prefetching. And it also speeds up hopping between pages. #}
+{#
+    {% set expiry = now|date_modify('+2 minute') %}
+    {% header "Cache-Control: max-age=" ~ (expiry.timestamp - now.timestamp) %}
+    {% header "Pragma: cache" %}
+    {% header "Expires: " ~ expiry|date('D, d M Y H:i:s', 'GMT') ~ " GMT" %}
+#}
+
+<!doctype html>
+<!--
+
+__/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
+ _\///\\\____/\\\/__\/////////////\\\_\/\\\_____/\\\//__
+  ___\///\\\/\\\/_______________/\\\/__\/\\\__/\\\//_____
+   _____\///\\\/_______________/\\\/____\/\\\\\\//\\\_____
+    _______\/\\\______________/\\\/______\/\\\//_\//\\\____
+     _______\/\\\____________/\\\/________\/\\\____\//\\\___
+      _______\/\\\__________/\\\/__________\/\\\_____\//\\\__
+       _______\/\\\________/\\\/____________\/\\\______\//\\\_
+        _______\///________\///______________\///________\///__
+
+-->
+<!--[if IE]><html lang="en" class="ie old-ie"><![endif]-->
+<!--[if !IE]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+    <title> Kirby Plate </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="user-scalable=yes, initial-scale=1, width=device-width, height=device-height" />
+    <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+
+    {# Prevent Search Engines from indexing the Staging Site #}
+    {% if kirby.options.appEnv != 'production' %}
+        <meta name="robots" content="noindex,nofollow">
+    {% endif %}
+
+    {# Loading Optimization #}
+    {#<link rel="dns-prefetch" href="//cloudflare.com">#}
+
+    {% block prefetch_resources %}{% endblock %}
+
+    {# SEO #}
+    {% block seo_data %}
+
+    {% endblock %}
+
+
+    {# Favicons #}
+    <link rel="apple-touch-icon" sizes="180x180" href="/build/images/meta/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="/build/images/meta/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/build/images/meta/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/build/images/meta/manifest.json">
+    <link rel="mask-icon" href="/build/images/meta/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="theme-color" content="#ffffff">
+
+
+    {# CSS #}
+
+    {# Block to insert custom, component-specific vendor css files #}
+    {% block include_vendor_css %}{% endblock %}
+
+    {# Vendor CSS from 3rd party plugins #}
+    {#{{ css('/build/css/vendor.css') }}#}
+
+    {# Main CSS #}
+    {{ css('/build/css/main.css') }}
+
+    {# Custom Modernizr checks. Please create custom modernizr build at "https://modernizr.com/download!" #}
+    {# <script type="text/javascript" src="/build/js/vendor/modernizr/modernizr.custom.min.js"></script> #}
+
+</head>
+
+{# Use "page_type" to distinguish each page for JS actions and styling. Use "body_class" for additional classes #}
+<body class="{{ block('body_class') }}">
+
+    {# Main Content #}
+    {% block page %}{% endblock %}
+
+    {# Block right before end of body. e.g. to add modal windows and other overlays #}
+    {% block before_body_ends %}{% endblock %}
+
+    {# Vendor JS libraries #}
+    {# <script type="text/javascript" src="{{ craft.bust.er('/build/js/vendor.js') }}"></script> #}
+
+    {# Block to insert custom, component-specific vendor js files #}
+    {% block include_vendor_js %}{% endblock %}
+
+    {% include 'helpers/frontend-constants.twig' %}
+
+    {# Main JS #}
+    {{ js('/build/js/app.js') }}
+
+    {# Block to insert custom, component-specific js block after all other code #}
+    {% block include_component_js %}{% endblock %}
+
+
+    {% include 'helpers/google-analytics.twig' %}
+
+
+</body>
+</html>

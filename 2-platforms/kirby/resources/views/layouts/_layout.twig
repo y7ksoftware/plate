@@ -1,0 +1,21 @@
+{#
+ # Base layout
+ # ---------------
+ #
+ #}
+
+{% extends "layouts/_html.twig" %}
+
+
+{% block page %}
+    <div class="page-wrapper grid-container">
+
+        <header class="header-page">
+        </header>
+
+        <main class="main">
+            {% block main %}{% endblock %}
+        </main>
+
+    </div>
+{% endblock %}

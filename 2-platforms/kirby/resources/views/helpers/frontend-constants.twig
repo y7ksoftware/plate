@@ -1,0 +1,17 @@
+{#
+ # Frontend Constants
+ # ---------------
+ #
+ # Sends config and .env configs from the backend to JS
+ #
+ #}
+
+<script type="text/javascript">
+
+    window.App = {};
+    window.App.constants = {{ {
+        'APP_DEBUG': kirby.options.debug,
+        'BUGSNAG_API_KEY': kirby.options.bugsnagKeyJs,
+    }|json_encode|raw }};
+
+</script>
