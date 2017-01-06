@@ -48,7 +48,7 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
      #}
     <title>{% if title is defined %}{{ title }} - {% endif %}{{ siteName }}</title> {# <------ Delete Title if using SEO Plugin #}
     {% block seo_data %}
-        {# {{ craft.sproutSeo.optimize() }} #}  {# <------ Uncomment this to enable SproutSEO (enable plugin first) #}
+        {# {% include 'helpers/seo-data' %} #}  {# <------ Uncomment this to enable SproutSEO (enable plugin first) #}
     {% endblock %}
 
 
