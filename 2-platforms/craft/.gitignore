@@ -1,17 +1,20 @@
-# Craft Storage Folder and License
-/craft/config/license.key
-
 # Config
 .env
 
-# npm Modules
-/node_modules
+# Craft License
+/craft/config/license.key
 
-# Vendor Folder
+# Dependencies
+/node_modules
 /vendor
 
-# build folder
+# Build folder
 /public/build
 
+# Upload Folder
+/public/content/*
+!/public/content/.gitkeep
+
+# Storage folder
 /storage/*
 !/storage/.gitkeep
