@@ -23,6 +23,7 @@ return [
         'enableTemplateCaching' => (getenv('TEMPLATE_CACHING')=='true'),
 
         'appEnv' => getenv('APP_ENV'),
+        'piwikSiteId' => getenv('PIWIK_SITE_ID'),
         'googleAnalyticsCode' => getenv('GOOGLE_ANALYTICS_CODE'),
         'googleVerificationCode' => getenv('GOOGLE_VERIFICATION_CODE'),
 
