@@ -26,18 +26,28 @@ class CacheMonsterPlugin extends BasePlugin
 
 	public function getName()
 	{
-		return Craft::t('CacheMonster');
+		return Craft::t('CacheMonster Y7K Fork');
 	}
 
 	public function getVersion()
 	{
-		return '1.0.0';
+		return '1.0.1';
 	}
+
+    public function getSchemaVersion()
+    {
+        return '1.0.0';
+    }
 
 	public function getDeveloper()
 	{
-		return 'Supercool';
+		return 'Supercool/Y7K';
 	}
+
+    public function getDescription()
+    {
+        return 'Y7K Fork replaces publicly accessible crawlandwarm command with console command';
+    }
 
 	public function getDeveloperUrl()
 	{
