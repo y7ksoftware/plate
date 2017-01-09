@@ -57,19 +57,17 @@ $(function() {
             if (textStatus == 'success') {
                 var $hudContents = $();
 
-                this.$form = $('<form/>');
+                this.$form = $('<div/>');
                 $fieldsContainer = $('<div class="fields"/>').appendTo(this.$form);
 
                 $fieldsContainer.html(response.html)
                 Craft.initUiElements($fieldsContainer);
 
-                var $buttonsOuterContainer = $('<div class="footer"/>').appendTo(this.$form);
-
-                this.$spinner = $('<div class="spinner hidden"/>').appendTo($buttonsOuterContainer);
-
-                var $buttonsContainer = $('<div class="buttons right"/>').appendTo($buttonsOuterContainer);
-                $cancelBtn = $('<div class="btn">'+Craft.t('Cancel')+'</div>').appendTo($buttonsContainer);
-                $saveBtn = $('<input class="btn submit" type="submit" value="'+Craft.t('Save')+'"/>').appendTo($buttonsContainer);
+                var $footer = $('<div class="hud-footer"/>').appendTo(this.$form),
+                    $buttonsContainer = $('<div class="buttons right"/>').appendTo($footer);
+                this.$cancelBtn = $('<div class="btn">'+Craft.t('Cancel')+'</div>').appendTo($buttonsContainer);
+                this.$saveBtn = $('<input class="btn submit" type="submit" value="'+Craft.t('Save')+'"/>').appendTo($buttonsContainer);
+                this.$spinner = $('<div class="spinner hidden"/>').appendTo($buttonsContainer);
 
                 $hudContents = $hudContents.add(this.$form);
 
@@ -80,8 +78,10 @@ $(function() {
 
                 this.hud.on('hide', $.proxy(this, 'closeHud'));
 
-                this.addListener($saveBtn, 'click', 'save');
-                this.addListener($cancelBtn, 'click', 'closeHud');
+                Garnish.$bod.append(response.footerJs);
+
+                this.addListener(this.$saveBtn, 'click', 'save');
+                this.addListener(this.$cancelBtn, 'click', 'closeHud');
             }
         },
 
@@ -90,7 +90,7 @@ $(function() {
 
             this.$spinner.removeClass('hidden');
 
-            var data = this.$form.serialize()
+            var data = this.hud.$body.serialize();
 
             Craft.postActionRequest('cpNav/layout/save', data, $.proxy(function(response, textStatus) {
                 this.$spinner.addClass('hidden');
@@ -154,19 +154,17 @@ $(function() {
             if (textStatus == 'success') {
                 var $hudContents = $();
 
-                this.$form = $('<form/>');
+                this.$form = $('<div/>');
                 $fieldsContainer = $('<div class="fields"/>').appendTo(this.$form);
 
                 $fieldsContainer.html(response.html)
                 Craft.initUiElements($fieldsContainer);
 
-                var $buttonsOuterContainer = $('<div class="footer"/>').appendTo(this.$form);
-
-                this.$spinner = $('<div class="spinner hidden"/>').appendTo($buttonsOuterContainer);
-
-                var $buttonsContainer = $('<div class="buttons right"/>').appendTo($buttonsOuterContainer);
-                $cancelBtn = $('<div class="btn">'+Craft.t('Cancel')+'</div>').appendTo($buttonsContainer);
-                $saveBtn = $('<input class="btn submit" type="submit" value="'+Craft.t('Create')+'"/>').appendTo($buttonsContainer);
+                var $footer = $('<div class="hud-footer"/>').appendTo(this.$form),
+                    $buttonsContainer = $('<div class="buttons right"/>').appendTo($footer);
+                this.$cancelBtn = $('<div class="btn">'+Craft.t('Cancel')+'</div>').appendTo($buttonsContainer);
+                this.$saveBtn = $('<input class="btn submit" type="submit" value="'+Craft.t('Save')+'"/>').appendTo($buttonsContainer);
+                this.$spinner = $('<div class="spinner hidden"/>').appendTo($buttonsContainer);
 
                 $hudContents = $hudContents.add(this.$form);
 
@@ -177,8 +175,10 @@ $(function() {
 
                 this.hud.on('hide', $.proxy(this, 'closeHud'));
 
-                this.addListener($saveBtn, 'click', 'save');
-                this.addListener($cancelBtn, 'click', 'closeHud');
+                Garnish.$bod.append(response.footerJs);
+
+                this.addListener(this.$saveBtn, 'click', 'save');
+                this.addListener(this.$cancelBtn, 'click', 'closeHud');
             }
         },
 
@@ -187,7 +187,7 @@ $(function() {
 
             this.$spinner.removeClass('hidden');
 
-            var data = this.$form.serialize()
+            var data = this.hud.$body.serialize();
 
             Craft.postActionRequest('cpNav/layout/new', data, $.proxy(function(response, textStatus) {
                 this.$spinner.addClass('hidden');
