@@ -26,9 +26,13 @@ var config = {
     browserSync: {
         proxy: process.env.APP_URL,
         notify: false,
+        open: false,
         files: [
-            Elixir.config.publicPath + '/**/*',
-            Elixir.config.viewPath + '/**/*.{twig,php}'
+            Elixir.config.appPath + '/**/*.php',
+            Elixir.config.get('public.css.outputFolder') + '/**/*.css',
+            Elixir.config.get('public.js.outputFolder') + '/**/*.js',
+            Elixir.config.get('public.versioning.buildFolder') + '/rev-manifest.json',
+            Elixir.config.viewPath + '/**/*.{php,twig}'
         ]
     },
 
