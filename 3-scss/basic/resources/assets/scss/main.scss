@@ -30,13 +30,9 @@
  * Images...............Base image styles.
  * Tables...............Simple table styles.
  *
+ * MODULES
+ * Modules..............Module encapsulate independent parts of the page
  *
- * META
- * tbd..............An example placeholder
- *
- *
- * COMPONENTS
- * Buttons..............An example button component
  *
  * UTILITIES
  * Clearfix.............Bind our clearfix onto a utility class.
@@ -52,37 +48,34 @@
 @import "dialog-size/dist/dialog-size";
 
 // SETTINGS
+@import "settings/breakpoints";
+@import "settings/colors";
 @import "settings/core";
+@import "settings/easing";
 @import "settings/grid";
 @import "settings/sizes";
 @import "settings/spacing";
 @import "settings/typo";
-@import "settings/colors";
-@import "settings/breakpoints";
-@import "settings/easing";
 
 // TOOLS
-@import "tools/clearfix";
-@import "tools/font-size";
-@import "tools/fluid-type";
-@import "tools/hidden";
 @import "sass-mq/mq";
+@import "tools/clearfix";
+@import "tools/fluid-type";
+@import "tools/font-size";
+@import "tools/hidden";
 
 // GENERIC
 @import "generic/box-sizing";
 @import "generic/normalize";
-@import "generic/reset";
 @import "generic/print";
+@import "generic/reset";
 @import "generic/shared";
 
 // ELEMENTS
-@import "elements/page";
 @import "elements/headings";
 @import "elements/images";
+@import "elements/page";
 @import "elements/tables";
-
-// COMPONENTS
-//@import "components/index";
 
 // MODULES
 //@import "modules/index";
@@ -93,9 +86,9 @@
 
 // UTILITIES
 @import "utilities/clearfix";
-@import "utilities/spacing";
-@import "utilities/hide";
 @import "utilities/headings";
+@import "utilities/hide";
+@import "utilities/spacing";
 
 // SHAME ON YOU
 @import "hacks/shame";

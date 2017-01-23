@@ -7,15 +7,17 @@
 */
 
 $space-small: (
-        bp-fallback: 5px,
+        bp-fallback: 10px,
         bp-phone: 10px,
         bp-tablet: 20px,
+        bp-desktop: 20px,
 );
 
 $space-medium: (
-        bp-fallback: 10px,
-        bp-phone: 15px,
-        bp-tablet: 30px,
+        bp-fallback: 20px,
+        bp-phone: 20px,
+        bp-tablet: 40px,
+        bp-desktop: 40px,
 );
 
 $generate-spacing-classes: (
