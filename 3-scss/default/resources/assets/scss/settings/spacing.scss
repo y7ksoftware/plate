@@ -1,0 +1,24 @@
+/* ========================================================================
+   SPACING
+   ======================================================================== */
+
+/**
+* TODO
+*/
+
+$space-small: (
+        bp-fallback: 5px,
+        bp-phone: 10px,
+        bp-tablet: 20px,
+);
+
+$space-medium: (
+        bp-fallback: 10px,
+        bp-phone: 15px,
+        bp-tablet: 30px,
+);
+
+$generate-spacing-classes: (
+        small: $space-small,
+        medium: $space-medium,
+);

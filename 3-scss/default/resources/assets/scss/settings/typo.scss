@@ -1,0 +1,28 @@
+/* ========================================================================
+   TYPO
+   ======================================================================== */
+
+$font-title: Helvetica, Arial, sans-serif;
+$font-text: Helvetica, Arial, sans-serif;
+
+$font-size-h1: size(1);
+$font-size-h2: size(0.8);
+$font-size-h3: size(0.6);
+$font-size-h4: size(0.4);
+$font-size-h5: size(0.2);
+$font-size-h6: size(0);
+
+
+/*
+Make your own mixins for font-sizes if needed
+ */
+
+@mixin font-size-small() {
+
+    @include font-size(size(small));
+
+    @include mq($from: bp-tablet) {
+        @include font-size(size(medium));
+    }
+
+}
