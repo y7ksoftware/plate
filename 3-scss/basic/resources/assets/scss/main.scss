@@ -56,7 +56,6 @@
 @import "settings/grid";
 @import "settings/sizes";
 @import "settings/spacing";
-@import "settings/typo";
 
 // TOOLS
 @import "tools/aspect-ratio";
@@ -67,6 +66,9 @@
 @import "tools/hidden";
 @import "tools/object-fit";
 @import "tools/rem";
+
+// Typo relies on tools
+@import "settings/typo";
 
 // GENERIC
 @import "generic/box-sizing";
