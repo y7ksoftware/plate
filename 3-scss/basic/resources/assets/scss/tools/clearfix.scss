@@ -11,6 +11,8 @@
 
 @mixin clearfix() {
 
+    clear: both;
+
     &:after {
         content: "" !important;
         display: block !important;
