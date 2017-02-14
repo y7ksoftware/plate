@@ -1,7 +1,4 @@
 import Barba from 'barba.js';
-import Vue from 'vue';
-
-import DemoModule from 'modules/DemoModule.vue';
 
 export default Barba.BaseView.extend({
 
@@ -9,9 +6,6 @@ export default Barba.BaseView.extend({
 
     onEnter() {
         // The new Container is ready and attached to the DOM.
-
-        // Components & Modules
-        new Vue(DemoModule);
     },
 
     onEnterCompleted() {

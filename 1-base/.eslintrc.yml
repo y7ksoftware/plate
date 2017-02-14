@@ -19,7 +19,6 @@
       - vars: all
         args: none
     no-console: 1
-    semi: 1
     comma-dangle:
         - 1
         - "only-multiline"
@@ -35,7 +34,7 @@
   globals:
     $: false,
     require: false,
-    Promise: false,
+    Promise: true,
 
   env:
     browser: true

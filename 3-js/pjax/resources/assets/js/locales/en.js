@@ -1,5 +1,5 @@
 export default {
 
-    message: 'Guten Bonjour!'
+    message: 'Good morning y\'all!'
 
 }

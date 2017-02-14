@@ -1,45 +1,44 @@
 /* global _paq */
 import Barba from 'barba.js';
+import {mountModules, unMountModules} from 'utils/modules';
+import BaseTransition from 'transitions/base';
 
+// Views
 import Homepage from 'transitions/views/home';
+
+// Modules
+import DemoModule from 'modules/DemoModule.vue';
+
 
 // Initialize Views
 Homepage.init();
 
 // Track PageView
 Barba.Dispatcher.on('newPageReady', (currentStatus, oldStatus, container) => {
-    console.log('page is ready');
-    if(typeof(_paq) !== 'undefined') {
+
+    // Load all modules here
+    Barba.BaseView.mountedModules = mountModules([
+        DemoModule
+    ], container);
+
+    // Track Pageview
+    if (typeof(_paq) !== 'undefined') {
         _paq.push(['setCustomUrl', currentStatus.url]);
         _paq.push(['trackPageView']);
     }
+
 });
 
 
-Barba.Dispatcher.on('linkClicked', function(currentStatus, oldStatus, container){
-    console.log('link clicked');
+Barba.Dispatcher.on('initStateChange', function (currentStatus) {
+    // Unmount Modules
+    unMountModules(Barba.BaseView.mountedModules);
 });
 
-
-let transition = Barba.BaseTransition.extend({
-    onEnter(){
-        console.log('bonjour transition');
-    },
-
-    start() {
-        this.newContainerLoading.then(this.finish.bind(this));
-    },
-
-    finish() {
-        console.log('finish main transition')
-        document.body.scrollTop = 0;
-        this.done();
-    }
-});
 
 // Main page transition
-Barba.Pjax.getTransition = function() {
-    return transition;
+Barba.Pjax.getTransition = function () {
+    return BaseTransition;
 };
 
 export {Barba};

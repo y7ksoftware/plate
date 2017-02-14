@@ -23,12 +23,12 @@ class AntiAllEntriesPlugin extends BasePlugin
 
 	public function getDescription()
 	{
-		return Craft::t('Removes the All Entries item from Craft\'s Entries view.');
+		return Craft::t('Removes the All Entries source from Craft\'s Entries view and renames Singles source to Pages.');
 	}
 
     public function getDocumentationUrl()
     {
-        return 'https://github.com/harry-harrison/antiallentries/blob/master/README.md';
+        return 'https://github.com/harry-harrison/antiallentries/';
     }
 
     public function getReleaseFeedUrl()
@@ -38,12 +38,12 @@ class AntiAllEntriesPlugin extends BasePlugin
 
     public function getVersion()
     {
-        return '1.0.1';
+        return '1.1.1';
     }
 
     public function getSchemaVersion()
     {
-        return '1.0.1';
+        return '1.0.0';
     }
 
     public function getDeveloper()
@@ -61,11 +61,33 @@ class AntiAllEntriesPlugin extends BasePlugin
         return false;
     }
 
+    public function getSettingsHtml()
+    {
+        return craft()->templates->render('antiallentries/settings', array(
+            'settings' => $this->getSettings()
+        ));
+    }
+
+    protected function defineSettings()
+    {
+        return array(
+            'singlesLabel' => array(AttributeType::String, 'default' => 'Singles', 'required' => true),
+            'showAllEntries' => array(AttributeType::Bool, 'default' => 0),
+        );
+    }
+
     public function modifyEntrySources(&$sources, $context)
     {
+        $settings = $this->getSettings();
+
         if ($context == 'index')
         {
-            unset($sources['*']);
+            // Remove All Entries
+            if ($settings->showAllEntries == 0) {
+                unset($sources['*']);
+            }
+            // Rename Singles to singlesLabel
+            $sources['singles']['label'] = $settings->singlesLabel;
         }
     }
 }
