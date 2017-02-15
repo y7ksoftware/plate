@@ -1,12 +1,10 @@
-import Barba from 'barba.js';
-
 import {startBaseTransition, endBaseTransition} from 'transitions/timelines/base';
 
-export default Barba.BaseTransition.extend({
+let BaseTransition = Barba.BaseTransition.extend({
 
     start() {
 
-        // window.dispatchEvent(new Event('pageTransitionStarted'));
+        window.dispatchEvent(new Event('pageTransitionStarted'));
 
         // Start loading the content
         // Start the  animation
@@ -21,7 +19,7 @@ export default Barba.BaseTransition.extend({
 
     finish() {
 
-        // done() removes the old container and sets the visibility of the new container to visible
+        // done() removes the old container and sets the visibility of the new container
         this.done();
 
         // Scroll to page top
@@ -31,9 +29,11 @@ export default Barba.BaseTransition.extend({
 
         endBaseTransition(this.newContainer)
             .then(() => {
-                // window.dispatchEvent(new Event('pageTransitionCompleted'));
+                window.dispatchEvent(new Event('pageTransitionCompleted'))
             })
 
     },
 
-});
+})
+
+export {BaseTransition};

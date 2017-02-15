@@ -1,4 +1,5 @@
-import {Vue} from 'boot';
+// Init app
+require('boot')
 
 document.addEventListener("DOMContentLoaded", () => {
 

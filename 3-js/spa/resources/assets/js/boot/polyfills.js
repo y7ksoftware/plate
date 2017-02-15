@@ -1,6 +1,5 @@
-import Promise from 'promise-polyfill';
 
-// To add to window
+// Polyfill Promise
 if (!window.Promise) {
-    window.Promise = Promise;
+    window.Promise = require('promise-polyfill')
 }

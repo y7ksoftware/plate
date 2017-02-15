@@ -1,30 +1,56 @@
-// First thing, run the polyfills
-import 'boot/polyfills';
-import {init as initErrorhandling} from 'boot/bugsnag';
-
-// Load Vue and extensions
-import Vue from 'vue';
-import VueI18n from 'vue-i18n';
-import axios from 'axios';
-
-import store from 'store';
-import router from 'router';
-
 import * as config from 'config';
-import locales_en from 'locales/en';
 
-initErrorhandling();
+// Load Bugsang
+require('boot/bugsnag')
 
-axios.defaults.baseURL = config.API_PREFIX;
-// axios.defaults.headers.common['Authorization'] = 'Bearer ' + config.API_TOKEN;
 
-Vue.use(VueI18n);
+// First thing, run the polyfills
+require('boot/polyfills')
 
-// Load the Language Data
-Vue.config.lang = 'en';
-Vue.locale('en', locales_en);
+
+// Vue
+window.Vue = require('vue')
 
 Vue.config.silent = !config.APP_DEBUG;
 Vue.config.devtools = config.APP_DEBUG;
 
-export { Vue, store, router };
+// Change vue delimiters
+// Vue.mixin({
+//     delimiters: ['${', '}']
+// })
+
+
+// Init Localisation
+// Vue.use(require('vue-i18n'))
+// Vue.config.lang = 'en';
+// Vue.locale('en', require('locales/en').default);
+
+
+// Store
+let store = require('store').store
+
+
+// Router
+let router = require('router').router
+
+
+// Lazyizes
+require('lazysizes')
+require('lazysizes/plugins/object-fit/ls.object-fit.min')
+
+
+// Axios
+window.axios = require('axios')
+
+axios.defaults.baseURL = config.API_PREFIX;
+axios.defaults.headers.common = {
+    // 'Authorization': 'Bearer ' + config.API_TOKEN,
+    // 'X-CSRF-TOKEN': window.constants.csrfToken,
+    'X-Requested-With': 'XMLHttpRequest'
+};
+
+export {
+    store,
+    router
+}
+

@@ -1,39 +1,50 @@
+import * as config from 'config';
+
+// Load Bugsang
+require('boot/bugsnag')
+
+
 // First thing, run the polyfills
-import 'boot/polyfills'
-import {init as initErrorhandling} from 'boot/bugsnag'
+require('boot/polyfills')
 
-// Load Vue and extensions
-import Vue from 'vue'
-import VueI18n from 'vue-i18n'
-import axios from 'axios'
 
-import {Barba} from 'transitions'
+// Vue
+window.Vue = require('vue')
 
-import * as config from 'config'
-import locales_en from 'locales/en'
-
-// Lazyizes
-import 'lazysizes'
-import 'lazysizes/plugins/object-fit/ls.object-fit.min'
-
-initErrorhandling()
-
-axios.defaults.baseURL = config.API_PREFIX
-// axios.defaults.headers.common['Authorization'] = 'Bearer ' + config.API_TOKEN
-
-Vue.use(VueI18n)
+Vue.config.silent = !config.APP_DEBUG;
+Vue.config.devtools = config.APP_DEBUG;
 
 // Change vue delimiters
 // Vue.mixin({
 //     delimiters: ['${', '}']
 // })
 
-// Load the Language Data
-Vue.config.lang = 'en'
-Vue.locale('en', locales_en)
+// Init the store
+// Vue.mixin({store: require('store').store})
 
-Vue.config.silent = !config.APP_DEBUG
-Vue.config.devtools = config.APP_DEBUG
+// Init Localisation
+// Vue.use(require('vue-i18n'))
+// Vue.config.lang = 'en';
+// Vue.locale('en', require('locales/en').default);
 
-export {Barba}
+
+// Transitions / Barba
+require('transitions')
+
+
+// Lazyizes
+require('lazysizes')
+require('lazysizes/plugins/object-fit/ls.object-fit.min')
+
+
+// Axios
+window.axios = require('axios')
+
+axios.defaults.baseURL = config.API_PREFIX;
+axios.defaults.headers.common = {
+    // 'Authorization': 'Bearer ' + config.API_TOKEN,
+    // 'X-CSRF-TOKEN': window.constants.csrfToken,
+    'X-Requested-With': 'XMLHttpRequest'
+};
+
 

@@ -1,25 +1,39 @@
+import * as config from 'config'
+
+// Load Bugsang
+require('boot/bugsnag')
+
+
 // First thing, run the polyfills
-import 'boot/polyfills';
-import {init as initErrorhandling} from 'boot/bugsnag';
+require('boot/polyfills')
 
-// Load Vue and extensions
-import Vue from 'vue';
-import axios from 'axios';
 
-import * as config from 'config';
+// Vue
+window.Vue = require('vue')
 
-initErrorhandling();
-
-axios.defaults.baseURL = config.API_PREFIX;
-// axios.defaults.headers.common['Authorization'] = 'Bearer ' + config.API_TOKEN;
+Vue.config.silent = !config.APP_DEBUG
+Vue.config.devtools = config.APP_DEBUG
 
 // Change vue delimiters
 // Vue.mixin({
 //     delimiters: ['${', '}']
 // })
 
-Vue.config.silent = !config.APP_DEBUG;
-Vue.config.devtools = config.APP_DEBUG;
+// Init the store
+// Vue.mixin({store: require('store').store})
 
-export {Vue};
 
+// Lazyizes
+require('lazysizes')
+require('lazysizes/plugins/object-fit/ls.object-fit.min')
+
+
+// Axios
+window.axios = require('axios')
+
+axios.defaults.baseURL = config.API_PREFIX;
+axios.defaults.headers.common = {
+    // 'Authorization': 'Bearer ' + config.API_TOKEN,
+    // 'X-CSRF-TOKEN': window.constants.csrfToken,
+    'X-Requested-With': 'XMLHttpRequest'
+}

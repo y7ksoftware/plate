@@ -1,4 +1,3 @@
-import Vue from 'vue';
 
 export function mountModules(modules, container) {
 

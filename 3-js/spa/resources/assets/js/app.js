@@ -1,8 +1,4 @@
-import {
-    Vue,
-    store,
-    router
-} from 'boot';
+import { store, router } from 'boot';
 import App from 'components/App.vue';
 
 new Vue({

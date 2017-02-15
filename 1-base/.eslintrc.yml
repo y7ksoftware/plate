@@ -35,6 +35,9 @@
     $: false,
     require: false,
     Promise: true,
+    Vue: true,
+    axios: true,
+    Barba: true
 
   env:
     browser: true
