@@ -19,7 +19,7 @@ require('boot')
 document.addEventListener("DOMContentLoaded", () => {
     Barba.Pjax.init()
     Barba.Prefetch.init()
-});
+})
 
 
 /*
@@ -29,5 +29,5 @@ require('boot')
 
 document.addEventListener("DOMContentLoaded", () => {
     // Start App here ..
-});
+})
 

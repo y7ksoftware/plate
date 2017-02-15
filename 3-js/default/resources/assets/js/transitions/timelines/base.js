@@ -1,9 +1,9 @@
-// import {TimelineMax} from 'vendor/gsap/TweenMax.min';
+// import {TimelineMax} from 'vendor/gsap/TweenMax.min'
 
 export function startBaseTransition(oldContainer) {
 
 
-    // let timeline = new TimelineMax({pause: true});
+    // let timeline = new TimelineMax({pause: true})
 
     return new Promise((resolve) => {
 
@@ -24,7 +24,7 @@ export function startBaseTransition(oldContainer) {
 
 export function endBaseTransition(newContainer) {
 
-    // let timeline = new TimelineMax({pause: true});
+    // let timeline = new TimelineMax({pause: true})
 
     return new Promise((resolve) => {
 

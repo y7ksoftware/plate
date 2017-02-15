@@ -1,4 +1,3 @@
-import Barba from 'barba.js';
 
 export default Barba.BaseView.extend({
 
@@ -19,5 +18,5 @@ export default Barba.BaseView.extend({
     onLeaveCompleted() {
         // The Container has just been removed from the DOM.
     }
-});
+})
 

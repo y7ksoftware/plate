@@ -16,4 +16,4 @@ const router = new window.VueRouter({
 
 // router.afterEach((to, from) => {})
 
-export default router;
+export default router
