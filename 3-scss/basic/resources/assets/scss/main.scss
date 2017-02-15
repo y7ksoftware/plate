@@ -56,6 +56,7 @@
 @import "settings/grid";
 @import "settings/sizes";
 @import "settings/spacing";
+@import "settings/typo";
 
 // TOOLS
 @import "tools/aspect-ratio";
@@ -67,17 +68,16 @@
 @import "tools/object-fit";
 @import "tools/rem";
 
-// Typo relies on tools
-@import "settings/typo";
-
 // GENERIC
 @import "generic/box-sizing";
 @import "generic/normalize";
 @import "generic/print";
 @import "generic/reset";
 @import "generic/shared";
+@import "generic/fonts";
 
 // ELEMENTS
+@import "elements/general";
 @import "elements/headings";
 @import "elements/images";
 @import "elements/page";
@@ -91,7 +91,6 @@
 
 // ANIMATIONS
 //@import "animations/index";
-
 
 // UTILITIES
 @import "utilities/clearfix";

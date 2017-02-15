@@ -1,0 +1,21 @@
+/* ==========================================================================
+   #GENERAL
+   ========================================================================== */
+
+html, body {
+    //overflow-y: hidden;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
