@@ -19,8 +19,26 @@ Vue.config.devtools = config.APP_DEBUG
 //     delimiters: ['${', '}']
 // })
 
-// Init the store
-// Vue.mixin({ store: require('store').default })
+
+// Init Localisation
+// Vue.use(require('vue-i18n'))
+// Vue.config.lang = 'en'
+// Vue.locale('en', require('locales/en').default)
+
+
+// Transitions / Barba
+require('transitions')
+
+
+// Store
+let store = require('store').default
+
+// Bind store to all Vue Instances
+// Vue.mixin({ store })
+
+
+// Router
+let router = require('router').default
 
 
 // Lazyizes
@@ -31,9 +49,15 @@ require('lazysizes/plugins/object-fit/ls.object-fit.min')
 // Axios
 window.axios = require('axios')
 
-axios.defaults.baseURL = config.API_PREFIX;
+axios.defaults.baseURL = config.API_PREFIX
 axios.defaults.headers.common = {
     // 'Authorization': 'Bearer ' + config.API_TOKEN,
     // 'X-CSRF-TOKEN': window.constants.csrfToken,
     'X-Requested-With': 'XMLHttpRequest'
 }
+
+export {
+    store,
+    router
+}
+
