@@ -27,11 +27,11 @@ Vue.config.devtools = config.APP_DEBUG;
 
 
 // Store
-let store = require('store').store
+let store = require('store').default
 
 
 // Router
-let router = require('router').router
+let router = require('router').default
 
 
 // Lazyizes

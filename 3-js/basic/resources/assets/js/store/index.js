@@ -46,11 +46,9 @@ const getters = {
     evenOrOdd: state => state.count % 2 === 0 ? 'even' : 'odd'
 }
 
-let store = new window.Vuex.Store({
+export default new window.Vuex.Store({
     state,
     getters,
     actions,
     mutations
 })
-
-export {store}

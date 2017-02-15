@@ -1,3 +1,4 @@
+
 window.VueRouter = require('vue-router')
 
 const routes = [
@@ -15,4 +16,4 @@ const router = new window.VueRouter({
 
 // router.afterEach((to, from) => {})
 
-export  {router};
+export default router;

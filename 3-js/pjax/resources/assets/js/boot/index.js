@@ -20,7 +20,7 @@ Vue.config.devtools = config.APP_DEBUG;
 // })
 
 // Init the store
-// Vue.mixin({store: require('store').store})
+// Vue.mixin({ store: require('store').default })
 
 // Init Localisation
 // Vue.use(require('vue-i18n'))
