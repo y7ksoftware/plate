@@ -49,17 +49,10 @@ Plain static HTML file, for static webhosts.
 
 ## Javascript
 
-### Basic
+### Default
 
-A config file, Vue.js and a simple `app.js`, no fancy stuff.
-
-### Single Page App
-
-Full setup for an SPA, with Router, Vuex and Localisation.
-
-### Pjax with Page-Transitions
-
-Page-Transitions with [Barba.js](http://barbajs.org), ideal for CMS-based sites.
+A Full setup with Router, Vuex and Localisation, as well as Page-Transitions with [Barba.js](http://barbajs.org).
+Ideal for CMS-based sites and Singe Page Applications – just remove the parts you don't need!
 
 ## Roadmap
 
