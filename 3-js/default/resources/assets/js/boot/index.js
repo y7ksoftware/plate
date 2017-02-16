@@ -26,8 +26,8 @@ Vue.config.devtools = config.APP_DEBUG
 // Vue.locale('en', require('locales/en').default)
 
 
-// Transitions / Barba
-require('transitions')
+// Enable Transitions / Barba
+// require('transitions')
 
 
 // Store
@@ -49,7 +49,7 @@ require('lazysizes/plugins/object-fit/ls.object-fit.min')
 // Axios
 window.axios = require('axios')
 
-axios.defaults.baseURL = config.API_PREFIX
+// axios.defaults.baseURL = config.API_PREFIX
 axios.defaults.headers.common = {
     // 'Authorization': 'Bearer ' + config.API_TOKEN,
     // 'X-CSRF-TOKEN': window.constants.csrfToken,
