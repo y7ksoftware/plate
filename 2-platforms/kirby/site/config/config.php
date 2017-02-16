@@ -38,6 +38,7 @@ c::set('panel.install', c::get('debug', false));
 
 c::set('bugsnagKeyJs', getenv('BUGSNAG_API_KEY_JS'));
 c::set('googleAnalyticsCode', getenv('GOOGLE_ANALYTICS_CODE'));
+c::set('piwikSiteId', getenv('PIWIK_SITE_ID'));
 
 
 c::set('twig', true);

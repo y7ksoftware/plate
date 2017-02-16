@@ -54,8 +54,9 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
     {# Main CSS #}
     {{ css('/build/css/main.css') }}
 
-</head>
+    {% include 'helpers/piwik-analytics.twig' %}
 
+</head>
 <body>
 
     {# Main Content #}

@@ -35,6 +35,8 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
 <!--    <link rel="stylesheet" type="text/css" href="build/css/vendor.css">-->
     <link rel="stylesheet" type="text/css" href="build/css/main.css">
 
+    @include('helpers/piwik-analytics')
+
 </head>
 <body>
 
@@ -42,8 +44,11 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
 
 <div id="app"></div>
 
-<!--<script src="build/js/vendor.js" type="text/javascript"></script>-->
-<script src="build/js/app.js" type="text/javascript"></script>
+{{ mix('/build/js/manifest.js') }}
+{{ mix('/build/js/vendor.js') }}
+{{ mix('/build/js/app.js') }}
+
+@include('helpers/google-analytics')
 
 </body>
 </html>
