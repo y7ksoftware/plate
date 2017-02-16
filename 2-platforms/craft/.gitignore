@@ -10,6 +10,7 @@
 
 # Build folder
 /public/build
+mix-manifest.json
 
 # Upload Folder
 /public/content/*
