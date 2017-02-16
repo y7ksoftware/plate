@@ -52,7 +52,7 @@ window.axios = require('axios')
 // axios.defaults.baseURL = config.API_PREFIX
 axios.defaults.headers.common = {
     // 'Authorization': 'Bearer ' + config.API_TOKEN,
-    // 'X-CSRF-TOKEN': window.constants.csrfToken,
+    // 'X-CSRF-TOKEN': window.csrfToken,
     'X-Requested-With': 'XMLHttpRequest'
 }
 

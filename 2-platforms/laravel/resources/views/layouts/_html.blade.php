@@ -44,6 +44,8 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
 
 <div id="app"></div>
 
+@include('helpers/globals')
+
 {{ mix('/build/js/manifest.js') }}
 {{ mix('/build/js/vendor.js') }}
 {{ mix('/build/js/app.js') }}
