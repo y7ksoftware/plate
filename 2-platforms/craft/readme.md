@@ -22,20 +22,20 @@ Changelog: See [changelog.md](changelog.md)
 
 ## Favicons
 
-- Replace all Favicons in `resources/assets/images/meta/`
+- Replace all Favicons in `public/assets/images/meta/`
 - Replace `favicon.ico` and `browserconfig.xml` in `public/` and `public/de/` 
-- Use correct file-paths in `browserconfig.xml` and `resources/assets/images/meta/manifest.json` 
+- Use correct file-paths in `browserconfig.xml` and `public/assets/images/meta/manifest.json` 
 
 ## Development
 
 ### Local Server
 
 You can use [Laravel Homestead](https://laravel.com/docs/master/homestead) as development server. Please read [these instructions](https://medium.com/@didgeoridoo/how-to-get-craft-cms-2-5-running-on-a-laravel-homestead-3-0-x-vagrant-box-556fe57ff807#.siftkm7kt) on how to set it up to get Craft running on it.
-Run `gulp watch` to build and watch your files, while livereloading the browser via browser-sync. Visit [http://localhost:3000](http://localhost:3000) to view the page. It works as a proxy to your dev domain specified in the `.env` file. Use your original url for going to the CMS Backend tough.
+Run `npm run watch` to build and watch your files, while livereloading the browser via browser-sync. Visit [http://localhost:3000](http://localhost:3000) to view the page. It works as a proxy to your dev domain specified in the `.env` file. Use your original url for going to the CMS Backend tough.
 
 ### Build Assets
 
-- Run `gulp`  for development build of all assets (non-minified)
+- Run `npm run dev`  for development build of all assets (non-minified)
 - Run `npm run prod` for production build (minified sources and minified images) 
 
 ### Localtunnel
