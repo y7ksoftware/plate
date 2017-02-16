@@ -1,33 +1,23 @@
-/*
-SPA
- */
-import { store, router } from 'boot'
-import App from 'components/App.vue'
-
-new Vue({
-    router,
-    store,
-    render: h => h(App)
-}).$mount('#app')
-
-
-/*
-PJAX
- */
 require('boot')
 
 document.addEventListener("DOMContentLoaded", () => {
-    Barba.Pjax.init()
-    Barba.Prefetch.init()
+    // Enable when using Pagetransitions
+    // Barba.Pjax.init()
+    // Barba.Prefetch.init()
 })
 
 
 /*
-Default
+ * Single Page Applications be like this instead
  */
-require('boot')
 
-document.addEventListener("DOMContentLoaded", () => {
-    // Start App here ..
-})
+/*
+    import { store, router } from 'boot'
+    import App from 'components/App.vue'
 
+    new Vue({
+        router,
+        store,
+        render: h => h(App)
+    }).$mount('#app')
+*/
