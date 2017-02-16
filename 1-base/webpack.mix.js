@@ -25,4 +25,4 @@ mix
     .extract(['vue', 'barba.js', 'bugsnag-js', 'lazysizes', 'axios'])
 
     // Build Stylesheets
-    .sass('resources/assets/scss/main.scss', 'public/build/css', config.sass)
+    .sass('resources/assets/scss/main.scss', 'public/build/css', config.sass);
