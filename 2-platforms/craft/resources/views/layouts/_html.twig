@@ -39,15 +39,16 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
 
     {# Loading Optimization #}
     {#<link rel="dns-prefetch" href="//cloudflare.com">#}
-
-    {% block prefetch_resources %}{% endblock %}
+    {{ block('prefetch_resources') }}
 
     {#
      # SEO:
      # Overwrite this Block on Suppages to add page-specific SEO data with the "seo-data.twig" helper
      #}
-    <title>{% if title is defined %}{{ title }} - {% endif %}{{ siteName }}</title> {# <------ Delete Title if using SEO Plugin #}
     {% block seo_data %}
+        {# Delete the following Title if your are using the SEO Plugin #}
+        <title>{% if title is defined %}{{ title }} - {% endif %}{{ siteName }}</title>
+
         {# {% include 'helpers/seo-data' %} #}  {# <------ Uncomment this to enable SproutSEO (enable plugin first) #}
     {% endblock %}
 
@@ -66,7 +67,7 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
     {{ getHeadHtml() }}
 
     {# Block to insert custom, component-specific vendor css files #}
-    {% block include_vendor_css %}{% endblock %}
+    {{ block('include_vendor_css') }}
 
     {# Load Craft Bust Macro #}
     {% import "helpers/craft-bust.twig" as bust %}
@@ -77,39 +78,34 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
     {# Main CSS #}
     <link rel="stylesheet" type="text/css" href="{{ bust.er('/build/css/main.css') }}">
 
-    {# Custom Modernizr checks. Please create custom modernizr build at "https://modernizr.com/download!" #}
-    {# <script type="text/javascript" src="/build/js/vendor/modernizr/modernizr.custom.min.js"></script> #}
-
     {# Y7K Analytics #}
     {% include "helpers/piwik-analytics.twig" %}
 
 </head>
 
-{# Use "page_type" to distinguish each page for JS actions and styling. Use "body_class" for additional classes #}
-<body class="{{ block('body_class') }}">
+<body>
 
     {# Main Content #}
-    {% block page %}{% endblock %}
+    {{ block('page') }}
 
     {# Block right before end of body. e.g. to add modal windows and other overlays #}
-    {% block before_body_ends %}{% endblock %}
-
-    {# Vendor JS libraries #}
-    {# <script type="text/javascript" src="{{ craft.bust.er('/build/js/vendor.js') }}"></script> #}
+    {{ block('before_body_ends') }}
 
     {# All footer stuff added by plugins #}
     {{ getFootHtml() }}
 
     {# Block to insert custom, component-specific vendor js files #}
-    {% block include_vendor_js %}{% endblock %}
+    {{ block('include_vendor_js') }}
 
     {% include 'helpers/frontend-constants.twig' %}
 
-    {# Main JS #}
+    {# Javascript #}
+    <script type="text/javascript" src="{{ bust.er('/build/js/manifest.js') }}"></script>
+    <script type="text/javascript" src="{{ bust.er('/build/js/vendor.js') }}"></script>
     <script type="text/javascript" src="{{ bust.er('/build/js/app.js') }}"></script>
 
     {# Block to insert custom, component-specific js block after all other code #}
-    {% block include_component_js %}{% endblock %}
+    {{ block('include_component_js') }}
 
 
     {% include 'helpers/google-analytics' %}

@@ -48,8 +48,8 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
     <meta name="theme-color" content="#ffffff">
 
 
-<!--    <link rel="stylesheet" type="text/css" href="build/css/vendor.css">-->
-    <link rel="stylesheet" type="text/css" href="build/css/main.css">
+<!--    <link rel="stylesheet" type="text/css" href="/build/css/vendor.css">-->
+    <link rel="stylesheet" type="text/css" href="/build/css/main.css">
 
 </head>
 <body>
@@ -68,8 +68,10 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
     }
 </script>
 
-<!--<script src="build/js/vendor.js" type="text/javascript"></script>-->
-<script src="build/js/app.js" type="text/javascript"></script>
+
+<script src="/build/js/manifest.js" type="text/javascript"></script>
+<script src="/build/js/vendor.js" type="text/javascript"></script>
+<script src="/build/js/app.js" type="text/javascript"></script>
 
 </body>
 </html>

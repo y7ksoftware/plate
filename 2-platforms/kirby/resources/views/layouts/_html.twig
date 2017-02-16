@@ -1,12 +1,3 @@
-
-{# Tell the browser to cache this page (every page) for 2 minutes, this is needed to allow link prefetching. And it also speeds up hopping between pages. #}
-{#
-    {% set expiry = now|date_modify('+2 minute') %}
-    {% header "Cache-Control: max-age=" ~ (expiry.timestamp - now.timestamp) %}
-    {% header "Pragma: cache" %}
-    {% header "Expires: " ~ expiry|date('D, d M Y H:i:s', 'GMT') ~ " GMT" %}
-#}
-
 <!doctype html>
 <!--
 
@@ -36,13 +27,11 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
 
     {# Loading Optimization #}
     {#<link rel="dns-prefetch" href="//cloudflare.com">#}
+    {{ block('prefetch_resources') }}
 
-    {% block prefetch_resources %}{% endblock %}
 
     {# SEO #}
-    {% block seo_data %}
-
-    {% endblock %}
+    {{ block('seo_data') }}
 
 
     {# Favicons #}
@@ -57,7 +46,7 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
     {# CSS #}
 
     {# Block to insert custom, component-specific vendor css files #}
-    {% block include_vendor_css %}{% endblock %}
+    {{ block('include_vendor_css') }}
 
     {# Vendor CSS from 3rd party plugins #}
     {#{{ css('/build/css/vendor.css') }}#}
@@ -65,37 +54,32 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
     {# Main CSS #}
     {{ css('/build/css/main.css') }}
 
-    {# Custom Modernizr checks. Please create custom modernizr build at "https://modernizr.com/download!" #}
-    {# <script type="text/javascript" src="/build/js/vendor/modernizr/modernizr.custom.min.js"></script> #}
-
 </head>
 
-{# Use "page_type" to distinguish each page for JS actions and styling. Use "body_class" for additional classes #}
-<body class="{{ block('body_class') }}">
+<body>
 
     {# Main Content #}
-    {% block page %}{% endblock %}
+    {{ block('page') }}
 
     {# Block right before end of body. e.g. to add modal windows and other overlays #}
-    {% block before_body_ends %}{% endblock %}
-
-    {# Vendor JS libraries #}
-    {# <script type="text/javascript" src="{{ craft.bust.er('/build/js/vendor.js') }}"></script> #}
+    {{ block('before_body_ends') }}
 
     {# Block to insert custom, component-specific vendor js files #}
-    {% block include_vendor_js %}{% endblock %}
+    {{ block('include_vendor_js') }}
 
+    {# Load Frontend Constants #}
     {% include 'helpers/frontend-constants.twig' %}
 
-    {# Main JS #}
+    {# JavaScript #}
+    {{ js('/build/js/manifest.js') }}
+    {{ js('/build/js/vendor.js') }}
     {{ js('/build/js/app.js') }}
 
     {# Block to insert custom, component-specific js block after all other code #}
-    {% block include_component_js %}{% endblock %}
+    {{ block('include_component_js') }}
 
 
     {% include 'helpers/google-analytics.twig' %}
-
 
 </body>
 </html>
