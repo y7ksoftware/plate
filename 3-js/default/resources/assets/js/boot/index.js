@@ -8,16 +8,19 @@ require('boot/bugsnag')
 require('boot/polyfills')
 
 
+// Lodash
+window._ = require('lodash');
+
+
 // Vue
 window.Vue = require('vue')
 
 Vue.config.silent = !config.APP_DEBUG
 Vue.config.devtools = config.APP_DEBUG
 
-// Change vue delimiters
-// Vue.mixin({
-//     delimiters: ['${', '}']
-// })
+// Change vue delimiters, to use vue in twig and blade tempaltes.
+// This doesn't change the delimiters in .vue files
+Vue.mixin({delimiters: ['${', '}']})
 
 
 // Init Localisation
@@ -30,23 +33,23 @@ Vue.config.devtools = config.APP_DEBUG
 // require('transitions')
 
 
-// Store
+// Load the Vuex Store
 let store = require('store').default
 
 // Bind store to all Vue Instances
 // Vue.mixin({ store })
 
 
-// Router
+// Load VueRouter
 let router = require('router').default
 
 
-// Lazyizes
+// Initialize Lazyizes
 require('lazysizes')
 require('lazysizes/plugins/object-fit/ls.object-fit.min')
 
 
-// Axios
+// Load Axios
 window.axios = require('axios')
 
 // axios.defaults.baseURL = config.API_PREFIX
