@@ -32,8 +32,8 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
     <meta name="theme-color" content="#ffffff">
 
 
-<!--    <link rel="stylesheet" type="text/css" href="build/css/vendor.css">-->
-    <link rel="stylesheet" type="text/css" href="build/css/main.css">
+    <link rel="stylesheet" type="text/css" href="{{ mix('build/css/vendor.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ mix('build/css/main.css') }}">
 
     @include('helpers/piwik-analytics')
 
@@ -46,9 +46,9 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
 
 @include('helpers/globals')
 
-{{ mix('/build/js/manifest.js') }}
-{{ mix('/build/js/vendor.js') }}
-{{ mix('/build/js/app.js') }}
+<script type="text/javascript" src="{{ mix('/build/js/manifest.js') }}"></script>
+<script type="text/javascript" src="{{ mix('/build/js/vendor.js') }}"></script>
+<script type="text/javascript" src="{{ mix('/build/js/app.js') }}"></script>
 
 @include('helpers/google-analytics')
 
