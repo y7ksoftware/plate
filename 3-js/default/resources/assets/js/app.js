@@ -2,7 +2,7 @@ require('boot')
 
 document.addEventListener("DOMContentLoaded", () => {
     // Enable when using Pagetransitions
-    // Barba.Pjax.init()
+    // Barba.Pjax.start()
     // Barba.Prefetch.init()
 })
 
