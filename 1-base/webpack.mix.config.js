@@ -24,7 +24,11 @@ const config = {
             modules: [
                 baseDir + '/resources/assets/js',
                 baseDir + '/node_modules'
-            ]
+            ],
+            // Uncomment this to include the template compiler
+            // alias: {
+            //     'vue$': 'vue/dist/vue.js'
+            // }
         },
 
         plugins: [
@@ -34,10 +38,9 @@ const config = {
                 notify: false,
                 open: false,
                 files: [
-                   baseDir + '/{public,app,craft,site}/**/*.php',
-                   baseDir + '/build/**/*.{js,css}',
-                   baseDir + '/mix-manifest.json',
-                   baseDir + '/resources/{views,lang}/**/*.{php,twig}'
+                    baseDir + '/{public,app,craft,site}/**/*.php',
+                    baseDir + '/build/**/*.{js,css}',
+                    baseDir + '/resources/{views,lang}/**/*.{php,twig}'
                 ]
             })
         ],
