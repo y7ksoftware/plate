@@ -1,5 +1,3 @@
-const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
-
 // Load Dotenv
 require('dotenv').load();
 
@@ -31,22 +29,25 @@ const config = {
             // }
         },
 
-        plugins: [
-            new BrowserSyncPlugin({
-                host: process.env.APP_URL,
-                proxy: process.env.APP_URL,
-                notify: false,
-                open: false,
-                files: [
-                    baseDir + '/{public,app,craft,site}/**/*.php',
-                    baseDir + '/build/**/*.{js,css}',
-                    baseDir + '/resources/{views,lang}/**/*.{php,twig}'
-                ]
-            })
-        ],
-
         externals: {}
 
+    },
+
+
+    /*
+     * BrowserSync
+     */
+
+    browserSync: {
+        host: process.env.APP_URL,
+        proxy: process.env.APP_URL,
+        notify: false,
+        open: false,
+        files: [
+            baseDir + '/{public,app,craft,site}/**/*.php',
+            baseDir + '/build/**/*.{js,css}',
+            baseDir + '/resources/{views,lang}/**/*.{php,twig}'
+        ]
     }
 
 

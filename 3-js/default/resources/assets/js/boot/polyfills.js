@@ -1,5 +1,2 @@
-
 // Polyfill Promise
-if (!window.Promise) {
-    window.Promise = require('promise-polyfill')
-}
+window.Promise = require('promise')

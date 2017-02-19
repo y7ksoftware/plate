@@ -9,7 +9,7 @@ require('boot/polyfills')
 
 
 // Lodash
-window._ = require('lodash');
+// window._ = require('lodash');
 
 
 // Vue
@@ -20,7 +20,7 @@ Vue.config.devtools = config.APP_DEBUG
 
 // Change vue delimiters, to use vue in twig and blade tempaltes.
 // This doesn't change the delimiters in .vue files
-Vue.mixin({delimiters: ['${', '}']})
+// Vue.mixin({delimiters: ['${', '}']})
 
 
 // Init Localisation
@@ -34,14 +34,14 @@ Vue.mixin({delimiters: ['${', '}']})
 
 
 // Load the Vuex Store
-let store = require('store').default
+// let store = require('store').default
 
 // Bind store to all Vue Instances
 // Vue.mixin({ store })
 
 
 // Load VueRouter
-let router = require('router').default
+// let router = require('router').default
 
 
 // Initialize Lazyizes
@@ -60,7 +60,7 @@ axios.defaults.headers.common = {
 }
 
 export {
-    store,
-    router
+    // store,
+    // router
 }
 

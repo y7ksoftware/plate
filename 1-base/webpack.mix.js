@@ -24,4 +24,7 @@ mix
     // Build Stylesheets
     .sass('resources/assets/scss/main.scss', 'public/build/css', config.sass)
 
+    // Start BrowserSync
+    .browserSync(config.browserSync)
+
     .webpackConfig(config.webpack);
