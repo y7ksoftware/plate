@@ -12,5 +12,9 @@
 /public/build
 mix-manifest.json
 
-# Upload Folder
+# Uploads folder
 /public/storage
+
+# General
+.idea
+.DS_Store
