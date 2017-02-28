@@ -13,9 +13,4 @@
 mix-manifest.json
 
 # Upload Folder
-/public/content/*
-!/public/content/.gitkeep
-
-# Storage folder
-/storage/*
-!/storage/.gitkeep
+/public/storage
