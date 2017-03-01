@@ -19,8 +19,8 @@
  */
 
 return array(
-    'imagerSystemPath' => $_SERVER['DOCUMENT_ROOT'] . '/storage/imager/',
-    'imagerUrl' => '/storage/imager/',
+    'imagerSystemPath' => $_SERVER['DOCUMENT_ROOT'] . '/imager/',
+    'imagerUrl' => '/imager/',
     'jpegQuality' => 90,
 
     'allowUpscale' => false,
