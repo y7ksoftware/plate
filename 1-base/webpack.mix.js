@@ -23,6 +23,7 @@ mix
 
     // Build Stylesheets
     .sass('resources/assets/scss/main.scss', 'public/build/css', config.sass)
+    .options({ processCssUrls: false })
 
     // Start BrowserSync
     .browserSync(config.browserSync)
