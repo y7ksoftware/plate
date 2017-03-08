@@ -29,3 +29,8 @@ mix
     .browserSync(config.browserSync)
 
     .webpackConfig(config.webpack);
+
+// Version Files
+if (mix.config.inProduction) {
+    // mix.version();
+}
