@@ -25,6 +25,9 @@ mix
     .copy('resources/assets/fonts', 'public/build/fonts', false)
     .copy('resources/assets/images', 'public/build/images', false)
 
+    // Copy whole js vendor folders
+    //.copy('resources/assets/js/vendor/modernizr', 'public/build/js/vendor/modernizr', false)
+
     // Build Stylesheets
     .sass('resources/assets/scss/main.scss', 'public/build/css', config.sass)
     .options({ processCssUrls: false })
