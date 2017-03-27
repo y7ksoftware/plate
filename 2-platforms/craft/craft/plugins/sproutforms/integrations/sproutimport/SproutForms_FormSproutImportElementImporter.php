@@ -5,26 +5,18 @@ class SproutForms_FormSproutImportElementImporter extends BaseSproutImportElemen
 {
 	public $isNewForm;
 
-	public function getModel()
+	/**
+	 * @return null|string
+	 */
+	public function getName()
 	{
-		$model = 'Craft\\SproutForms_FormModel';
-
-		return new $model;
+		return Craft::t("Sprout Forms Forms");
 	}
 
-	//public function populateModel($model, $settings)
-	//{
-	//	// @todo - we need this because we should refactor how deleting/weeding
-	//	// things works. Deleting passes in a different settings array...
-	//	if (isset($settings['attributes']))
-	//	{
-	//		$settings = $settings['attributes'];
-	//	}
-	//	// Assign any setting values we can to the model
-	//	$model->setAttributes($settings);
-	//
-	//	$this->model = $model;
-	//}
+	public function getModelName()
+	{
+		return 'SproutForms_Form';
+	}
 
 	public function save()
 	{
@@ -71,7 +63,7 @@ class SproutForms_FormSproutImportElementImporter extends BaseSproutImportElemen
 
 			foreach ($fields as $fieldSettings)
 			{
-				$field = sproutImport()->setting->saveSetting($fieldSettings);
+				$field = sproutImport()->settingsService->saveSetting($fieldSettings);
 
 				$fieldLayout[$tabName][] = $field->id;
 

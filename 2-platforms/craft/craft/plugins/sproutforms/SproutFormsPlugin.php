@@ -32,7 +32,7 @@ class SproutFormsPlugin extends BasePlugin
 	 */
 	public function getVersion()
 	{
-		return '2.3.2';
+		return '2.3.5';
 	}
 
 	/**
@@ -96,7 +96,11 @@ class SproutFormsPlugin extends BasePlugin
 		Craft::import('plugins.sproutforms.contracts.SproutFormsBaseField');
 
 		Craft::import('plugins.sproutforms.integrations.sproutreports.datasources.*');
-		Craft::import('plugins.sproutforms.integrations.sproutimport.*');
+		Craft::import('plugins.sproutforms.integrations.sproutimport.SproutForms_EntrySproutImportElementImporter');
+		Craft::import('plugins.sproutforms.integrations.sproutimport.SproutForms_FormSproutImportElementImporter');
+
+		Craft::import('plugins.sproutforms.integrations.sproutimport.SproutForms_FormsSproutImportFieldImporter');
+		Craft::import('plugins.sproutforms.integrations.sproutimport.SproutForms_EntrySproutImportFieldImporter');
 
 		craft()->on('email.onBeforeSendEmail', array(sproutForms(), 'handleOnBeforeSendEmail'));
 
@@ -231,8 +235,13 @@ class SproutFormsPlugin extends BasePlugin
 	public function registerSproutImportImporters()
 	{
 		return array(
-			new SproutForms_EntrySproutImportElementImporter,
-			new SproutForms_FormSproutImportElementImporter
+			// Element Importers
+			new SproutForms_EntrySproutImportElementImporter(),
+			new SproutForms_FormSproutImportElementImporter(),
+
+			// Field Importers
+			new SproutForms_FormsSproutImportFieldImporter(),
+			new SproutForms_EntrySproutImportFieldImporter()
 		);
 	}
 
