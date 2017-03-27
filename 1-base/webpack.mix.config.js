@@ -39,7 +39,7 @@ const config = {
      */
 
     browserSync: {
-        host: process.env.APP_URL,
+        //host: process.env.APP_URL,
         proxy: process.env.APP_URL,
         notify: false,
         open: false,
