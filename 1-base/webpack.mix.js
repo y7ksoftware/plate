@@ -21,6 +21,10 @@ mix
     // Extract libraries to vendor.js file
     // .extract(['vue', 'barba.js', 'bugsnag-js', 'lazysizes', 'axios', 'lodash'])
 
+    // Copy assets
+    .copy('resources/assets/fonts', 'public/build/fonts', false)
+    .copy('resources/assets/images', 'public/build/images', false)
+
     // Build Stylesheets
     .sass('resources/assets/scss/main.scss', 'public/build/css', config.sass)
     .options({ processCssUrls: false })
