@@ -32,6 +32,9 @@ mix
     .sass('resources/assets/scss/main.scss', 'public/build/css', config.sass)
     .options({ processCssUrls: false })
 
+    // Build sourcemaps
+    .sourceMaps()
+
     // Start BrowserSync
     .browserSync(config.browserSync)
 
