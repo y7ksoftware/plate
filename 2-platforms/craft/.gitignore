@@ -12,10 +12,10 @@
 /public/build
 mix-manifest.json
 
-# Upload Folder
-/public/content/*
-!/public/content/.gitkeep
+# Uploads folder
+/public/storage
+/public/imager
 
-# Storage folder
-/storage/*
-!/storage/.gitkeep
+# General
+.idea
+.DS_Store

@@ -28,10 +28,6 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
     <meta name="viewport" content="user-scalable=yes, initial-scale=1, width=device-width, height=device-height" />
     <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
 
-    {% if craft.config.googleVerificationCode %}
-        <meta name="google-site-verification" content="{{ craft.config.googleVerificationCode }}" />
-    {% endif %}
-
     {# Prevent Search Engines from indexing the Staging Site #}
     {% if craft.config.appEnv != 'production' %}
         <meta name="robots" content="noindex,nofollow">
@@ -48,8 +44,8 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
     {% block seo_data %}
         {# Delete the following Title if your are using the SEO Plugin #}
         <title>{% if title is defined %}{{ title }} - {% endif %}{{ siteName }}</title>
-
-        {# {% include 'helpers/seo-data' %} #}  {# <------ Uncomment this to enable SproutSEO (enable plugin first) #}
+        {# Uncomment this to enable SproutSEO (enable plugin first) #}
+        {# {% include 'helpers/seo-data' %} #}
     {% endblock %}
 
 

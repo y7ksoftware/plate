@@ -25,27 +25,12 @@ Installs the Laravel Framework.
 2. [Base](base) Files, **excluding:** `.gitignore`
 2. [Laravel](platforms/laravel) Boilerplate Files
 
-### Kirby CMS
+### Plain
 
-Installs Kirby CMS plus boilerplate.
-
-1. [Base](base) Files
-2. [Kirby](platforms/kirby) Boilerplate Files
-3. Kirby app and panel  through composer to the `public` folder.
-
-### Plain PHP
-
-Plain PHP index file as starting point, with environment Variables loaded.
+Plain PHP or HTML index file as starting point (with environment Variables loaded).
 
 1. [Base](base) Files
-2. [Plain PHP](platforms/plain-php) Boilerplate Files
-
-### Plain HTML
-
-Plain static HTML file, for static webhosts.
-
-1. [Base](base) Files
-2. [Plain HTML](platforms/plain-html) Boilerplate Files
+2. [Plain PHP](platforms/plain) Boilerplate Files
 
 ## Javascript
 

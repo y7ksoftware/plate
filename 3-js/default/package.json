@@ -3,7 +3,7 @@
         "axios": "^0.15.3",
         "barba.js": "^1.0.0",
         "bugsnag-js": "^3.0.7",
-        "promise-polyfill": "^6.0.2",
+        "promise": "^7.1.1",
         "lazysizes": "^3.0.0-rc4",
         "lodash": "^4.17.4",
         "vue": "^2.1.4",
