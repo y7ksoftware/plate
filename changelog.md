@@ -1,5 +1,24 @@
 # Y7K Project Boilerplate Changelog
 
+## Version 0.4.*
+* Updated Craft Sprout Plugins
+* Reintroduced static assets to build process
+* Add sourcemaps to webpack
+* Add template to mix: Task to copy non-commonjs vendor folders
+* Add versioning and changelog
+
+
+## Version 0.3.*
+* Remove Kirby
+* Merge Plain Plates
+* Updage Webpack Tooling
+* Add Imager To Craft
+* Change craft storage folders
+* Minor refactoring
+
+## Version 0.2.*
+* Changes not tracked
+
 ## Version 0.1.*
 
 * Updated JS structure
