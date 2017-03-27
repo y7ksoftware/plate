@@ -10,7 +10,10 @@ class SproutEmailVariable
 
 	public function __construct()
 	{
-		$this->entries = craft()->elements->getCriteria('SproutEmail_Entry');
+		/**
+		 * craft.sproutEmail.entries
+		 */
+		$this->entries = craft()->elements->getCriteria('SproutEmail_CampaignEmail');
 	}
 
 	/**
@@ -34,6 +37,16 @@ class SproutEmailVariable
 	}
 
 	/**
+	 * @return string
+	 */
+	public function getSettings()
+	{
+		$plugin = craft()->plugins->getPlugin('sproutemail');
+
+		return $plugin->getSettings();
+	}
+
+	/**
 	 * Returns a list of available mailers
 	 *
 	 * @return SproutEmailBaseMailer[]
@@ -52,6 +65,7 @@ class SproutEmailVariable
 	{
 		$mailers = $this->getMailers();
 
+		// Hide defaultmailer for now.
 		unset($mailers['defaultmailer']);
 
 		return $mailers;
@@ -74,56 +88,36 @@ class SproutEmailVariable
 	 */
 	public function getAvailableEvents()
 	{
-		return sproutEmail()->notifications->getAvailableEvents();
-	}
-
-	public function getSelectedOptions($event, $campaignId)
-	{
-		if (craft()->request->getRequestType() == 'POST')
-		{
-			return $event->prepareOptions();
-		}
-
-		$notification = sproutEmail()->notifications->getNotification(
-			array(
-				'eventId'    => $event->getEventId(),
-				'campaignId' => $campaignId
-			)
-		);
-
-		if ($notification)
-		{
-			return $event->prepareValue($notification->options);
-		}
+		return sproutEmail()->notificationEmails->getAvailableEvents();
 	}
 
 	/**
-	 * Returns a notification entry model if found by campaing id
+	 * @param $event
+	 * @param $notificationEmail
 	 *
-	 * @param int $id
-	 *
-	 * @return SproutEmail_EntryModel|null
+	 * @return mixed
 	 */
-	public function getNotificationEntryByCampaignId($id)
+	public function getEventSelectedOptions($event, $notificationEmail)
 	{
-		return sproutEmail()->notifications->getNotificationEntryByCampaignId($id);
-	}
-
-	public function getNotificationById($id)
-	{
-		return sproutEmail()->notifications->getNotificationById($id);
+		return sproutEmail()->notificationEmails->getEventSelectedOptions($event, $notificationEmail);
 	}
 
 	/**
-	 * Return Campaign model by passing entry id
-	 *
+	 * @return SproutEmail_NotificationModel[]|null
+	 */
+	public function getNotifications()
+	{
+		return sproutEmail()->notificationEmails->getNotifications();
+	}
+
+	/**
 	 * @param $id
 	 *
-	 * @return bool|SproutEmail_CampaignModel
+	 * @return BaseElementModel|null
 	 */
-	public function getCampaignByEntryId($id)
+	public function getNotificationEmailById($id)
 	{
-		return sproutEmail()->campaigns->getCampaignByEntryId($id);
+		return sproutEmail()->notificationEmails->getNotificationEmailById($id);
 	}
 
 	/**
@@ -131,21 +125,21 @@ class SproutEmailVariable
 	 *
 	 * @return mixed Campaign model
 	 */
-	public function getCampaigns($type = null)
+	public function getCampaignTypes()
 	{
-		return sproutEmail()->campaigns->getCampaigns($type);
+		return sproutEmail()->campaignTypes->getCampaignTypes();
 	}
 
 	/**
-	 * Get a Campaign by id *
+	 * Get a Campaign Type by id *
 	 *
-	 * @param int $campaignId
+	 * @param int $campaignTypeId
 	 *
 	 * @return object campaign record
 	 */
-	public function getCampaignById($campaignId)
+	public function getCampaignTypeById($campaignTypeId)
 	{
-		return sproutEmail()->campaigns->getCampaignById($campaignId);
+		return sproutEmail()->campaignTypes->getCampaignTypeById($campaignTypeId);
 	}
 
 	/**
@@ -181,7 +175,7 @@ class SproutEmailVariable
 	 */
 	public function getAllUserGroups($indexBy = null)
 	{
-		$groups = craft()->userGroups->getAllGroups($indexBy);
+		$groups  = craft()->userGroups->getAllGroups($indexBy);
 		$options = array();
 
 		foreach ($groups as $group)
@@ -222,7 +216,7 @@ class SproutEmailVariable
 
 	public function getGeneralSettingsTemplate($emailProvider = null)
 	{
-		$customTemplate = 'sproutemail/_providers/' . $emailProvider . '/generalCampaignSettings';
+		$customTemplate       = 'sproutemail/_providers/' . $emailProvider . '/generalCampaignSettings';
 		$customTemplateExists = craft()->templates->doesTemplateExist($customTemplate);
 
 		// if there is a custom set of general settings for this provider, return those; if not, return the default
@@ -232,6 +226,14 @@ class SproutEmailVariable
 		}
 
 		return false;
+	}
+
+	public function getCampaignEmailShareUrl($emailId, $campaignTypeId)
+	{
+		return UrlHelper::getActionUrl('sproutEmail/campaignEmails/shareCampaignEmail', array(
+			'emailId'        => $emailId,
+			'campaignTypeId' => $campaignTypeId
+		));
 	}
 
 	public function getRecipientLists($mailer)
@@ -261,6 +263,11 @@ class SproutEmailVariable
 
 	public function getMailerBySentEmailId($id)
 	{
-		return SproutEmail()->sentEmails->getMailerBySentEmailId($id);
+		return sproutEmail()->sentEmails->getMailerBySentEmailId($id);
+	}
+
+	public function getFirstAvailableTab()
+	{
+		return sproutEmail()->getFirstAvailableTab();
 	}
 }

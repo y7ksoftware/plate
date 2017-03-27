@@ -2,13 +2,13 @@
 namespace Craft;
 
 /**
- * Enables you to send your campaigns using Mail Chimp
+ * Enables you to send your campaigns using MailChimp
  *
  * Class SproutEmailMailchimpMailer
  *
  * @package Craft
  */
-class SproutEmail_MailchimpMailer extends SproutEmailBaseMailer
+class SproutEmail_MailchimpMailer extends SproutEmailBaseMailer implements SproutEmailCampaignEmailSenderInterface
 {
 	/**
 	 * @var SproutEmailMailchimpService
@@ -45,17 +45,17 @@ class SproutEmail_MailchimpMailer extends SproutEmailBaseMailer
 	/**
 	 * @return string
 	 */
-	public function getTitle()
+	public function getName()
 	{
-		return 'MailChimp';
+		return 'mailchimp';
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getName()
+	public function getTitle()
 	{
-		return 'mailchimp';
+		return 'MailChimp';
 	}
 
 	/**
@@ -67,77 +67,57 @@ class SproutEmail_MailchimpMailer extends SproutEmailBaseMailer
 	}
 
 	/**
-	 * @param array $context
+	 * @param array $settings
 	 *
 	 * @return string
 	 */
-	public function getSettingsHtml(array $context = array())
+	public function getSettingsHtml(array $settings = array())
 	{
-		$context['settings'] = $this->getSettings();
+		$settings = isset($settings['settings']) ? $settings['settings'] : $this->getSettings();
 
-		return craft()->templates->render('sproutemail/settings/_mailers/mailchimp/settings', $context);
+		return craft()->templates->render('sproutemail/settings/mailers/mailchimp/settings', array(
+			'settings' => $settings
+		));
 	}
 
 	/**
-	 * @param SproutEmail_EntryModel    $entry
-	 * @param SproutEmail_CampaignModel $campaign
-	 *
-	 * @return string
+	 * @return array
 	 */
-	public function getPrepareModalHtml(SproutEmail_EntryModel $entry, SproutEmail_CampaignModel $campaign)
+	public function defineSettings()
 	{
-		if (strpos($entry->replyToEmail, '{') !== false)
-		{
-			$entry->replyToEmail = $entry->fromEmail;
-		}
-
-		// Create an array of all recipient list titles
-		$lists = sproutEmail()->entries->getRecipientListsByEntryId($entry->id);
-
-		$recipientLists = array();
-
-		if (is_array($lists) && count($lists))
-		{
-			foreach ($lists as $list)
-			{
-				$current = $this->getService()->getRecipientListById($list->list);
-
-				array_push($recipientLists, $current);
-			}
-		}
-
-		return craft()->templates->render(
-			'sproutemail/settings/_mailers/mailchimp/prepare',
-			array(
-				'entry'    => $entry,
-				'lists'    => $recipientLists,
-				'mailer'   => $this,
-				'campaign' => $campaign
-			)
+		return array(
+			'apiKey'    => array(AttributeType::String, 'required' => true),
+			'inlineCss' => array(AttributeType::String, 'default' => true),
 		);
 	}
 
 	/**
 	 * Renders the recipient list UI for this mailer
 	 *
-	 * @param SproutEmail_EntryModel[]|null $values
+	 * @param SproutEmail_CampaignEmailModel[]|null $values
 	 *
 	 * @return string Rendered HTML content
 	 */
 	public function getRecipientListsHtml(array $values = null)
 	{
 		$lists = $this->getRecipientLists();
-		$options = array();
+
+		$options  = array();
 		$selected = array();
 
-		if ($lists == false)
+		if ($lists === false)
 		{
-			return craft()->templates->render('sproutemail/settings/_mailers/mailchimp/lists/sslerror');
+			return craft()->templates->render('sproutemail/settings/mailers/mailchimp/lists/sslerror');
+		}
+
+		if (!is_array($lists))
+		{
+			return $lists;
 		}
 
 		if (!count($lists))
 		{
-			return craft()->templates->render('sproutemail/settings/_mailers/mailchimp/lists/norecipientlists');
+			return craft()->templates->render('sproutemail/settings/mailers/mailchimp/lists/norecipientlists');
 		}
 
 		if (count($lists))
@@ -155,7 +135,6 @@ class SproutEmail_MailchimpMailer extends SproutEmailBaseMailer
 
 					$listUrl = "https://us7.admin.mailchimp.com/lists/members/?id=" . $list['web_id'];
 
-					// @todo Provide a way for info to become a Craft tooltip in the UI
 					$options[] = array(
 						'label' => sprintf('<a target="_blank" href="%s">%s (%s)</a>', $listUrl, $list['name'], $length),
 						'value' => $list['id']
@@ -203,26 +182,25 @@ class SproutEmail_MailchimpMailer extends SproutEmailBaseMailer
 	}
 
 	/**
-	 * @param SproutEmail_EntryModel    $entry
-	 * @param SproutEmail_CampaignModel $campaign
+	 * @param SproutEmail_CampaignEmailModel $campaignEmail
+	 * @param SproutEmail_CampaignTypeModel  $campaign
 	 *
-	 * @return array|SproutEmail_EntryModel
+	 * @return array|SproutEmail_CampaignEmailModel
 	 */
-	public function prepareRecipientLists(SproutEmail_EntryModel $entry, SproutEmail_CampaignModel $campaign)
+	public function prepareRecipientLists(SproutEmail_CampaignEmailModel $campaignEmail)
 	{
-		$ids = craft()->request->getPost('recipient.recipientLists');
+		$ids   = craft()->request->getPost('recipient.recipientLists');
 		$lists = array();
 
 		if ($ids)
 		{
 			foreach ($ids as $id)
 			{
-				$model = new SproutEmail_EntryRecipientListModel();
+				$model = new SproutEmail_RecipientListRelationsModel();
 
-				$model->setAttribute('entryId', $entry->id);
+				$model->setAttribute('emailId', $campaignEmail->id);
 				$model->setAttribute('mailer', $this->getId());
 				$model->setAttribute('list', $id);
-				$model->setAttribute('type', $campaign->type);
 
 				$lists[] = $model;
 			}
@@ -232,26 +210,67 @@ class SproutEmail_MailchimpMailer extends SproutEmailBaseMailer
 	}
 
 	/**
-	 * @param SproutEmail_EntryModel    $entry
-	 * @param SproutEmail_CampaignModel $campaign
+	 * @param SproutEmail_CampaignEmailModel $campaignEmail
+	 * @param SproutEmail_CampaignTypeModel  $campaignType
+	 *
+	 * @return string
+	 */
+	public function getPrepareModalHtml(SproutEmail_CampaignEmailModel $campaignEmail, SproutEmail_CampaignTypeModel $campaignType)
+	{
+		if (strpos($campaignEmail->replyToEmail, '{') !== false)
+		{
+			$campaignEmail->replyToEmail = $campaignEmail->fromEmail;
+		}
+
+		// Create an array of all recipient list titles
+		$lists = sproutEmail()->campaignEmails->getRecipientListsByEmailId($campaignEmail->id);
+
+		$recipientLists = array();
+
+		if (is_array($lists) && count($lists))
+		{
+			foreach ($lists as $list)
+			{
+				$current = $this->getService()->getRecipientListById($list->list);
+
+				array_push($recipientLists, $current);
+			}
+		}
+
+		return craft()->templates->render(
+			'sproutemail/settings/mailers/mailchimp/sendEmailPrepare',
+			array(
+				'mailer'         => $this,
+				'campaignEmail'  => $campaignEmail,
+				'campaignType'   => $campaignType,
+				'recipientLists' => $recipientLists,
+			)
+		);
+	}
+
+	/**
+	 * @param SproutEmail_CampaignEmailModel $campaignEmail
+	 * @param SproutEmail_CampaignTypeModel  $campaignType
 	 *
 	 * @return array|void
 	 */
-	public function exportEntry(SproutEmail_EntryModel $entry, SproutEmail_CampaignModel $campaign)
+	public function sendCampaignEmail(SproutEmail_CampaignEmailModel $campaignEmail, SproutEmail_CampaignTypeModel $campaignType)
 	{
 		$sentCampaignIds = array();
-		$response = new SproutEmail_ResponseModel();
+		$response        = new SproutEmail_ResponseModel();
 
 		try
 		{
-			$sentCampaign = $this->getService()->export($entry, $campaign);
+			$sentCampaign = $this->getService()->sendCampaignEmail($campaignEmail, $campaignType);
 
 			$sentCampaignIds = $sentCampaign['ids'];
 
 			$response->emailModel = $sentCampaign['emailModel'];
 
 			$response->success = true;
-			$response->message = Craft::t('Campaign successfully sent to {count} recipient lists.', array('count' => count($sentCampaignIds)));
+			$response->message = Craft::t('Campaign successfully sent to {count} recipient lists.', array(
+				'count' => count($sentCampaignIds)
+			));
 		}
 		catch (\Exception $e)
 		{
@@ -262,14 +281,11 @@ class SproutEmail_MailchimpMailer extends SproutEmailBaseMailer
 		}
 
 		$response->content = craft()->templates->render(
-			'sproutemail/settings/_mailers/mailchimp/export',
+			'sproutemail/settings/mailers/mailchimp/sendEmailConfirmation',
 			array(
-				'entry'       => $entry,
-				'campaign'    => $campaign,
-				'mailer'      => $this,
-				'success'     => $response->success,
-				'message'     => $response->message,
-				'campaignIds' => $sentCampaignIds
+				'mailer'  => $campaignEmail,
+				'success' => $response->success,
+				'message' => $response->message
 			)
 		);
 
@@ -279,16 +295,5 @@ class SproutEmail_MailchimpMailer extends SproutEmailBaseMailer
 	public function includeModalResources()
 	{
 		craft()->templates->includeJsResource('sproutemail/js/mailers/mailchimp.js');
-	}
-
-	/**
-	 * @return array
-	 */
-	public function defineSettings()
-	{
-		return array(
-			'apiKey'    => array(AttributeType::String, 'required' => true),
-			'inlineCss' => array(AttributeType::String, 'default' => true),
-		);
 	}
 }

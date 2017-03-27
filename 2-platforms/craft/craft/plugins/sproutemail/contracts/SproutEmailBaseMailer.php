@@ -38,8 +38,8 @@ abstract class SproutEmailBaseMailer
 	{
 		if (!$this->initialized)
 		{
-			$this->settings = sproutEmail()->mailers->getSettingsByMailerName($this->getId());
-			$this->installed = sproutEmail()->mailers->isInstalled($this->getId());
+			$this->settings    = sproutEmail()->mailers->getSettingsByMailerName($this->getId());
+			$this->installed   = sproutEmail()->mailers->isInstalled($this->getId());
 			$this->initialized = true;
 		}
 	}
@@ -65,7 +65,7 @@ abstract class SproutEmailBaseMailer
 	}
 
 	/**
-	 * Returns whether or not the mailer has been installed and additionally registered with Sprout Email
+	 * Returns whether or not the mailer has been installed and registered with Sprout Email
 	 *
 	 * @return bool
 	 */
@@ -89,9 +89,9 @@ abstract class SproutEmailBaseMailer
 	}
 
 	/**
-	 * Returns the qualified mailer name
+	 * Returns the Mailer name
 	 *
-	 * @example CoreMailer
+	 * @example DefaultMailer
 	 *
 	 * @return string
 	 */
@@ -107,25 +107,22 @@ abstract class SproutEmailBaseMailer
 	abstract public function getTitle();
 
 	/**
-	 * Returns the mailer title optionally wrapped in a link pointing to /sproutemail/mailer
+	 * Returns a short description of this mailer
 	 *
-	 * @note
-	 * We use this to integrate third party plugin routes and UI seamlessly within Sprout Email
+	 * @example The Sprout Email Core Mailer uses the Craft API to send emails
 	 *
-	 * @see       hasCpSection()
-	 *
-	 * @deprecate Deprecated for 0.9.0 in favour of getCpSectionUrl()
-	 *
-	 * @return string|\Twig_Markup
+	 * @return string
 	 */
-	final public function getCpTitle()
-	{
-		if ($this->hasCpSection())
-		{
-			return sproutEmail()->mailers->getMailerCpSectionLink($this);
-		}
+	abstract public function getDescription();
 
-		return $this->getTitle();
+	/**
+	 * Returns whether or not the mailer has registered routes to accomplish tasks within Sprout Email
+	 *
+	 * @return bool
+	 */
+	public function hasCpSection()
+	{
+		return false;
 	}
 
 	/**
@@ -137,24 +134,6 @@ abstract class SproutEmailBaseMailer
 		{
 			return UrlHelper::getCpUrl(sprintf('sproutemail/%s', $this->getId()));
 		}
-	}
-
-	final public function getCpSettingsUrl()
-	{
-		if ($this->hasCpSettings())
-		{
-			return UrlHelper::getCpUrl(sprintf('sproutemail/settings/mailers/%s', $this->getId()));
-		}
-	}
-
-	/**
-	 * Returns whether or not the mailer has registered routes to accomplish tasks within Sprout Email
-	 *
-	 * @return bool
-	 */
-	public function hasCpSection()
-	{
-		return false;
 	}
 
 	/**
@@ -170,13 +149,15 @@ abstract class SproutEmailBaseMailer
 	}
 
 	/**
-	 * Returns a short description of this mailer
-	 *
-	 * @example The Sprout Email Core Mailer uses the Craft API to send emails
-	 *
 	 * @return string
 	 */
-	abstract public function getDescription();
+	final public function getCpSettingsUrl()
+	{
+		if ($this->hasCpSettings())
+		{
+			return UrlHelper::getCpUrl(sprintf('sproutemail/settings/mailers/%s', $this->getId()));
+		}
+	}
 
 	/**
 	 * Returns the settings model for this mailer
@@ -194,28 +175,22 @@ abstract class SproutEmailBaseMailer
 	}
 
 	/**
-	 * Returns the settings and default values that should be stored when first installed
-	 *
-	 * @deprecated Deprecated since version 0.8.2 in favor of defineSettings()
-	 *
-	 * @see        defineSettings()
-	 *
-	 * @return array
-	 */
-	public function getDefaultSettings()
-	{
-		craft()->deprecator->log(__FUNCTION__, 'Deprecated since version 0.8.2 in favor of defineSettings()');
-
-		return array();
-	}
-
-	/**
 	 * Returns a rendered html string to use for capturing settings input
 	 *
 	 * @return string
 	 */
-	public function getSettingsHtml()
+	public function getSettingsHtml(array $settings = array())
 	{
+	}
+
+	/**
+	 * Enables mailers to define their own settings and validation for them
+	 *
+	 * @return array
+	 */
+	public function defineSettings()
+	{
+		return array();
 	}
 
 	/**
@@ -239,27 +214,37 @@ abstract class SproutEmailBaseMailer
 	}
 
 	/**
-	 * Gives a mailer the ability to register an action to post to when a [prepare] modal is launched
+	 * Returns an entry model to be stored and used by Sprout Email for sending via this mailer
 	 *
-	 * @return string
+	 * @param SproutEmail_CampaignEmailModel $campaignEmail
+	 * @param SproutEmail_CampaignTypeModel  $campaign
+	 *
+	 * @return SproutEmail_CampaignEmailModel
+	 * @internal param SproutEmail_CampaignEmailModel $campaignEmail
 	 */
-	public function getActionForPrepareModal()
+	public function prepareRecipientLists(SproutEmail_CampaignEmailModel $campaignEmail)
 	{
-		return 'sproutEmail/mailer/getPrepareModal';
+		return new SproutEmail_CampaignEmailModel();
 	}
 
 	/**
-	 * Gives a mailer the ability to register an action to post to when a [preview] modal is launched
-	 *
-	 * @deprecated Deprecated since version 0.8.3 in favor of using ElementTypeModel::routeRequestForMatchedElement()
-	 *
-	 * @return string
+	 * @param SproutEmail_CampaignTypeModel $campaignType
 	 */
-	public function getActionForPreviewModal()
+	public function saveRecipientList(SproutEmail_CampaignTypeModel $campaignType)
 	{
-		craft()->deprecator->log(__FUNCTION__, 'Deprecated since version 0.8.3 in favor of using ElementTypeModel::routeRequestForMatchedElement()');
+	}
 
-		return 'sproutEmail/mailer/getPreviewModal';
+	/**
+	 * Returns the value that should be saved to the settings column for this mailer
+	 *
+	 * @example
+	 * return craft()->request->getPost('sproutemail');
+	 *
+	 * @return mixed
+	 */
+	public function prepareSettings()
+	{
+		return craft()->request->getPost($this->getId());
 	}
 
 	/**
@@ -280,26 +265,13 @@ abstract class SproutEmailBaseMailer
 	}
 
 	/**
-	 * Enables mailers to define their own settings and validation for them
+	 * Gives a mailer the ability to register an action to post to when a [prepare] modal is launched
 	 *
-	 * @return array
+	 * @return string
 	 */
-	public function defineSettings()
+	public function getActionForPrepareModal()
 	{
-		return array();
-	}
-
-	/**
-	 * Returns the value that should be saved to the settings column for this mailer
-	 *
-	 * @example
-	 * return craft()->request->getPost('sproutemail');
-	 *
-	 * @return mixed
-	 */
-	public function prepareSettings()
-	{
-		return craft()->request->getPost($this->getId());
+		return 'sproutEmail/mailer/getPrepareModal';
 	}
 
 	/**
@@ -315,50 +287,26 @@ abstract class SproutEmailBaseMailer
 	}
 
 	/**
-	 * Returns an entry model to be stored and used by Sprout Email for sending via this mailer
+	 * Gives a mailer the responsibility to send Notification Emails
+	 * if they implement SproutEmailNotificationEmailSenderInterface
 	 *
-	 * @todo Revise if this responsibility should fall on the mailer or the mailer service
-	 *
-	 * @param SproutEmail_EntryModel    $entry
-	 * @param SproutEmail_CampaignModel $campaign
-	 *
-	 * @return SproutEmail_EntryModel
+	 * @param SproutEmail_NotificationEmailModel $notificationEmail
+	 * @param                                    $object
 	 */
-	public function prepareRecipientLists(SproutEmail_EntryModel $entry, SproutEmail_CampaignModel $campaign)
-	{
-		return new SproutEmail_EntryModel();
-	}
-
-	/**
-	 * @todo Decide how this should be standardised across mailers
-	 *
-	 * @param SproutEmail_CampaignModel $campaign
-	 */
-	public function saveRecipientList(SproutEmail_CampaignModel $campaign)
+	public function sendNotificationEmail(SproutEmail_NotificationEmailModel $notificationEmail, $object)
 	{
 	}
 
 	/**
-	 * Gives a mailer the responsibility to send campaigns if they implement SproutEmailCampaignSenderInterface
+	 * Gives a mailer the responsibility to send Campaign Emails
+	 * if they implement SproutEmailCampaignEmailSenderInterface
 	 *
-	 * @param SproutEmail_EntryModel    $entry
-	 * @param SproutEmail_CampaignModel $campaign
+	 * @param SproutEmail_CampaignEmailModel $campaignEmail
+	 * @param SproutEmail_CampaignTypeModel  $campaign
+	 *
+	 * @internal param SproutEmail_CampaignEmailModel $campaignEmail
 	 */
-	public function sendCampaign(SproutEmail_EntryModel $entry, SproutEmail_CampaignModel $campaign)
-	{
-	}
-
-	/**
-	 * Gives a mailer the responsibility to send notifications if they implement SproutEmailNotificationSenderInterface
-	 *
-	 * @param SproutEmail_CampaignModel $campaign
-	 * @param                           $object
-	 *
-	 * @return bool
-	 * @internal param mixed|null $element
-	 *
-	 */
-	public function sendNotification(SproutEmail_CampaignModel $campaign, $object)
+	public function sendCampaignEmail(SproutEmail_CampaignEmailModel $campaignEmail, SproutEmail_CampaignTypeModel $campaignType)
 	{
 	}
 }

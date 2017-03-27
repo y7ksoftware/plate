@@ -11,49 +11,33 @@ class SproutEmail_CopyPasteService extends BaseApplicationComponent
 	}
 
 	/**
-	 * @param SproutEmail_EntryModel    $entry
-	 * @param SproutEmail_CampaignModel $campaign
+	 * @param SproutEmail_CampaignEmailModel $campaignEmail
+	 * @param SproutEmail_CampaignTypeModel  $campaignType
 	 *
 	 * @return SproutEmail_ResponseModel
 	 */
-	public function exportEntry(SproutEmail_EntryModel $entry, SproutEmail_CampaignModel $campaign)
+	public function sendCampaignEmail(SproutEmail_CampaignEmailModel $campaignEmail, SproutEmail_CampaignTypeModel $campaignType)
 	{
-		$params = array(
-			'email'     => $entry,
-			'campaign'  => $campaign,
-			'recipient' => array(
-				'firstName' => 'John',
-				'lastName'  => 'Doe',
-				'email'     => 'john@doe.com'
-			),
+		$variables = array(
+			'email'        => $campaignEmail,
+			'campaignType' => $campaignType,
 
-			// @deprecate - in favor of `email` in v3
-			'entry'     => $entry
+			// @deprecate - `entry` in favor of `email` in v3
+			// @deprecate - `campaign` in favor of `campaignType` in v3
+			'entry'        => $campaignEmail,
+			'campaign'     => $campaignType
 		);
 
-		$html = sproutEmail()->renderSiteTemplateIfExists($campaign->templateCopyPaste, $params);
-		$text = sproutEmail()->renderSiteTemplateIfExists($campaign->templateCopyPaste . '.txt', $params);
+		$html = sproutEmail()->renderSiteTemplateIfExists($campaignType->templateCopyPaste, $variables);
+		$text = sproutEmail()->renderSiteTemplateIfExists($campaignType->templateCopyPaste . '.txt', $variables);
 
-		$vars = array(
+		$response          = new SproutEmail_ResponseModel();
+		$response->success = true;
+		$response->content = craft()->templates->render('sproutemail/settings/mailers/copypaste/sendEmailPrepare', array(
 			'html' => trim($html),
 			'text' => trim($text),
-		);
-
-		$response = new SproutEmail_ResponseModel();
-		$response->success = true;
-
-		$response->content = craft()->templates->render('sproutemail/settings/_mailers/copypaste/prepare', $vars);
+		));
 
 		return $response;
-	}
-
-	public function previewEntry(SproutEmail_EntryModel $entry, SproutEmail_CampaignModel $campaign)
-	{
-		$type = craft()->request->getPost('contentType', 'html');
-		$ext = strtolower($type) == 'text' ? '.txt' : null;
-		$params = array('entry' => $entry, 'campaign' => $campaign);
-		$body = sproutEmail()->renderSiteTemplateIfExists($campaign->template . $ext, $params);
-
-		return array('content' => TemplateHelper::getRaw($body));
 	}
 }

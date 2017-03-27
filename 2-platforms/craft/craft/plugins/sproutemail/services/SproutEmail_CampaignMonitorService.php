@@ -73,20 +73,23 @@ class SproutEmail_CampaignMonitorService extends BaseApplicationComponent
 	}
 
 	/**
-	 * @param SproutEmail_EntryModel    $entry
-	 * @param SproutEmail_CampaignModel $campaign
-	 *
-	 * @throws \Exception
+	 * @param SproutEmail_CampaignEmailModel $campaignEmail
+	 * @param SproutEmail_CampaignTypeModel  $campaignType
 	 *
 	 * @return array
+	 * @throws \Exception
 	 */
-	public function exportEntry(SproutEmail_EntryModel $entry, SproutEmail_CampaignModel $campaign)
+	public function sendCampaignEmail(SproutEmail_CampaignEmailModel $campaignEmail, SproutEmail_CampaignTypeModel $campaignType)
 	{
-		$urls = $this->getEntryUrls($entry->id, $campaign->template);
+		$urls = $this->getCampaignEmailUrls($campaignEmail->id, $campaignType->template);
 
-		$lists = SproutEmail_EntryRecipientListRecord::model()->findAllByAttributes(array('entryId' => $entry->id));
+		$lists          = SproutEmail_RecipientListRelationsRecord::model()->findAllByAttributes(array(
+			'emailId' => $campaignEmail->id
+		));
+
 		$recipientLists = array();
-		$toEmails = array();
+		$toEmails       = array();
+
 		foreach ($lists as $list)
 		{
 			array_push($recipientLists, $list->list);
@@ -94,8 +97,8 @@ class SproutEmail_CampaignMonitorService extends BaseApplicationComponent
 		}
 
 		$params = array(
-			'email'     => $entry,
-			'campaign'  => $campaign,
+			'email'     => $campaignEmail,
+			'campaign'  => $campaignType,
 			'recipient' => array(
 				'firstName' => 'First',
 				'lastName'  => 'Last',
@@ -103,39 +106,39 @@ class SproutEmail_CampaignMonitorService extends BaseApplicationComponent
 			),
 
 			// @deprecate - in favor of `email` in v3
-			'entry'     => $entry
+			'entry'     => $campaignEmail
 		);
 
 		$content = array(
-			'html' => sproutEmail()->renderSiteTemplateIfExists($campaign->template, $params),
-			'text' => sproutEmail()->renderSiteTemplateIfExists($campaign->template . '.txt', $params),
+			'html' => sproutEmail()->renderSiteTemplateIfExists($campaignType->template, $params),
+			'text' => sproutEmail()->renderSiteTemplateIfExists($campaignType->template . '.txt', $params),
 		);
 
 		try
 		{
-			$auth = $this->getPostParams();
+			$auth   = $this->getPostParams();
 			$params = array(
-				'Subject'   => $entry->subjectLine,
-				'Name'      => $campaign->name . ': ' . $entry->subjectLine,
-				'FromName'  => $entry->fromName,
-				'FromEmail' => $entry->fromEmail,
-				'ReplyTo'   => $entry->replyToEmail,
-				'HtmlUrl'   => $entry->getUrl(),
-				'TextUrl'   => $entry->getUrl() . '?type=text',
+				'Subject'   => $campaignEmail->subjectLine,
+				'Name'      => $campaignType->name . ': ' . $campaignEmail->subjectLine,
+				'FromName'  => $campaignEmail->fromName,
+				'FromEmail' => $campaignEmail->fromEmail,
+				'ReplyTo'   => $campaignEmail->replyToEmail,
+				'HtmlUrl'   => $campaignEmail->getUrl(),
+				'TextUrl'   => $campaignEmail->getUrl() . '?type=text',
 				'ListIDs'   => $recipientLists
 			);
 
 			// Set up API call to create a draft campaign and assign the response to $response
 			$draftCampaign = new CS_REST_Campaigns(null, $auth);
-			$response = $draftCampaign->create($this->settings['clientId'], $params);
+			$response      = $draftCampaign->create($this->settings['clientId'], $params);
 
 			$email = new EmailModel();
 
-			$email->subject = $entry->subjectLine;
-			$email->fromName = $entry->fromName;
-			$email->fromEmail = $entry->fromEmail;
-			$email->body = $content['text'];
-			$email->htmlBody = $content['html'];
+			$email->subject   = $campaignEmail->subjectLine;
+			$email->fromName  = $campaignEmail->fromName;
+			$email->fromEmail = $campaignEmail->fromEmail;
+			$email->body      = $content['text'];
+			$email->htmlBody  = $content['html'];
 
 			if (!empty($toEmails))
 			{
@@ -153,7 +156,7 @@ class SproutEmail_CampaignMonitorService extends BaseApplicationComponent
 			{
 				sproutEmail()->info('Successfully created campaign in Campaign Monitor with ID: ' . $response->response);
 
-				$this->sendEntry($entry, $response->response, $auth);
+				$this->sendEmailViaService($campaignEmail, $response->response, $auth);
 
 				return array('id' => $response->response, 'emailModel' => $email);
 			}
@@ -169,17 +172,17 @@ class SproutEmail_CampaignMonitorService extends BaseApplicationComponent
 	/*
 	 * @return true|false according to the success of the request
 	 */
-	public function sendEntry(SproutEmail_EntryModel $entry, $campaignId, $auth)
+	public function sendEmailViaService(SproutEmail_CampaignEmailModel $campaignEmail, $campaignTypeId, $auth)
 	{
 		// Access the newly created draft campaign
-		$campaignToSend = new CS_REST_Campaigns($campaignId, $auth);
+		$campaignToSend = new CS_REST_Campaigns($campaignTypeId, $auth);
 
 		// Try to send the campaign 
 		try
 		{
 			$response = $campaignToSend->send(
 				array(
-					'ConfirmationEmail' => $entry->replyToEmail,
+					'ConfirmationEmail' => $campaignEmail->replyToEmail,
 					'SendDate'          => 'immediately'
 				)
 			);
@@ -192,7 +195,7 @@ class SproutEmail_CampaignMonitorService extends BaseApplicationComponent
 			}
 			else
 			{
-				sproutEmail()->info('Successfully sent campaign through Campaign Monitor with ID: ' . $campaignId);
+				sproutEmail()->info('Successfully sent campaign through Campaign Monitor with ID: ' . $campaignTypeId);
 
 				return true;
 			}
@@ -203,16 +206,6 @@ class SproutEmail_CampaignMonitorService extends BaseApplicationComponent
 
 			throw $e;
 		}
-	}
-
-	public function previewEntry(SproutEmail_EntryModel $entry, SproutEmail_CampaignModel $campaign)
-	{
-		$type = craft()->request->getPost('contentType', 'html');
-		$ext = strtolower($type) == 'text' ? '.txt' : null;
-		$params = array('entry' => $entry, 'campaign' => $campaign);
-		$body = sproutEmail()->renderSiteTemplateIfExists($campaign->template . $ext, $params);
-
-		return array('content' => TemplateHelper::getRaw($body));
 	}
 
 	/**
@@ -240,7 +233,7 @@ class SproutEmail_CampaignMonitorService extends BaseApplicationComponent
 			throw new Exception(Craft::t('API Key cannot be null.'));
 		}
 
-		$csRestSubscribers = new CS_REST_Subscribers($listId, $apiKey);
+		$csRestSubscribers      = new CS_REST_Subscribers($listId, $apiKey);
 		$subscriberCustomFields = array();
 
 		/*
@@ -298,7 +291,7 @@ class SproutEmail_CampaignMonitorService extends BaseApplicationComponent
 	public function getListStats($listId)
 	{
 		// Get stats belonging to a list with the given ID
-		$list = new CS_REST_Lists($listId, $this->getPostParams());
+		$list     = new CS_REST_Lists($listId, $this->getPostParams());
 		$response = $list->get_stats()->response;
 
 		return $this->tryJsonResponse($response);
@@ -310,7 +303,7 @@ class SproutEmail_CampaignMonitorService extends BaseApplicationComponent
 	public function getDetails($listId)
 	{
 		// Get stats belonging to a list with the given ID
-		$list = new CS_REST_Lists($listId, $this->getPostParams());
+		$list     = new CS_REST_Lists($listId, $this->getPostParams());
 		$response = $list->get()->response;
 
 		return $this->tryJsonResponse($response);
@@ -339,22 +332,20 @@ class SproutEmail_CampaignMonitorService extends BaseApplicationComponent
 		}
 	}
 
-	public function getEntryUrls($entryId, $template)
+	public function getCampaignEmailUrls($emailId, $template)
 	{
-		/*
-		 * @TODO: make sure these URLs are getting assigned
-		 * to a live, outside accessible URL
-		 */
+		// @todo: make sure these URLs are getting assigned
+		// to a live, outside accessible URL
 		// Assign html/text URLs for Campaign Monitor to scrape
 		$urls = array(
-			'html' => craft()->siteUrl . 'index.php/admin/actions/sproutEmail/entry/shareEntry?entryId=' . $entryId . '&template=html'
+			'html' => craft()->siteUrl . 'index.php/admin/actions/sproutEmail/campaignEmails/shareCampaignEmail?emailId=' . $emailId . '&template=html'
 		);
 
 		// Determine if a text template exists
 		$urls['hasText'] = sproutEmail()->doesSiteTemplateExist($template . '.txt');
 		if ($urls['hasText'])
 		{
-			$urls['text'] = craft()->siteUrl . 'index.php/admin/actions/sproutEmail/entry/shareEntry?entryId=' . $entryId . '&template=text';
+			$urls['text'] = craft()->siteUrl . 'index.php/admin/actions/sproutEmail/campaignEmails/shareCampaignEmail?emailId=' . $emailId . '&template=text';
 		}
 
 		return $urls;

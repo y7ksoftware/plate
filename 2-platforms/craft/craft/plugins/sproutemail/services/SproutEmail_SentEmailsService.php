@@ -24,15 +24,11 @@ class SproutEmail_SentEmailsService extends BaseApplicationComponent
 		$emailModel = $event->params['emailModel'];
 		$variables  = $event->params['variables'];
 		$emailKey   = isset($variables['emailKey']) ? $variables['emailKey'] : null;
-		$infoTable  = new SproutEmail_SentEmailInfoTableModel();
 
 		// If we have info set, grab the custom info that's already prepared
 		// If we don't have info, we probably have an email sent by Craft so
 		// we can continue with our generic info table model
-		if (isset($variables['info']))
-		{
-			$infoTable = $variables['info'];
-		}
+		$infoTable = isset($variables['info']) ? $variables['info'] : new SproutEmail_SentEmailInfoTableModel();
 
 		// Prepare our info table settings for Notifications
 		// -----------------------------------------------------------
@@ -76,15 +72,10 @@ class SproutEmail_SentEmailsService extends BaseApplicationComponent
 		$emailModel = $event->params['emailModel'];
 		$campaign   = $event->params['campaign'];
 
-		$infoTable  = new SproutEmail_SentEmailInfoTableModel();
-
 		// If we have info set, grab the custom info that's already prepared
 		// If we don't have info, we probably have an email sent by Craft so
 		// we can continue with our generic info table model
-		if (isset($variables['info']))
-		{
-			$infoTable = $variables['info'];
-		}
+		$infoTable = isset($variables['info']) ? $variables['info'] : new SproutEmail_SentEmailInfoTableModel();
 
 		// Prepare our info table settings for Campaigns
 		// -----------------------------------------------------------
@@ -115,6 +106,15 @@ class SproutEmail_SentEmailsService extends BaseApplicationComponent
 	 */
 	public function saveSentEmail($emailModel, SproutEmail_SentEmailInfoTableModel $infoTable)
 	{
+		// Make sure we should be saving Sent Emails
+		// -----------------------------------------------------------
+		$settings = craft()->plugins->getPlugin('sproutemail')->getSettings();
+
+		if (!$settings->enableSentEmails)
+		{
+			return false;
+		}
+
 		// decode subject if it is encoded
 		$isEncoded = preg_match("/=\?UTF-8\?B\?(.*)\?=/", $emailModel->subject, $matches);
 		if ($isEncoded)
@@ -215,7 +215,8 @@ class SproutEmail_SentEmailsService extends BaseApplicationComponent
 		$infoTable->source        = $plugin->getName();
 		$infoTable->sourceVersion = $plugin->getName() . ' ' . $plugin->getVersion();
 
-		$craftVersion            = 'Craft ' . craft()->getEditionName() . ' ' . craft()->getVersion() . '.' . craft()->getBuild();
+		$craftVersion = $this->_getCraftVersion();
+
 		$infoTable->craftVersion = $craftVersion;
 
 		return $infoTable;
@@ -229,7 +230,7 @@ class SproutEmail_SentEmailsService extends BaseApplicationComponent
 	 */
 	public function updateInfoTableWithCraftInfo($emailKey, $infoTable)
 	{
-		$craftVersion = 'Craft ' . craft()->getEditionName() . ' ' . craft()->getVersion() . '.' . craft()->getBuild();
+		$craftVersion = $this->_getCraftVersion();
 
 		$infoTable->emailType     = Craft::t('Craft CMS Email');
 		$infoTable->source        = 'Craft CMS';
@@ -268,5 +269,22 @@ class SproutEmail_SentEmailsService extends BaseApplicationComponent
 		$emailModel->body     = $renderedTextBody;
 
 		return $emailModel;
+	}
+
+	private function _getCraftVersion()
+	{
+		$version      = craft()->getVersion();
+		$craftVersion = '';
+
+		if (version_compare($version, '2.6.2951', '>='))
+		{
+			$craftVersion = 'Craft ' . craft()->getEditionName() .' '. $version;
+		}
+		else
+		{
+			$craftVersion = 'Craft ' . craft()->getEditionName() . ' ' . craft()->getVersion() . '.' . craft()->getBuild();
+		}
+
+		return $craftVersion;
 	}
 }

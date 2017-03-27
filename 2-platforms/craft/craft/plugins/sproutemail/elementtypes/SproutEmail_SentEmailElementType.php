@@ -45,6 +45,9 @@ class SproutEmail_SentEmailElementType extends BaseElementType
 		return true;
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getStatuses()
 	{
 		return array(
@@ -82,6 +85,11 @@ class SproutEmail_SentEmailElementType extends BaseElementType
 		}
 	}
 
+	/**
+	 * @param null $context
+	 *
+	 * @return array
+	 */
 	public function getSources($context = null)
 	{
 
@@ -102,22 +110,15 @@ class SproutEmail_SentEmailElementType extends BaseElementType
 	public function defineAvailableTableAttributes()
 	{
 		$attributes = array(
-			'emailSubject'           => array('label' => Craft::t('Subject')),
-			'fromEmail'              => array('label' => Craft::t('From Email')),
-			'campaignNotificationId' => array('label' => Craft::t('Notification Type')),
-			'dateCreated'            => array('label' => Craft::t('Date Created')),
-			'dateUpdated'            => array('label' => Craft::t('Date Updated'))
+			'dateSent'     => array('label' => Craft::t('Date Sent')),
+			'toEmail'      => array('label' => Craft::t('Recipient')),
+			'emailSubject' => array('label' => Craft::t('Subject')),
+			'preview'      => array('label' => Craft::t('Preview')),
+			'resend'       => array('label' => Craft::t('Resend')),
+			'info'         => array('label' => Craft::t(''))
 		);
 
 		return $attributes;
-	}
-
-	public function defineSortableAttributes()
-	{
-		return array(
-			'emailSubject' => Craft::t('Subject'),
-			'dateCreated'  => Craft::t('Date Sent')
-		);
 	}
 
 	/**
@@ -129,13 +130,25 @@ class SproutEmail_SentEmailElementType extends BaseElementType
 	{
 		$attributes = array();
 
-		$attributes[] = 'emailSubject';
-		$attributes[] = 'fromEmail';
+		$attributes[] = 'dateSent';
 		$attributes[] = 'toEmail';
-		$attributes[] = 'dateCreated';
-		$attributes[] = 'dateUpdated';
+		$attributes[] = 'emailSubject';
+		$attributes[] = 'preview';
+		$attributes[] = 'resend';
+		$attributes[] = 'info';
 
 		return $attributes;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function defineSortableAttributes()
+	{
+		return array(
+			'emailSubject' => Craft::t('Subject'),
+			'dateCreated'  => Craft::t('Date Sent')
+		);
 	}
 
 	/**
@@ -153,11 +166,37 @@ class SproutEmail_SentEmailElementType extends BaseElementType
 		);
 	}
 
+	/**
+	 * @param BaseElementModel $element
+	 * @param string           $attribute
+	 *
+	 * @return mixed|string
+	 */
 	public function getTableAttributeHtml(BaseElementModel $element, $attribute)
 	{
 
 		switch ($attribute)
 		{
+			case "preview":
+				return '<a class="prepare" data-action="sproutEmail/sentEmail/getViewContentModal"' .
+					'data-email-id="' . $element->id . '"' .
+					'href="' . UrlHelper::getCpUrl('sproutemail/sentemails/view/' . $element->id) . '">' .
+					Craft::t("View Content") .
+					'</a>';
+				break;
+
+			case "resend":
+				return '<a class="prepare" 
+								data-action="sproutEmail/sentEmail/getResendModal" 
+								data-email-id="' . $element->id . '" 
+								href="' . UrlHelper::getCpUrl('sproutemail/sentemails/view/' . $element->id) . '">' .
+					Craft::t("Prepare") .
+					'</a>';
+				break;
+
+			case "info":
+				return '<span class="tableRowInfo" data-icon="info"></span>';
+				break;
 
 			default:
 			{
@@ -166,21 +205,22 @@ class SproutEmail_SentEmailElementType extends BaseElementType
 		}
 	}
 
-	public function getIndexHtml(
-		$criteria,
-		$disabledElementIds,
-		$viewState,
-		$sourceKey,
-		$context,
-		$includeContainer,
-		$showCheckboxes
-	)
+	/**
+	 * @param ElementCriteriaModel $criteria
+	 * @param array                $disabledElementIds
+	 * @param array                $viewState
+	 * @param null|string          $sourceKey
+	 * @param null|string          $context
+	 * @param bool                 $includeContainer
+	 * @param bool                 $showCheckboxes
+	 *
+	 * @return string
+	 */
+	public function getIndexHtml($criteria, $disabledElementIds, $viewState, $sourceKey, $context, $includeContainer, $showCheckboxes)
 	{
-
 		$order = isset($viewState['order']) ? $viewState['order'] : 'dateCreated';
-		$sort = isset($viewState['sort']) ? $viewState['sort'] : 'desc';
+		$sort  = isset($viewState['sort']) ? $viewState['sort'] : 'desc';
 
-		$criteria->limit = null;
 		$criteria->order = sprintf('%s %s', $order, $sort);
 
 		// Add this to prevent search error
@@ -192,14 +232,11 @@ class SproutEmail_SentEmailElementType extends BaseElementType
 		craft()->templates->includeJsResource('sproutemail/js/sproutmodal.js');
 		craft()->templates->includeJs('var sproutModalInstance = new SproutModal(); sproutModalInstance.init();');
 
-		return craft()->templates->render(
-			'sproutemail/sentemails/_entryindex', array(
-				'context'            => $context,
-				'elementType'        => new ElementTypeVariable($this),
-				'disabledElementIds' => $disabledElementIds,
-				'elements'           => $criteria->find(),
-			)
-		);
+		$html = parent::getIndexHtml($criteria, $disabledElementIds, $viewState, $sourceKey, $context, $includeContainer, $showCheckboxes);
+
+		$modal = craft()->templates->render('sproutemail/_modals/box');
+
+		return $html . $modal;
 	}
 
 	/**
@@ -226,6 +263,7 @@ class SproutEmail_SentEmailElementType extends BaseElementType
 				$criteria->order = str_replace('dateUpdated', 'sentemail.dateUpdated', $criteria->order);
 			}
 		}
+
 		if ($criteria->toEmail)
 		{
 			$query->andWhere(DbHelper::parseParam('sentemail.toEmail', $criteria->toEmail, $query->params));
@@ -235,6 +273,25 @@ class SproutEmail_SentEmailElementType extends BaseElementType
 	public function defineSearchableAttributes()
 	{
 		return array('title', 'toEmail');
+	}
+
+	/**
+	 * @inheritDoc IElementType::getAvailableActions()
+	 *
+	 * @param string|null $source
+	 *
+	 * @return array|null
+	 */
+	public function getAvailableActions($source = null)
+	{
+		$deleteAction = craft()->elements->getAction('SproutEmail_SentEmailDelete');
+
+		$deleteAction->setParams(array(
+			'confirmationMessage' => Craft::t('Are you sure you want to delete the selected emails?'),
+			'successMessage'      => Craft::t('Emails deleted.'),
+		));
+
+		return array($deleteAction);
 	}
 
 	/**

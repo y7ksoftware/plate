@@ -1,7 +1,7 @@
 <?php
 namespace Craft;
 
-class SproutEmail_CopyPasteMailer extends SproutEmailBaseMailer
+class SproutEmail_CopyPasteMailer extends SproutEmailBaseMailer implements SproutEmailCampaignEmailSenderInterface
 {
 	protected $service;
 
@@ -20,69 +20,76 @@ class SproutEmail_CopyPasteMailer extends SproutEmailBaseMailer
 		return $this->service;
 	}
 
-	public function getTitle()
-	{
-		return 'Copy/Paste';
-	}
-
+	/**
+	 * @return string
+	 */
 	public function getName()
 	{
 		return 'copypaste';
 	}
 
+	/**
+	 * @return string
+	 */
+	public function getTitle()
+	{
+		return 'Copy/Paste';
+	}
+
+	/**
+	 * @return string
+	 */
 	public function getDescription()
 	{
 		return "Copy and paste your email campaigns to better (or worse) places.";
 	}
 
-	public function getPrepareModalHtml(SproutEmail_EntryModel $entry, SproutEmail_CampaignModel $campaign)
+	/**
+	 * @return string
+	 */
+	public function getActionForPrepareModal()
+	{
+		return 'sproutEmail/campaignEmails/sendCampaignEmail';
+	}
+
+	/**
+	 * @param SproutEmail_CampaignEmailModel $campaignEmail
+	 * @param SproutEmail_CampaignTypeModel  $campaignType
+	 *
+	 * @return mixed
+	 */
+	public function getPrepareModalHtml(SproutEmail_CampaignEmailModel $campaignEmail, SproutEmail_CampaignTypeModel $campaignType)
 	{
 		craft()->templates->includeJsResource('sproutemail/js/mailers/copypaste.js');
 
 		return craft()->templates->render('sproutemail/_modal', array(
-			'entry'    => $entry,
-			'campaign' => $campaign
+			'entry'    => $campaignEmail,
+			'campaign' => $campaignType
 		));
 	}
 
-	public function getActionForPrepareModal()
-	{
-		return 'sproutEmail/entry/export';
-	}
-
-	public function getPreviewModalHtml(SproutEmail_EntryModel $entry, SproutEmail_CampaignModel $campaign)
-	{
-		return $this->getService()->previewEntry($entry, $campaign);
-	}
-
-	public function getActionForPreview()
-	{
-		return 'sproutEmail/entry/preview';
-	}
-
+	/**
+	 * Gives mailers the ability to include their own modal resources and register their dynamic action handlers
+	 */
 	public function includeModalResources()
 	{
 		craft()->templates->includeJsResource('sproutemail/js/mailers/copypaste.js');
 	}
 
-	public function exportEntry(SproutEmail_EntryModel $entry, SproutEmail_CampaignModel $campaign)
+	/**
+	 * @param SproutEmail_CampaignEmailModel $campaignEmail
+	 * @param SproutEmail_CampaignTypeModel  $campaignType
+	 *
+	 * @return mixed
+	 * @throws \Exception
+	 */
+	public function sendCampaignEmail(SproutEmail_CampaignEmailModel $campaignEmail, SproutEmail_CampaignTypeModel $campaignType)
 	{
 		$this->includeModalResources();
-		try
-		{
-			return $this->getService()->exportEntry($entry, $campaign);
-		}
-		catch (\Exception $e)
-		{
-			throw $e;
-		}
-	}
 
-	public function previewEntry(SproutEmail_EntryModel $entry, SproutEmail_CampaignModel $campaign)
-	{
 		try
 		{
-			return $this->getService()->previewEntry($entry, $campaign);
+			return $this->getService()->sendCampaignEmail($campaignEmail, $campaignType);
 		}
 		catch (\Exception $e)
 		{

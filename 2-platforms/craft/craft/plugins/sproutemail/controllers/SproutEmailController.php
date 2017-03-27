@@ -4,11 +4,15 @@ namespace Craft;
 class SproutEmailController extends BaseController
 {
 	/**
+	 * Determine which Settings should display on the Settings template
+	 *
 	 * @throws HttpException
 	 */
 	public function actionSettingsIndexTemplate()
 	{
-		if (!sproutEmail()->checkPermission())
+		$currentUser = craft()->userSession->getUser();
+
+		if (!$currentUser->can('editSproutEmailSettings'))
 		{
 			$this->redirect('sproutemail');
 		}
@@ -18,21 +22,31 @@ class SproutEmailController extends BaseController
 			$this->redirect('sproutemail/settings/general');
 		}
 
-		$variables['settingsTemplate'] = craft()->request->getSegment(3);
+		$settingsTemplate = craft()->request->getSegment(3) . '/index';
 
-		$variables['settings'] = craft()->plugins->getPlugin('sproutemail')->getSettings();
+		if (craft()->request->getSegment(3) == 'integrations')
+		{
+			$settingsTemplate = 'integrations/' . craft()->request->getSegment(4);
+		}
 
-		$this->renderTemplate('sproutemail/settings/_tabs/' . $variables['settingsTemplate'], $variables);
+		$settings = craft()->plugins->getPlugin('sproutemail')->getSettings();
+
+		$this->renderTemplate('sproutemail/settings/' . $settingsTemplate, array(
+			'settingsTemplate' => $settingsTemplate,
+			'settings'         => $settings
+		));
 	}
 
 	/**
+	 * Save plugin settings
+	 *
 	 * @return void
 	 */
 	public function actionSavePluginSettings()
 	{
 		$this->requirePostRequest();
 
-		$plugin = craft()->plugins->getPlugin('sproutemail');
+		$plugin   = craft()->plugins->getPlugin('sproutemail');
 		$settings = craft()->request->getPost('settings');
 
 		if (craft()->plugins->savePluginSettings($plugin, $settings))

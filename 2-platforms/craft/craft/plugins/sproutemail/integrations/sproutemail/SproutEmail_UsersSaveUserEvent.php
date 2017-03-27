@@ -25,10 +25,14 @@ class SproutEmail_UsersSaveUserEvent extends SproutEmailBaseEvent
 			$context['groups'] = $this->getAllGroups();
 		}
 
-		$options = $context['options']['craft']['saveUser']['userGroupIds'];
-		$context['fieldValue'] = sproutEmail()->mailers->getCheckboxFieldValue($options);
+		$context['fieldValue'] = '';
 
-		return craft()->templates->render('sproutemail/_events/saveUser', $context);
+		if (isset($context['options']['craft']['saveUser']['userGroupIds']))
+		{
+			$options = $context['options']['craft']['saveUser']['userGroupIds'];
+			$context['fieldValue'] = sproutEmail()->mailers->getCheckboxFieldValue($options);
+		}
+		return craft()->templates->render('sproutemail/_integrations/events/saveUser', $context);
 	}
 
 	public function prepareOptions()
@@ -64,7 +68,7 @@ class SproutEmail_UsersSaveUserEvent extends SproutEmailBaseEvent
 		// If any user groups were checked, make sure the user is in one of the groups
 		if (is_array($options['craft']['saveUser']['userGroupIds']) && !empty($options['craft']['saveUser']['userGroupIds']) && count($options['craft']['saveUser']['userGroupIds']))
 		{
-			$inGroup = false;
+			$inGroup            = false;
 			$existingUserGroups = $user->getGroups('id');
 
 			// When saving a new user, we grab our groups from the post request
@@ -86,7 +90,7 @@ class SproutEmail_UsersSaveUserEvent extends SproutEmailBaseEvent
 
 			if (!$inGroup)
 			{
-				SproutEmailPlugin::log(Craft::t('Saved user not in any selected User Group.'));
+				SproutEmailPlugin::log(Craft::t('Saved user not in any selected User Group.'), LogLevel::Warning);
 
 				return false;
 			}
@@ -95,21 +99,21 @@ class SproutEmail_UsersSaveUserEvent extends SproutEmailBaseEvent
 		if (!$whenNew && !$whenUpdated)
 		{
 			SproutEmailPlugin::log(Craft::t("No settings have been selected. Please select 'When a user is created' or 'When
-			a user is updated' from the options on the Rules tab."));
+			a user is updated' from the options on the Rules tab."), LogLevel::Warning);
 
 			return false;
 		}
 
 		if (($whenNew && !$isNewUser) && !$whenUpdated)
 		{
-			SproutEmailPlugin::log(Craft::t("No match. 'When a user is created' is selected but the user is being updated."));
+			SproutEmailPlugin::log(Craft::t("No match. 'When a user is created' is selected but the user is being updated."), LogLevel::Warning);
 
 			return false;
 		}
 
 		if (($whenUpdated && $isNewUser) && !$whenNew)
 		{
-			SproutEmailPlugin::log(Craft::t("No match. 'When a user is updated' is selected but the user is new."));
+			SproutEmailPlugin::log(Craft::t("No match. 'When a user is updated' is selected but the user is new."), LogLevel::Warning);
 
 			return false;
 		}

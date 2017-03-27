@@ -13,7 +13,7 @@ class SproutEmail_SetStatusElementAction extends BaseElementAction
 	 */
 	public function getTriggerHtml()
 	{
-		return craft()->templates->render('sproutemail/_actions/setStatus');
+		return craft()->templates->render('sproutemail/_components/elementactions/setStatus');
 	}
 
 	/**
@@ -24,23 +24,23 @@ class SproutEmail_SetStatusElementAction extends BaseElementAction
 	public function performAction(ElementCriteriaModel $criteria)
 	{
 
-		$status = $this->getParams()->status;
+		$status   = $this->getParams()->status;
 		$archived = 0;
-		$enable = 0;
+		$enable   = 0;
 
 		switch ($status)
 		{
-			case SproutEmail_EntryModel::ENABLED:
+			case SproutEmail_CampaignEmailModel::ENABLED:
 			{
 				$enable = 1;
 				break;
 			}
-			case SproutEmail_EntryModel::DISABLED:
+			case SproutEmail_CampaignEmailModel::DISABLED:
 			{
 				$enable = 0;
 				break;
 			}
-			case SproutEmail_EntryModel::ARCHIVED:
+			case SproutEmail_CampaignEmailModel::ARCHIVED:
 			{
 				$archived = 1;
 				break;
@@ -56,7 +56,7 @@ class SproutEmail_SetStatusElementAction extends BaseElementAction
 			array('in', 'id', $elementIds)
 		);
 
-		if ($status == SproutEmail_EntryModel::ENABLED)
+		if ($status == SproutEmail_CampaignEmailModel::ENABLED)
 		{
 			// Enable their locale as well
 			craft()->db->createCommand()->update(
@@ -95,7 +95,7 @@ class SproutEmail_SetStatusElementAction extends BaseElementAction
 				'values'   => array(
 					BaseElementModel::ENABLED,
 					BaseElementModel::DISABLED,
-					SproutEmail_EntryModel::ARCHIVED
+					SproutEmail_CampaignEmailModel::ARCHIVED
 				),
 				'required' => true
 			)

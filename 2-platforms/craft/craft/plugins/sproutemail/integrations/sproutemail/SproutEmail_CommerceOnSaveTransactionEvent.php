@@ -56,10 +56,15 @@ class SproutEmail_CommerceOnSaveTransactionEvent extends SproutEmailBaseEvent
 	{
 		$context['statuses'] = $this->getAllTransactionStatuses();
 
-		$options = $context['options']['commerceStatuses'];
-		$context['fieldValue'] = sproutEmail()->mailers->getCheckboxFieldValue($options);
+		$context['fieldValue'] = '';
 
-		return craft()->templates->render('sproutemail/_events/saveTransaction', $context);
+		if (isset($context['options']['commerceStatuses']))
+		{
+			$options               = $context['options']['commerceStatuses'];
+			$context['fieldValue'] = sproutEmail()->mailers->getCheckboxFieldValue($options);
+		}
+
+		return craft()->templates->render('sproutemail/_integrations/events/saveTransaction', $context);
 	}
 
 	/**
@@ -75,11 +80,11 @@ class SproutEmail_CommerceOnSaveTransactionEvent extends SproutEmailBaseEvent
 	}
 
 	/**
-	 * Returns whether or not the entry meets the criteria necessary to trigger the event
+	 * Returns whether or not the transaction meets the criteria necessary to trigger the event
 	 *
-	 * @param mixed      $options
-	 * @param EntryModel $entry
-	 * @param array      $params
+	 * @param mixed                     $options
+	 * @param Commerce_TransactionModel $model
+	 * @param array                     $params
 	 *
 	 * @return bool
 	 */
@@ -122,7 +127,7 @@ class SproutEmail_CommerceOnSaveTransactionEvent extends SproutEmailBaseEvent
 			Commerce_TransactionRecord::STATUS_SUCCESS,
 			Commerce_TransactionRecord::STATUS_FAILED
 		];
-		$options = array();
+		$options  = array();
 		if (!empty($statuses))
 		{
 			foreach ($statuses as $status)
@@ -150,7 +155,7 @@ class SproutEmail_CommerceOnSaveTransactionEvent extends SproutEmailBaseEvent
 		// Return the oldest order
 		if (!empty($order))
 		{
-			$orderId = $order->id;
+			$orderId      = $order->id;
 			$transactions = craft()->commerce_transactions->getAllTransactionsByOrderId($orderId);
 			if (!empty($transactions))
 			{

@@ -6,19 +6,19 @@ namespace Craft;
  *
  * @package Craft
  *
- * @property SproutEmail_MailerService        $mailers
- * @property SproutEmail_EntriesService       $entries
- * @property SproutEmail_CampaignsService     $campaigns
- * @property SproutEmail_NotificationsService $notifications
- * @property SproutEmail_DefaultMailerService $defaultmailer
- * @property SproutEmail_SentEmailsService    $sentEmails
+ * @property SproutEmail_MailerService             $mailers
+ * @property SproutEmail_CampaignTypesService      $campaignTypes
+ * @property SproutEmail_CampaignEmailsService     $campaignEmails
+ * @property SproutEmail_NotificationEmailsService $notificationEmails
+ * @property SproutEmail_DefaultMailerService      $defaultmailer
+ * @property SproutEmail_SentEmailsService         $sentEmails
  */
 class SproutEmailService extends BaseApplicationComponent
 {
 	public $mailers;
-	public $entries;
-	public $campaigns;
-	public $notifications;
+	public $campaignTypes;
+	public $campaignEmails;
+	public $notificationEmails;
 	public $defaultmailer;
 	public $sentEmails;
 
@@ -28,12 +28,12 @@ class SproutEmailService extends BaseApplicationComponent
 	{
 		parent::init();
 
-		$this->mailers       = Craft::app()->getComponent('sproutEmail_mailer');
-		$this->defaultmailer = Craft::app()->getComponent('sproutEmail_defaultMailer');
-		$this->entries       = Craft::app()->getComponent('sproutEmail_entries');
-		$this->campaigns     = Craft::app()->getComponent('sproutEmail_campaigns');
-		$this->notifications = Craft::app()->getComponent('sproutEmail_notifications');
-		$this->sentEmails    = Craft::app()->getComponent('sproutEmail_sentEmails');
+		$this->mailers            = Craft::app()->getComponent('sproutEmail_mailer');
+		$this->defaultmailer      = Craft::app()->getComponent('sproutEmail_defaultMailer');
+		$this->campaignEmails     = Craft::app()->getComponent('sproutEmail_campaignEmails');
+		$this->campaignTypes      = Craft::app()->getComponent('sproutEmail_campaignTypes');
+		$this->notificationEmails = Craft::app()->getComponent('sproutEmail_notificationEmails');
+		$this->sentEmails         = Craft::app()->getComponent('sproutEmail_sentEmails');
 	}
 
 	/**
@@ -54,28 +54,28 @@ class SproutEmailService extends BaseApplicationComponent
 	/**
 	 * Allows us to render an object template without creating a fatal error
 	 *
-	 * @param string $str
-	 * @param object $obj
+	 * @param string $string
+	 * @param object $object
 	 *
 	 * @return string
 	 */
-	public function renderObjectTemplateSafely($str, $obj)
+	public function renderObjectTemplateSafely($string, $object)
 	{
 		try
 		{
-			return craft()->templates->renderObjectTemplate($str, $obj);
+			return craft()->templates->renderObjectTemplate($string, $object);
 		}
 		catch (\Exception $e)
 		{
-			$this->error($e->getMessage(), 'template');
+			$this->error(Craft::t('Cannot render template. Check template file and object variables.'), 'template');
 		}
 	}
 
 	/**
 	 * @param BaseModel   $model
-	 * @param array|mixed $obj
+	 * @param array|mixed $object
 	 */
-	public function renderObjectContentSafely(&$model, $obj)
+	public function renderObjectContentSafely(&$model, $object)
 	{
 		$content = $model->getContent();
 
@@ -83,7 +83,7 @@ class SproutEmailService extends BaseApplicationComponent
 		{
 			if (is_string($value) && stripos($value, '{') !== false)
 			{
-				$model->getContent()->{$attribute} = $this->renderObjectTemplateSafely($value, $obj);
+				$model->getContent()->{$attribute} = $this->renderObjectTemplateSafely($value, $object);
 			}
 		}
 	}
@@ -100,7 +100,7 @@ class SproutEmailService extends BaseApplicationComponent
 	{
 		$renderedTemplate = null;
 
-		// @todo - can't explain this
+		// @todo - look into how to explain this
 		// If a blank template is passed in, Craft renders the index template
 		// If a template is set specifically to the value `test` Craft also
 		// appears to render the index template.
@@ -109,8 +109,8 @@ class SproutEmailService extends BaseApplicationComponent
 			return $renderedTemplate;
 		}
 
-		$oldPath = craft()->path->getTemplatesPath();
-		craft()->path->setTemplatesPath(craft()->path->getSiteTemplatesPath());
+		$oldPath = craft()->templates->getTemplatesPath();
+		craft()->templates->setTemplatesPath(craft()->path->getSiteTemplatesPath());
 
 		try
 		{
@@ -118,10 +118,19 @@ class SproutEmailService extends BaseApplicationComponent
 		}
 		catch (\Exception $e)
 		{
-			$this->error($e->getMessage(), 'template');
+			// Specify template .html if no .txt
+			$message = $e->getMessage();
+
+			if (strpos($template, '.txt') === false)
+			{
+				$message = str_replace($template, $template . '.html', $message);
+			}
+
+			// @todo - update error handling
+			$this->error($message, 'template-' . $template);
 		}
 
-		craft()->path->setTemplatesPath($oldPath);
+		craft()->templates->setTemplatesPath($oldPath);
 
 		return $renderedTemplate;
 	}
@@ -135,13 +144,13 @@ class SproutEmailService extends BaseApplicationComponent
 	 */
 	public function doesSiteTemplateExist($template)
 	{
-		$path = craft()->path->getTemplatesPath();
+		$path = craft()->templates->getTemplatesPath();
 
-		craft()->path->setTemplatesPath(craft()->path->getSiteTemplatesPath());
+		craft()->templates->setTemplatesPath(craft()->path->getSiteTemplatesPath());
 
 		$exists = craft()->templates->doesTemplateExist($template);
 
-		craft()->path->setTemplatesPath($path);
+		craft()->templates->setTemplatesPath($path);
 
 		return $exists;
 	}
@@ -165,50 +174,50 @@ class SproutEmailService extends BaseApplicationComponent
 	/**
 	 * Logs an info message to the plugin logs
 	 *
-	 * @param mixed $msg
-	 * @param array $vars
+	 * @param mixed $message
+	 * @param array $variables
 	 */
-	public function info($msg, array $vars = array())
+	public function info($message, array $variables = array())
 	{
-		if (is_string($msg))
+		if (is_string($message))
 		{
-			$msg = Craft::t($msg, $vars);
+			$message = Craft::t($message, $variables);
 		}
 		else
 		{
-			$msg = print_r($msg, true);
+			$message = print_r($message, true);
 		}
 
-		SproutEmailPlugin::log($msg, LogLevel::Info);
+		SproutEmailPlugin::log($message, LogLevel::Info);
 	}
 
 	/**
 	 * Logs an error in cases where it makes more sense than to throw an exception
 	 *
-	 * @param mixed $msg
-	 * @param array $vars
+	 * @param mixed $message
+	 * @param array $variables
 	 */
-	public function error($msg, $key = '', array $vars = array())
+	public function error($message, $key = '', array $variables = array())
 	{
-		if (is_string($msg))
+		if (is_string($message))
 		{
-			$msg = Craft::t($msg, $vars);
+			$message = Craft::t($message, $variables);
 		}
 		else
 		{
-			$msg = print_r($msg, true);
+			$message = print_r($message, true);
 		}
 
 		if (!empty($key))
 		{
-			$this->error[$key] = $msg;
+			$this->error[$key] = $message;
 		}
 		else
 		{
-			$this->error = $msg;
+			$this->error = $message;
 		}
 
-		SproutEmailPlugin::log($msg, LogLevel::Error);
+		SproutEmailPlugin::log($message, LogLevel::Error);
 	}
 
 	/**
@@ -249,11 +258,12 @@ class SproutEmailService extends BaseApplicationComponent
 	}
 
 	/**
-	 * Handles event to attach files to email
+	 * Attach files during Craft onBeforeSendEmail event
 	 *
 	 * @param Event $event
+	 *
+	 * @return bool
 	 */
-
 	public function handleOnBeforeSendEmail(Event $event)
 	{
 		$variables = $event->params['variables'];
@@ -264,26 +274,26 @@ class SproutEmailService extends BaseApplicationComponent
 			return true;
 		}
 
-		$entry                 = $variables['sproutEmailEntry'];
-		$enableFileAttachments = $entry->enableFileAttachments;
+		$notificationEmail     = $variables['sproutEmailEntry'];
+		$enableFileAttachments = $notificationEmail->enableFileAttachments;
 
 		if (isset($variables['elementEntry']) && $enableFileAttachments)
 		{
-			$entry = $variables['elementEntry'];
+			$notificationEmail = $variables['elementEntry'];
 
 			/**
 			 * @var $field FieldModel
 			 */
-			if (method_exists($entry->getFieldLayout(), 'getFields'))
+			if (method_exists($notificationEmail->getFieldLayout(), 'getFields'))
 			{
-				foreach ($entry->getFieldLayout()->getFields() as $fieldLayoutField)
+				foreach ($notificationEmail->getFieldLayout()->getFields() as $fieldLayoutField)
 				{
 					$field = $fieldLayoutField->getField();
 					$type  = $field->getFieldType();
 
 					if (get_class($type) === 'Craft\\AssetsFieldType')
 					{
-						$this->attachAsset($entry, $field, $event);
+						$this->attachAsset($notificationEmail, $field, $event);
 					}
 					// @todo validate assets within MatrixFieldType
 				}
@@ -306,6 +316,7 @@ class SproutEmailService extends BaseApplicationComponent
 		if ($criteria instanceof ElementCriteriaModel)
 		{
 			$assets = $criteria->find();
+
 			if ($assets)
 			{
 				$this->attachAssetFilesToEmailModel($event->params['emailModel'], $assets);
@@ -315,13 +326,13 @@ class SproutEmailService extends BaseApplicationComponent
 
 	/**
 	 * @param mixed $message
-	 * @param array $vars
+	 * @param array $variables
 	 */
-	public function log($message, array $vars = array())
+	public function log($message, array $variables = array())
 	{
 		if (is_string($message))
 		{
-			$message = Craft::t($message, $vars);
+			$message = Craft::t($message, $variables);
 		}
 		else
 		{
@@ -374,29 +385,13 @@ class SproutEmailService extends BaseApplicationComponent
 	public function hasExamples()
 	{
 		$path = craft()->path->getSiteTemplatesPath() . 'sproutemail';
+
 		if (file_exists($path))
 		{
 			return true;
 		}
 
 		return false;
-	}
-
-	/**
-	 * Return true if has permission
-	 *
-	 * @return bool
-	 */
-	public function checkPermission()
-	{
-		$user = craft()->userSession->getUser();
-
-		if (!$user->can('editSproutEmailSettings'))
-		{
-			return false;
-		}
-
-		return true;
 	}
 
 	/**
@@ -411,20 +406,21 @@ class SproutEmailService extends BaseApplicationComponent
 
 	public function sendEmail(EmailModel $emailModel, $variables = array())
 	{
-		try
-		{
-			return craft()->email->sendEmail($emailModel, $variables);
-		}
-		catch (\Exception $e)
-		{
-			$message = $e->getMessage();
+		$errorMessage = $this->getError();
 
-			sproutEmail()->error($message);
+		if (!empty($errorMessage))
+		{
+			if (is_array($errorMessage))
+			{
+				$errorMessage = implode("\n", $errorMessage);
+			}
 
-			$this->handleOnSendEmailErrorEvent($message, $emailModel, $variables);
+			$this->handleOnSendEmailErrorEvent($errorMessage, $emailModel, $variables);
 
 			return false;
 		}
+
+		return craft()->email->sendEmail($emailModel, $variables);
 	}
 
 	public function getValidAndInvalidRecipients($recipients)
@@ -502,9 +498,39 @@ class SproutEmailService extends BaseApplicationComponent
 		$deliveryStatus = (isset($event->params['deliveryStatus'])) ? $event->params['deliveryStatus'] : null;
 		$message        = (isset($event->params['message'])) ? $event->params['message'] : Craft::t("Unknown error");
 
-		// Add a few additional variables to our info table
-		$event->params['variables']['info']->deliveryStatus = $deliveryStatus;
-		$event->params['variables']['info']->message        = $message;
+		if (isset($event->params['variables']['info']))
+		{
+			// Add a few additional variables to our info table
+			$event->params['variables']['info']->deliveryStatus = $deliveryStatus;
+			$event->params['variables']['info']->message        = $message;
+		}
+		else
+		{
+			// This is for logging errors before sproutEmail()->sendEmail is called.
+			$infoTable = new SproutEmail_SentEmailInfoTableModel();
+
+			$infoTable->deliveryStatus = $deliveryStatus;
+			$infoTable->message        = $message;
+
+			$event->params['variables']['info'] = $infoTable;
+		}
+
+		if (isset($event->params['variables']['info']))
+		{
+			// Add a few additional variables to our info table
+			$event->params['variables']['info']->deliveryStatus = $deliveryStatus;
+			$event->params['variables']['info']->message        = $message;
+		}
+		else
+		{
+			// This is for logging errors before sproutEmail()->sendEmail is called.
+			$infoTable = new SproutEmail_SentEmailInfoTableModel();
+
+			$infoTable->deliveryStatus = $deliveryStatus;
+			$infoTable->message        = $message;
+
+			$event->params['variables']['info'] = $infoTable;
+		}
 
 		sproutEmail()->sentEmails->logSentEmail($event);
 	}
@@ -528,9 +554,9 @@ class SproutEmailService extends BaseApplicationComponent
 	 *
 	 * @throws \CException
 	 */
-	public function onSendCampaign(Event $event)
+	public function onSendSproutEmail(Event $event)
 	{
-		$this->raiseEvent('onSendCampaign', $event);
+		$this->raiseEvent('onSendSproutEmail', $event);
 	}
 
 	/**
@@ -543,5 +569,83 @@ class SproutEmailService extends BaseApplicationComponent
 	public function onSetStatus(Event $event)
 	{
 		$this->raiseEvent('onSetStatus', $event);
+	}
+
+	/**
+	 * @param mixed|null $element
+	 *
+	 * @throws \Exception
+	 * @return array|string
+	 */
+	public function getRecipients($element = null, $model)
+	{
+		$recipientsString = $model->getAttribute('recipients');
+
+		// Possibly called from entry edit screen
+		if (is_null($element))
+		{
+			return $recipientsString;
+		}
+
+		// Previously converted to array somehow?
+		if (is_array($recipientsString))
+		{
+			return $recipientsString;
+		}
+
+		// Previously stored as JSON string?
+		if (stripos($recipientsString, '[') === 0)
+		{
+			return JsonHelper::decode($recipientsString);
+		}
+
+		// Still a string with possible twig generator code?
+		if (stripos($recipientsString, '{') !== false)
+		{
+			try
+			{
+				$recipients = craft()->templates->renderObjectTemplate(
+					$recipientsString,
+					$element
+				);
+
+				return array_unique(ArrayHelper::filterEmptyStringsFromArray(ArrayHelper::stringToArray($recipients)));
+			}
+			catch (\Exception $e)
+			{
+				throw $e;
+			}
+		}
+
+		// Just a regular CSV list
+		if (!empty($recipientsString))
+		{
+			return ArrayHelper::filterEmptyStringsFromArray(ArrayHelper::stringToArray($recipientsString));
+		}
+
+		return array();
+	}
+
+	public function getFirstAvailableTab()
+	{
+		$settings = craft()->plugins->getPlugin('sproutemail')->getSettings();
+
+		switch (true)
+		{
+			case $settings->enableCampaignEmails:
+				return 'sproutemail/campaigns';
+
+			case $settings->enableNotificationEmails:
+				return 'sproutemail/notifications';
+
+			case $settings->enableSentEmails:
+				return 'sproutemail/sentemails';
+
+			case $settings->enableRecipientLists:
+				return 'sproutemail/recipients';
+
+			default:
+				return 'sproutemail/settings';
+		}
 	}
 }

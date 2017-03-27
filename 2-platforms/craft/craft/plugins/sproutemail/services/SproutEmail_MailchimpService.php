@@ -62,6 +62,10 @@ class SproutEmail_MailchimpService extends BaseApplicationComponent
 			{
 				return false;
 			}
+			else
+			{
+				return $e->getMessage();
+			}
 		}
 	}
 
@@ -131,37 +135,27 @@ class SproutEmail_MailchimpService extends BaseApplicationComponent
 		}
 	}
 
-	public function previewEntry(SproutEmail_EntryModel $entry, SproutEmail_CampaignModel $campaign)
-	{
-		$type = craft()->request->getPost('contentType', 'html');
-		$ext = strtolower($type) == 'text' ? '.txt' : null;
-		$params = array('entry' => $entry, 'campaign' => $campaign);
-		$body = sproutEmail()->renderSiteTemplateIfExists($campaign->template . $ext, $params);
-
-		return array('content' => TemplateHelper::getRaw($body));
-	}
-
 	/**
-	 * @param SproutEmail_EntryModel    $entry
-	 * @param SproutEmail_CampaignModel $campaign
-	 * @param bool                      $sendOnExport
+	 * @param SproutEmail_CampaignEmailModel $campaignEmail
+	 * @param SproutEmail_CampaignTypeModel  $campaignType
+	 * @param bool                           $sendOnExport
 	 *
 	 * @return array
 	 * @throws \Exception
 	 */
-	public function export($entry, $campaign, $sendOnExport = true)
+	public function sendCampaignEmail($campaignEmail, $campaignType, $sendOnExport = true)
 	{
-		$lists = sproutEmail()->entries->getRecipientListsByEntryId($entry->id);
+		$lists       = sproutEmail()->campaignEmails->getRecipientListsByEmailId($campaignEmail->id);
 		$campaignIds = array();
 
 		if ($lists && count($lists))
 		{
-			$type = 'regular';
+			$type    = 'regular';
 			$options = array(
-				'title'      => $entry->title,
-				'subject'    => $entry->title,
-				'from_name'  => $entry->fromName,
-				'from_email' => $entry->fromEmail,
+				'title'      => $campaignEmail->title,
+				'subject'    => $campaignEmail->title,
+				'from_name'  => $campaignEmail->fromName,
+				'from_email' => $campaignEmail->fromEmail,
 				'tracking'   => array(
 					'opens'       => true,
 					'html_clicks' => true,
@@ -170,8 +164,8 @@ class SproutEmail_MailchimpService extends BaseApplicationComponent
 			);
 
 			$params = array(
-				'email'     => $entry,
-				'campaign'  => $campaign,
+				'email'     => $campaignEmail,
+				'campaign'  => $campaignType,
 				'recipient' => array(
 					'firstName' => 'First',
 					'lastName'  => 'Last',
@@ -179,12 +173,12 @@ class SproutEmail_MailchimpService extends BaseApplicationComponent
 				),
 
 				// @deprecate - in favor of `email` in v3
-				'entry'     => $entry
+				'entry'     => $campaignEmail
 			);
 
 			$content = array(
-				'html' => sproutEmail()->renderSiteTemplateIfExists($campaign->template, $params),
-				'text' => sproutEmail()->renderSiteTemplateIfExists($campaign->template . '.txt', $params),
+				'html' => sproutEmail()->renderSiteTemplateIfExists($campaignType->template, $params),
+				'text' => sproutEmail()->renderSiteTemplateIfExists($campaignType->template . '.txt', $params),
 			);
 
 			foreach ($lists as $list)
@@ -198,10 +192,10 @@ class SproutEmail_MailchimpService extends BaseApplicationComponent
 
 				try
 				{
-					$campaign = $this->client->campaigns->create($type, $options, $content);
-					$campaignIds[] = $campaign['id'];
+					$campaignType  = $this->client->campaigns->create($type, $options, $content);
+					$campaignIds[] = $campaignType['id'];
 
-					sproutEmail()->info($campaign);
+					sproutEmail()->info($campaignType);
 				}
 				catch (\Exception $e)
 				{
@@ -226,7 +220,7 @@ class SproutEmail_MailchimpService extends BaseApplicationComponent
 		}
 
 		$recipientLists = array();
-		$toEmails = array();
+		$toEmails       = array();
 		if (is_array($lists) && count($lists))
 		{
 			foreach ($lists as $list)
@@ -247,11 +241,11 @@ class SproutEmail_MailchimpService extends BaseApplicationComponent
 
 		$email = new EmailModel();
 
-		$email->subject = $entry->title;
-		$email->fromName = $entry->fromName;
-		$email->fromEmail = $entry->fromEmail;
-		$email->body = $content['text'];
-		$email->htmlBody = $content['html'];
+		$email->subject   = $campaignEmail->title;
+		$email->fromName  = $campaignEmail->fromName;
+		$email->fromEmail = $campaignEmail->fromEmail;
+		$email->body      = $content['text'];
+		$email->htmlBody  = $content['html'];
 
 		if (!empty($toEmails))
 		{
