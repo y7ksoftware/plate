@@ -1,5 +1,5 @@
 @if(env('PIWIK_SITE_ID'))
-    <!-- Prism -->
+    {{-- Prism --}}
     <script type="text/javascript">
         var _paq = _paq || [];
         // tracker methods like "setCustomDimension" should be called before "trackPageView"
@@ -13,5 +13,5 @@
             g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'js'; s.parentNode.insertBefore(g,s);
         })();
     </script>
-    <!-- End Prism Code -->
+    {{-- End Prism Code --}}
 @endif

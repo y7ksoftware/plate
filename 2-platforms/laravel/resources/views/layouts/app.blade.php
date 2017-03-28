@@ -29,12 +29,14 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
     <link rel="icon" type="image/png" href="/assets/images/meta/favicon-16x16.png" sizes="16x16">
     <link rel="manifest" href="/assets/images/meta/manifest.json">
     <link rel="mask-icon" href="/assets/images/meta/safari-pinned-tab.svg" color="#5bbad5">
+    {{-- Favicons --}}
     <meta name="theme-color" content="#ffffff">
 
-
+    {{-- Stylesheets --}}
     <link rel="stylesheet" type="text/css" href="{{ mix('build/css/vendor.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ mix('build/css/main.css') }}">
 
+    {{-- Piwik --}}
     @include('helpers/piwik-analytics')
 
 </head>
@@ -44,8 +46,10 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
 
 <div id="app"></div>
 
+{{-- Constants for Frontend --}}
 @include('helpers/globals')
 
+{{-- JS --}}
 <script type="text/javascript" src="{{ mix('/build/js/manifest.js') }}"></script>
 <script type="text/javascript" src="{{ mix('/build/js/vendor.js') }}"></script>
 <script type="text/javascript" src="{{ mix('/build/js/app.js') }}"></script>
