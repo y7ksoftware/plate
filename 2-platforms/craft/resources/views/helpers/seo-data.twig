@@ -16,6 +16,19 @@
 {% if not craft.plugins.getPlugin('sproutseo' , false).isEnabled() %}
     <title>{% if title is defined %}{{ title }} - {% endif %}{{ siteName }}</title>
 {% else %}
+
+    {# Prevent Search Engines from indexing the Staging Site #}
+    {% if craft.config.appEnv != 'production' %}
+        {% do craft.sproutSeo.meta({
+            robots: { 'noindex': 1, 'nofollow': 1 }
+        }) %}
+    {% endif %}
+
+    {# Overwrite Metadata with Custom Sections. For multi-lingual websites #}
+    {#{% do craft.sproutSeo.meta({#}
+        {#section: 'sproutseo_section:' ~ craft.locale#}
+    {#}) %}#}
+
     {#
         Outputs all Sprout SEO Meta Data:
         If you want full control and output tags yourself, have a look at
