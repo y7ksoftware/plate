@@ -38,15 +38,11 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
     {{ block('prefetch_resources') }}
 
     {#
-     # SEO:
-     # Overwrite this Block on Suppages to add page-specific SEO data with the "seo-data.twig" helper
+     # SEO: Use SproutSEO Settings to specify SEO. You can override the block if you want
+     # to disable SproutSEO for a specific page and add your own tags.
+     # If you want your own SEO config per default, please still do this in "helpers/seo-data"
      #}
-    {% block seo_data %}
-        {# Delete the following Title if your are using the SEO Plugin #}
-        <title>{% if title is defined %}{{ title }} - {% endif %}{{ siteName }}</title>
-        {# Uncomment this to enable SproutSEO (enable plugin first) #}
-        {# {% include 'helpers/seo-data' %} #}
-    {% endblock %}
+    {% block seo_data %}{% include 'helpers/seo-data' %}{% endblock %}
 
 
     {# Favicons #}
