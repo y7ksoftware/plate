@@ -24,9 +24,13 @@
         }) %}
     {% endif %}
 
+    {# Set OG Locale. do we need to do this? Doesn't work out of the box. #}
+    {#{% set ogLocale = (craft.locale == 'de') ? 'de_DE' : 'en_GB' %}#}
+
     {# Overwrite Metadata with Custom Sections. For multi-lingual websites #}
     {#{% do craft.sproutSeo.meta({#}
-        {#section: 'sproutseo_section:' ~ craft.locale#}
+        {#section: 'sproutseo_section:' ~ craft.locale,#}
+        {#ogLocale: ogLocale#}
     {#}) %}#}
 
     {#
