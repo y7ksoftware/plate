@@ -6,12 +6,13 @@
 * Add sourcemaps to webpack
 * Add template to mix: Task to copy non-commonjs vendor folders
 * Add versioning and changelog
+* Approximate Craft and Laravel Template filenames
 
 
 ## Version 0.3.*
 * Remove Kirby
 * Merge Plain Plates
-* Updage Webpack Tooling
+* Update Webpack Tooling
 * Add Imager To Craft
 * Change craft storage folders
 * Minor refactoring

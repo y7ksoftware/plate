@@ -44,7 +44,7 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
 
 <div id="app"></div>
 
-@include('helpers/globals')
+@include('helpers/frontend-constants')
 
 <script type="text/javascript" src="{{ mix('/build/js/manifest.js') }}"></script>
 <script type="text/javascript" src="{{ mix('/build/js/vendor.js') }}"></script>
