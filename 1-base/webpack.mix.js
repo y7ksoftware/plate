@@ -19,7 +19,7 @@ mix
     .js('resources/assets/js/app.js', 'public/build/js')
 
     // Extract libraries to vendor.js file
-    // .extract(['vue', 'barba.js', 'bugsnag-js', 'lazysizes', 'axios', 'lodash'])
+    .extract(['vue', 'barba.js', 'bugsnag-js', 'lazysizes', 'axios', 'lodash'])
 
     // Copy assets
     .copy('resources/assets/fonts', 'public/build/fonts', false)

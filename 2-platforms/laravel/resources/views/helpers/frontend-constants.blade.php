@@ -1,4 +1,4 @@
-<!--  Globals -->
+{{--  Globals --}}
 <script>
     window.App = {
         // CSRF Token
