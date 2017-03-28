@@ -1,5 +1,13 @@
 # Y7K Project Boilerplate Changelog
 
+## Version 0.5.*
+* Add compatibility with Sprout SEO 3
+* Split vendor chunks to vendor.js per default
+* Fix favicon paths
+* Use blade comments
+* Remove HDTextRank Plugin
+* Add namespace to body
+
 ## Version 0.4.*
 * Updated Craft Sprout Plugins
 * Reintroduced static assets to build process
