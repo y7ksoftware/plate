@@ -11,6 +11,12 @@ class CacheMonsterCommand extends BaseCommand
     public function actionCrawlAndWarm()
     {
 
+        if(!craft()->isSystemOn()) {
+            echo 'System is turned off.';
+            // Exit
+            return craft()->end();
+        }
+
         // Delete all the template caches!
         craft()->templateCache->deleteAllCaches();
 
@@ -31,12 +37,6 @@ class CacheMonsterCommand extends BaseCommand
 
             if ($task)
             {
-                // Attempt to close the connection if this is an Ajax request
-                if (craft()->request->isAjaxRequest())
-                {
-                    craft()->request->close();
-                }
-
                 // Start running tasks
                 craft()->tasks->runPendingTasks();
             }

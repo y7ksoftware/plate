@@ -15,6 +15,7 @@
 * Add template to mix: Task to copy non-commonjs vendor folders
 * Add versioning and changelog
 * Approximate Craft and Laravel Template filenames
+* Abort Cache-Warming Task when System is turned off
 
 
 ## Version 0.3.*
