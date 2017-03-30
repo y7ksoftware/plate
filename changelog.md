@@ -7,6 +7,9 @@
 * Use blade comments
 * Remove HDTextRank Plugin
 * Add namespace to body
+* Approximate Craft and Laravel Template filenames
+* Abort Cache-Warming Task when System is turned off
+* Add to JS: Set Active class on Barba Page-Transition
 
 ## Version 0.4.*
 * Updated Craft Sprout Plugins
@@ -14,9 +17,6 @@
 * Add sourcemaps to webpack
 * Add template to mix: Task to copy non-commonjs vendor folders
 * Add versioning and changelog
-* Approximate Craft and Laravel Template filenames
-* Abort Cache-Warming Task when System is turned off
-* Add to JS: Set Active class on Barba Page-Transition
 
 ## Version 0.3.*
 * Remove Kirby
