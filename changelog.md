@@ -16,7 +16,7 @@
 * Add versioning and changelog
 * Approximate Craft and Laravel Template filenames
 * Abort Cache-Warming Task when System is turned off
-
+* Add to JS: Set Active class on Barba Page-Transition
 
 ## Version 0.3.*
 * Remove Kirby
