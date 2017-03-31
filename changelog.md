@@ -32,7 +32,6 @@
 * Changes not tracked
 
 ## Version 0.1.*
-
 * Updated JS structure
 * Updated SCSS structure
 
