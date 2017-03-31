@@ -10,6 +10,7 @@
 * Approximate Craft and Laravel Template filenames
 * Abort Cache-Warming Task when System is turned off
 * Add to JS: Set Active class on Barba Page-Transition
+* Update Laravel Mix to 0.10.0
 
 ## Version 0.4.*
 * Updated Craft Sprout Plugins

@@ -22,8 +22,8 @@ mix
     .extract(['vue', 'barba.js', 'bugsnag-js', 'lazysizes', 'axios', 'lodash'])
 
     // Copy assets
-    .copy('resources/assets/fonts', 'public/build/fonts', false)
-    .copy('resources/assets/images', 'public/build/images', false)
+    .copyDirectory('resources/assets/fonts', 'public/build/fonts')
+    .copyDirectory('resources/assets/images', 'public/build/images')
 
     // Copy whole js vendor folders
     //.copy('resources/assets/js/vendor/modernizr', 'public/build/js/vendor/modernizr', false)
