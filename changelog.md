@@ -12,6 +12,7 @@
 * Add to JS: Set Active class on Barba Page-Transition
 * Update Laravel Mix to 0.10.0
 * Update JS dependencies
+* Add npm script aliases
 
 ## Version 0.4.*
 * Updated Craft Sprout Plugins
