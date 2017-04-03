@@ -46,8 +46,8 @@ Vue.config.devtools = config.APP_DEBUG
 
 // Initialize Lazyizes
 require('lazysizes')
-require('lazysizes/plugins/object-fit/ls.object-fit.min')
-
+// require('lazysizes/plugins/object-fit/ls.object-fit.min')
+// require('lazysizes/plugins/unveilhooks/ls.unveilhooks.min')
 
 // Load Axios
 window.axios = require('axios')
