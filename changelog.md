@@ -1,5 +1,12 @@
 # Y7K Project Boilerplate Changelog
 
+## Version 0.6.*
+* Update Plugins
+    - Imager 1.4.0 -> 1.5.0
+    - ImageResizer 0.1.4 -> 1.0.0
+    - SproutSEO 3.2.0 -> 3.2.1
+    - SuperTable 1.0.2 -> 1.0.4
+
 ## Version 0.5.*
 * Add compatibility with Sprout SEO 3
 * Split vendor chunks to vendor.js per default
@@ -14,6 +21,7 @@
 * Update JS dependencies
 * Add npm script aliases
 * Disable SproutSEO output tag, so initial installs don't break
+
 
 ## Version 0.4.*
 * Updated Craft Sprout Plugins
