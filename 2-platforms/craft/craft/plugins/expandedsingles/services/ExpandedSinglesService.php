@@ -27,6 +27,9 @@ class ExpandedSinglesService extends BaseApplicationComponent
         // Grab all the Singles
         $singleSections = craft()->sections->getSectionsByType(SectionType::Single);
 
+        // Get logged-in user
+        $user = craft()->userSession->getUser();
+
         // Create list of Singles
         foreach ($singleSections as $single) {
             $criteria = craft()->elements->getCriteria(ElementType::Entry);
@@ -34,11 +37,11 @@ class ExpandedSinglesService extends BaseApplicationComponent
             $criteria->sectionId = $single->id;
             $entry = $criteria->first();
 
-            if ($entry) {
+            if ($entry && $user->can('editEntries:'.$single->id)) {
                 $url = $entry->getCpEditUrl();
 
                 $singles['single:'.$single->id] = array(
-                    'label'     => Craft::t($single->name),
+                    'label'     => $single->name,
                     'data'      => array('url' => $url),
                     'criteria'  => array('section' => $single),
                 );
@@ -49,7 +52,7 @@ class ExpandedSinglesService extends BaseApplicationComponent
         if ($context == 'index') {
             // array_splice() doesn't preserve the array keys, which is a must!
             $this->_array_splice_preserve_keys($sources, 1, 0, $singles);
-
+        
             // Remove original Singles links
             unset($sources['singles']);
         }
