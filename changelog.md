@@ -13,6 +13,7 @@
 * Update Laravel Mix to 0.10.0
 * Update JS dependencies
 * Add npm script aliases
+* Disable SproutSEO output tag, so initial installs don't break
 
 ## Version 0.4.*
 * Updated Craft Sprout Plugins
