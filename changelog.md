@@ -7,7 +7,7 @@
     - SproutSEO 3.2.0 -> 3.2.1
     - SuperTable 1.0.2 -> 1.0.4
 * Added `APP_NAME` to `.env` file
-
+* Added timezone settings to Craft plate
 
 ## Version 0.5.*
 * Add compatibility with Sprout SEO 3
