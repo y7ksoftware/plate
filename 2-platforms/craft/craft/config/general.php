@@ -18,10 +18,14 @@ return [
         'enableCsrfProtection' => true, // Enable CSRF protection (will be default in Craft 3)
         'cacheDuration' => 'P2W', // Set default template caching time to 2 weeks
         'generateTransformsBeforePageLoad' => true, // Generate Image Transforms before page load. Else caching may be a problem
+        'extraAllowedFileExtensions' => 'json', // Allow upload of Json files, also used for external Video Plugin
+        'sendPoweredByHeader' => false,
+        'defaultWeekStartDay' => 1,
 
         'devMode' => (getenv('APP_DEBUG')=='true'),
         'enableTemplateCaching' => (getenv('TEMPLATE_CACHING')=='true'),
 
+        'appId' => getenv('APP_NAME'),
         'appEnv' => getenv('APP_ENV'),
         'piwikSiteId' => getenv('PIWIK_SITE_ID'),
         'googleAnalyticsCode' => getenv('GOOGLE_ANALYTICS_CODE'),
