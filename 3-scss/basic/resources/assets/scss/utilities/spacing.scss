@@ -6,26 +6,25 @@
  * Utility classes to put specific spacing values onto elements. The below loop
  * will generate us a suite of classes like:
  *
- *   .u-space-top {}
- *   .u-space-inner-left-large {}
- *   .u-space-right-small {}
- *   .u-space-inner {}
- *   .u-space-inner-right-none {}
+ *   .u-spaceTop {}
+ *   .u-spaceInnerLeft-isMedium {}
+ *   .u-spaceRightSmall {}
+ *   .u-spaceInner {}
  */
 
 /* stylelint-disable string-quotes */
 
 $spacing-directions: (
     null: null,
-    '-top': '-top',
-    '-right': '-right',
-    '-bottom': '-bottom',
-    '-left': '-left',
+    '-top': 'Top',
+    '-right': 'Right',
+    '-bottom': 'Bottom',
+    '-left': 'Left',
 ) !default;
 
 $spacing-properties: (
     'margin': null,
-    'padding': '-inner',
+    'padding': 'Inner',
 ) !default;
 
 // Loop through directions, properties and breakpoints per spacing
