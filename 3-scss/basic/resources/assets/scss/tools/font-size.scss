@@ -1,8 +1,11 @@
-///* ========================================================================
-//   #FONT-SIZE
-//   ======================================================================== */
+/* ========================================================================
+   FONT SIZE
+   ======================================================================== */
 
-// Generate a font-size and baseline-compatible line-height.
+/**
+ * Generate a font-size and baseline-compatible line-height.
+ */
+
 @mixin font-size($font-size, $line-height: auto, $important: false, $fluid-type-min-font-size: false) {
 
     @if ($important == true) {

@@ -1,6 +1,6 @@
-/*
-SUSY SETTINGS
-*/
+/* ========================================================================
+   SUSY GRID SETTINGS
+   ======================================================================== */
 
 // TESTING ONLY ------------------------------
 //* {
@@ -35,6 +35,7 @@ $susy: (
     //)
 );
 
+
 @mixin grid-container() {
 
     @include container($container-phone);
@@ -54,6 +55,5 @@ $susy: (
     @include mq($from: bp-big-desktop) {
         @include container($container-big-desktop);
     }
-
 
 }
