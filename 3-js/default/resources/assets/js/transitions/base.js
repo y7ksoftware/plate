@@ -1,4 +1,4 @@
-import {startBaseTransition, endBaseTransition} from 'transitions/timelines/base'
+import {startTransition, endTransition} from 'transitions/timelines/base'
 
 export default Barba.BaseTransition.extend({
 
@@ -7,10 +7,10 @@ export default Barba.BaseTransition.extend({
         window.dispatchEvent(new Event('pageTransitionStarted'))
 
         // Start loading the content
-        // Start the  animation
+        // Start the animation
         Promise.all([
             this.newContainerLoading,
-            startBaseTransition(this.oldContainer),
+            startTransition(this.oldContainer),
         ])
             .then(this.finish.bind(this))
 
@@ -23,11 +23,9 @@ export default Barba.BaseTransition.extend({
         this.done()
 
         // Scroll to page top
-        // TweenLite.to(window, 0.05, {
-        //     scrollTo: 0,
-        // })
+        document.body.scrollTop = 0;
 
-        endBaseTransition(this.newContainer)
+        endTransition(this.newContainer)
             .then(() => {
                 window.dispatchEvent(new Event('pageTransitionCompleted'))
             })
