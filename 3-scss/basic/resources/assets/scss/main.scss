@@ -44,9 +44,9 @@
  */
 
 // LIBRARIES
-@import "susy/sass/susy";
 @import "dialog-size/dist/dialog-size";
 @import "sass-mq/mq";
+@import "susy/sass/susy";
 
 // SETTINGS
 @import "settings/breakpoints";
@@ -71,10 +71,10 @@
 // GENERIC
 @import "generic/box-sizing";
 @import "generic/normalize";
-@import "generic/print";
 @import "generic/reset";
 @import "generic/shared";
 @import "generic/fonts";
+@import "generic/print";
 
 // ELEMENTS
 @import "elements/general";
