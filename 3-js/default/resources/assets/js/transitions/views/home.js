@@ -3,20 +3,32 @@ export default Barba.BaseView.extend({
 
     namespace: 'home',
 
+    /**
+     * The new Container is ready and attached to the DOM.
+     */
     onEnter() {
-        // The new Container is ready and attached to the DOM.
+
     },
 
+    /**
+     * The Transition has just finished.
+     */
     onEnterCompleted() {
-        // The Transition has just finished.
+
     },
 
+    /**
+     * A new Transition toward a new page has just started.
+     */
     onLeave() {
-        // A new Transition toward a new page has just started.
+
     },
 
+    /**
+     * The Container has just been removed from the DOM.
+     */
     onLeaveCompleted() {
-        // The Container has just been removed from the DOM.
+
     }
 })
 
