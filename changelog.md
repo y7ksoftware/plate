@@ -1,5 +1,22 @@
 # Y7K Project Boilerplate Changelog
 
+## Version 0.7.*
+* Add Craft Prune Plugin
+* Fix Browsersync autoreload
+* Add Babel-Polyfill and use stage-2 presets
+* Refactor SCSS
+    - Unified commenting
+    - Simplified general styles
+    - Simplified/changes typo styles
+* Add new SCSS utilities
+    - Responsive properties
+    - Named Z-Indexes
+    - V-Cloak support
+    - Unlink: remove link styles
+* Change Breakpoint definitions: bp-phone is default (from 0)
+* Refactored Barba.js transitions
+
+
 ## Version 0.6.*
 * Update Plugins
     - Imager 1.4.0 -> 1.5.0
@@ -8,6 +25,7 @@
     - SuperTable 1.0.2 -> 1.0.4
 * Added `APP_NAME` to `.env` file
 * Added timezone settings to Craft plate
+
 
 ## Version 0.5.*
 * Add compatibility with Sprout SEO 3
@@ -32,6 +50,7 @@
 * Add template to mix: Task to copy non-commonjs vendor folders
 * Add versioning and changelog
 
+
 ## Version 0.3.*
 * Remove Kirby
 * Merge Plain Plates
@@ -40,12 +59,15 @@
 * Change craft storage folders
 * Minor refactoring
 
+
 ## Version 0.2.*
 * Changes not tracked
+
 
 ## Version 0.1.*
 * Updated JS structure
 * Updated SCSS structure
+
 
 ## Version 0.0.*
 
