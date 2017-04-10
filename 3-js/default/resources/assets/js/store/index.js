@@ -1,5 +1,4 @@
-// Load Vuex
-window.Vuex = require('vuex')
+import Vuex from 'vuex'
 
 // root state object.
 // each Vuex instance is just a single state tree.

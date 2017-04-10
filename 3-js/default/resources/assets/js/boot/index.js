@@ -1,4 +1,6 @@
 import * as config from 'config'
+import Vue from 'vue'
+import Vuex from 'vuex'
 
 // Load Bugsang
 require('boot/bugsnag')
@@ -11,9 +13,6 @@ require('boot/polyfills')
 // Lodash
 // window._ = require('lodash');
 
-
-// Vue
-window.Vue = require('vue')
 
 Vue.config.silent = !config.APP_DEBUG
 Vue.config.devtools = config.APP_DEBUG
@@ -34,10 +33,10 @@ Vue.config.devtools = config.APP_DEBUG
 
 
 // Load the Vuex Store
-// let store = require('store').default
-
-// Bind store to all Vue Instances
+// Vue.use(Vuex)
+// window.store = require('store').default
 // Vue.mixin({ store })
+
 
 
 // Load VueRouter
@@ -47,6 +46,7 @@ Vue.config.devtools = config.APP_DEBUG
 // Initialize Lazyizes
 require('lazysizes')
 // require('lazysizes/plugins/object-fit/ls.object-fit.min')
+// require('lazysizes/plugins/parent-fit/ls.parent-fit')
 // require('lazysizes/plugins/unveilhooks/ls.unveilhooks.min')
 
 // Load Axios
@@ -59,6 +59,7 @@ axios.defaults.headers.common = {
     'X-Requested-With': 'XMLHttpRequest'
 }
 
+// TODO what is this, is it needed?
 export {
     // store,
     // router
