@@ -11,9 +11,3 @@
 
     }
 </script>
-
-<template>
-    <div>
-        <h1>Demo Module</h1>
-    </div>
-</template>
