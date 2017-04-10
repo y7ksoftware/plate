@@ -1,2 +1,1 @@
-// Polyfill Promise
-window.Promise = require('promise')
+require("babel-polyfill");
