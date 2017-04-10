@@ -4,6 +4,10 @@
 
 $font-title: Helvetica, Arial, sans-serif;
 $font-text: Helvetica, Arial, sans-serif;
+// Base typographical styles and baseline grid. You need to define these values
+// in pixels: we will convert them to more appropriate units.
+$global-font-size: 16px;
+$global-line-height: 24px;
 
 $font-size-h1: size(1);
 $font-size-h2: size(0.8);
