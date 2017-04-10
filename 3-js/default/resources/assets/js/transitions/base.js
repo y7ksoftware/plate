@@ -4,7 +4,7 @@ export default Barba.BaseTransition.extend({
 
     start() {
 
-        window.dispatchEvent(new Event('pageTransitionStarted'))
+        Barba.Dispatcher.trigger('startTransitionStarted')
 
         // Start loading the content
         // Start the animation
@@ -19,6 +19,9 @@ export default Barba.BaseTransition.extend({
 
     finish() {
 
+        Barba.Dispatcher.trigger('startTransitionEnded')
+        Barba.Dispatcher.trigger('endTransitionStarted')
+
         // done() removes the old container and sets the visibility of the new container
         this.done()
 
@@ -27,7 +30,7 @@ export default Barba.BaseTransition.extend({
 
         endTransition(this.newContainer)
             .then(() => {
-                window.dispatchEvent(new Event('pageTransitionCompleted'))
+                Barba.Dispatcher.trigger('endTransitionEnded')
             })
 
     },

@@ -6,6 +6,10 @@ import DemoModule from 'modules/DemoModule.vue'
 
 Barba.Dispatcher.on('newPageReady', (currentStatus, oldStatus, container) => {
 
+    // Save modules from the old container, so we can unmount them,
+    // as soon as the old container leaving transition is done
+    Barba.BaseView.oldMountedModules = Barba.BaseView.mountedModules;
+
     // Load all modules
     Barba.BaseView.mountedModules = mountModules([
         DemoModule
@@ -14,7 +18,7 @@ Barba.Dispatcher.on('newPageReady', (currentStatus, oldStatus, container) => {
 })
 
 
-Barba.Dispatcher.on('initStateChange', function (currentStatus) {
+Barba.Dispatcher.on('startTransitionEnded', function (currentStatus) {
     // Unmount Modules
-    unMountModules(Barba.BaseView.mountedModules)
+    unMountModules(Barba.BaseView.oldMountedModules)
 })
