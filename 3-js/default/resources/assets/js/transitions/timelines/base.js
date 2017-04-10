@@ -1,44 +1,38 @@
-// import {TimelineMax} from 'vendor/gsap/TweenMax.min'
+//import {TimelineLite} from 'gsap'
 
-export function startBaseTransition(oldContainer) {
-
-
-    // let timeline = new TimelineMax({pause: true})
+export function startTransition(oldContainer) {
 
     return new Promise((resolve) => {
 
-        // timeline
-        //     .to(oldContainer, 0.4, {
+        // Example with GSAP
+        //
+        // new TimelineLite()
+        //     .to(oldContainer, 0.5, {
         //         opacity: 0,
-        //         y: 10,
+        //         onComplete: resolve
         //     })
-        //
-        // timeline.vars.onComplete = resolve
-        //
-        // timeline.play()
+
+        // Remove this, if you use the animation above!
         resolve()
 
     })
 
 }
 
-export function endBaseTransition(newContainer) {
-
-    // let timeline = new TimelineMax({pause: true})
+export function endTransition(newContainer) {
 
     return new Promise((resolve) => {
 
-        // timeline
-        //     .from(newContainer, 0.6, {
+        // Example with GSAP
+        //
+        // new TimelineLite()
+        //     .from(newContainer, 0.5, {
         //         opacity: 0,
-        //         y: 10
+        //         onComplete: resolve
         //     })
-        //
-        // timeline.vars.onComplete = resolve
-        //
-        // timeline.play()
-        resolve()
 
+        // Remove this, if you use the animation above!
+        resolve()
     })
 
 }
