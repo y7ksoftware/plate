@@ -39,13 +39,12 @@ const config = {
      */
 
     browserSync: {
-        //host: process.env.APP_URL,
         proxy: process.env.APP_URL,
         notify: false,
         open: false,
         files: [
             baseDir + '/{public,app,craft,site}/**/*.php',
-            baseDir + '/build/**/*.{js,css}',
+            baseDir + '/public/build/**/*.{js,css}',
             baseDir + '/resources/{views,lang}/**/*.{php,twig}'
         ]
     }
