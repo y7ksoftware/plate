@@ -40,10 +40,6 @@ $susy: (
 
     @include container($container-phone);
 
-    @include mq($from: bp-phone) {
-        @include container($container-phone);
-    }
-
     @include mq($from: bp-tablet) {
         @include container($container-tablet);
     }
