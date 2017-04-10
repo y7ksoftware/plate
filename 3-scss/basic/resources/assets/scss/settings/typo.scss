@@ -2,31 +2,29 @@
    TYPO
    ======================================================================== */
 
-$font-title: Helvetica, Arial, sans-serif;
-$font-text: Helvetica, Arial, sans-serif;
 // Base typographical styles and baseline grid. You need to define these values
 // in pixels: we will convert them to more appropriate units.
 $global-font-size: 16px;
 $global-line-height: 24px;
 
-$font-size-h1: size(1);
-$font-size-h2: size(0.8);
-$font-size-h3: size(0.6);
-$font-size-h4: size(0.4);
-$font-size-h5: size(0.2);
-$font-size-h6: size(0);
+
+// Font Families
+$font-title: Helvetica, Arial, sans-serif;
+$font-text: Helvetica, Arial, sans-serif;
 
 
-/*
-Make your own mixins for font-sizes if needed
- */
+// Example Font definitions
 
-@mixin font-size-small() {
+@mixin font-body() {
+    @include font-size(size(medium));
+    @include mq($from: bp-tablet) { @include font-size(size(medium)); }
+    font-family: $font-text;
+}
 
-    @include font-size(size(small));
 
-    @include mq($from: bp-tablet) {
-        @include font-size(size(medium));
-    }
-
+@mixin font-title() {
+    @include font-size(size(medium));
+    @include mq($from: bp-tablet) { @include font-size(size(large)); }
+    font-family: $font-title;
+    font-weight: bold;
 }
