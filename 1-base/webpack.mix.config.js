@@ -43,7 +43,7 @@ const config = {
         notify: false,
         open: false,
         files: [
-            baseDir + '/{public,app,craft,site}/**/*.php',
+            baseDir + '/{public,app,craft}/**/*.php',
             baseDir + '/public/build/**/*.{js,css}',
             baseDir + '/resources/{views,lang}/**/*.{php,twig}'
         ]
