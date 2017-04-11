@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import * as config from 'config'
 import VueIl8n from 'vue-i18n'
 import store from 'store'
 import router from 'router'
