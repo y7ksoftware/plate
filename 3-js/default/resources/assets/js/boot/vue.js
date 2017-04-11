@@ -1,7 +1,5 @@
 import Vue from 'vue'
-import Vuex from 'vuex'
 import VueIl8n from 'vue-i18n'
-import VueRouter from 'vue-router'
 import store from 'store'
 import router from 'router'
 
@@ -19,9 +17,7 @@ Vue.mixin({delimiters: ['${', '}']})
 // Vue.locale('en', require('locales/en').default)
 
 // Init the Router
-// Vue.use(VueRouter)
 // Vue.mixin({ router })
 
 // Init the Vuex Store
-// Vue.use(Vuex)
 // Vue.mixin({ store })
