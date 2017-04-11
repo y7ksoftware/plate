@@ -45,7 +45,7 @@ const getters = {
     evenOrOdd: state => state.count % 2 === 0 ? 'even' : 'odd'
 }
 
-export default new window.Vuex.Store({
+export default new Vuex.Store({
     state,
     getters,
     actions,

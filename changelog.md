@@ -15,6 +15,7 @@
     - Unlink: remove link styles
 * Change Breakpoint definitions: bp-phone is default (from 0)
 * Refactored Barba.js transitions
+* Refactored Vue Bootstrapping
 
 
 ## Version 0.6.*

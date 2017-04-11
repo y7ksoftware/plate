@@ -1,5 +1,4 @@
-
-window.VueRouter = require('vue-router')
+import VueRouter from 'vue-router'
 
 const routes = [
     // {
@@ -9,7 +8,7 @@ const routes = [
     // },
 ];
 
-const router = new window.VueRouter({
+const router = new VueRouter({
     routes: routes,
     mode: 'history',
 });
