@@ -10,5 +10,5 @@ window.Bugsnag.apiKey = config.BUGSNAG_API_KEY_JS
 window.Bugsnag.releaseStage = config.APP_ENV
 window.Bugsnag.appVersion = config.APP_VERSION
 
-// uncomment 'develop' if you want to locally test if bugsnag works
-window.Bugsnag.notifyReleaseStages = [/*'develop', */'staging', 'production']
+// uncomment 'local' if you want to locally test if bugsnag works
+window.Bugsnag.notifyReleaseStages = [/*'local', */'develop', 'staging', 'production']
