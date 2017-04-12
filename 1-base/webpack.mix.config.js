@@ -17,20 +17,12 @@ const config = {
      */
 
     webpack: {
-
         resolve: {
             modules: [
                 baseDir + '/resources/assets/js',
                 baseDir + '/node_modules'
             ],
-            // Uncomment this to include the template compiler
-            // alias: {
-            //     'vue$': 'vue/dist/vue.js'
-            // }
-        },
-
-        externals: {}
-
+        }
     },
 
 
