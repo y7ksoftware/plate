@@ -16,6 +16,7 @@
 * Change Breakpoint definitions: bp-phone is default (from 0)
 * Refactored Barba.js transitions
 * Refactored Vue Bootstrapping
+* Added Formatting options to Craft Redactor config
 
 
 ## Version 0.6.*

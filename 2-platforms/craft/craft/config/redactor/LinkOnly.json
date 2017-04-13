@@ -1,5 +1,4 @@
 {
 	"buttons": ["link","file"],
-	"toolbarFixed": true,
-  	"toolbar": true
+	"toolbarFixed": true
 }

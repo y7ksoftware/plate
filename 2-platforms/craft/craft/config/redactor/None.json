@@ -1,5 +1,3 @@
 {
-	"buttons": ["bold","italic","link"],
-	"toolbarFixed": true,
   	"toolbar": false
 }
