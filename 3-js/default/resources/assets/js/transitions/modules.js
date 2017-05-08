@@ -17,12 +17,7 @@ Barba.Dispatcher.on('newPageReady', (currentStatus, oldStatus, container) => {
 
 })
 
-Barba.Dispatcher.on('initStateChange', function (currentStatus) {
-    // Store current Moules to unload them
-    Barba.BaseView.modulesToUnload = Barba.BaseView.mountedModules;
-});
-
 Barba.Dispatcher.on('startTransitionEnded', function () {
     // Unmount Modules
-    unMountModules(Barba.BaseView.modulesToUnload);
+    unMountModules(Barba.BaseView.oldMountedModules);
 });

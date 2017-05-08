@@ -17,7 +17,6 @@
 * Refactored Barba.js transitions
 * Refactored Vue Bootstrapping
 * Added Formatting options to Craft Redactor config
-* Fixed Module Unloading
 
 
 ## Version 0.6.*
