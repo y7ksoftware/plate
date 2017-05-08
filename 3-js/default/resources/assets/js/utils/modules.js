@@ -2,7 +2,7 @@ import Vue from 'vue'
 
 export function mountModules(modules, container) {
 
-    if(typeof modules == 'undefined') return [];
+    if(typeof modules === 'undefined') return [];
 
     let loadedModules = [];
 
@@ -32,7 +32,7 @@ export function mountModules(modules, container) {
 
 export function unMountModules(modules) {
 
-    if(typeof modules == 'undefined') return;
+    if(typeof modules === 'undefined') return;
 
     // Loop through all Modules
     for (let i = 0; i < modules.length; i++) {
