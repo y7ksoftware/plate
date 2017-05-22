@@ -2,6 +2,7 @@
 
 ## Version 0.8.*
 * Updated all Craft Plugins
+* Updated ESLint Config
 
 ## Version 0.7.*
 * Add Craft Prune Plugin
