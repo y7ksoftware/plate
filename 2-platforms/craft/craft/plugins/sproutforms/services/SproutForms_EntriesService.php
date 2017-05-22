@@ -192,18 +192,7 @@ class SproutForms_EntriesService extends BaseApplicationComponent
 						craft()->content->fieldContext = $oldFieldContext;
 						craft()->content->contentTable = $oldContentTable;
 
-						Craft::import('plugins.sproutforms.events.SproutForms_OnSaveEntryEvent');
-
-						$event = new SproutForms_OnSaveEntryEvent(
-							$this, array(
-								'entry'      => $entry,
-								'isNewEntry' => $isNewEntry,
-								'event'      => 'saveEntry',
-								'entity'     => $entry,
-							)
-						);
-
-						craft()->sproutForms->onSaveEntry($event);
+						$this->callOnSaveEntryEvent($entry, $isNewEntry);
 
 						return true;
 					}
@@ -239,6 +228,22 @@ class SproutForms_EntriesService extends BaseApplicationComponent
 
 			return false;
 		}
+	}
+
+	public function callOnSaveEntryEvent($entry, $isNewEntry)
+	{
+		Craft::import('plugins.sproutforms.events.SproutForms_OnSaveEntryEvent');
+
+		$event = new SproutForms_OnSaveEntryEvent(
+			$this, array(
+				'entry'      => $entry,
+				'isNewEntry' => $isNewEntry,
+				'event'      => 'saveEntry',
+				'entity'     => $entry,
+			)
+		);
+
+		craft()->sproutForms->onSaveEntry($event);
 	}
 
 	/**
@@ -574,6 +579,20 @@ class SproutForms_EntriesService extends BaseApplicationComponent
 		$entryStatus = SproutForms_EntryStatusRecord::model()->find(array('order'=>'isDefault DESC'));
 
 		return $entryStatus != null ? $entryStatus->id : null;
+	}
+
+	public function isDataSaved($form)
+	{
+		$settings = craft()->plugins->getPlugin('sproutforms')->getSettings();
+
+		$saveData = $settings['enableSaveData'];
+
+		if (($settings['enableSaveDataPerFormBasis'] && $saveData) || $form->submitAction)
+		{
+			$saveData = $form->saveData;
+		}
+
+		return $saveData;
 	}
 
 	/**

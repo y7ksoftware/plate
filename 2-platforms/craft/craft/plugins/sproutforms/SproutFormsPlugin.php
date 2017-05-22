@@ -32,7 +32,7 @@ class SproutFormsPlugin extends BasePlugin
 	 */
 	public function getVersion()
 	{
-		return '2.3.5';
+		return '2.4.1';
 	}
 
 	/**
@@ -40,7 +40,7 @@ class SproutFormsPlugin extends BasePlugin
 	 */
 	public function getSchemaVersion()
 	{
-		return '2.3.0';
+		return '2.4.0';
 	}
 
 	/**
@@ -132,6 +132,9 @@ class SproutFormsPlugin extends BasePlugin
 			'templateFolderOverride'              => AttributeType::String,
 			'enablePerFormTemplateFolderOverride' => AttributeType::Bool,
 			'enablePayloadForwarding'             => AttributeType::Bool,
+			'enableSaveData'                      => AttributeType::Bool,
+			'enableSaveDataPerFormBasis'          => AttributeType::Bool,
+			'saveDataByDefault'                   => AttributeType::Bool,
 		);
 	}
 
@@ -253,6 +256,7 @@ class SproutFormsPlugin extends BasePlugin
 	public function onAfterInstall()
 	{
 		sproutForms()->entries->installDefaultEntryStatuses();
+		sproutForms()->forms->installDefaultSettings();
 		craft()->request->redirect(UrlHelper::getCpUrl() . '/sproutforms/settings/examples');
 	}
 

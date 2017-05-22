@@ -5,6 +5,9 @@ use League\Fractal\Manager;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
 use League\Fractal\Serializer\ArraySerializer;
+use League\Fractal\Serializer\DataArraySerializer;
+use League\Fractal\Serializer\JsonApiSerializer;
+use League\Fractal\Serializer\SerializerAbstract;
 use League\Fractal\TransformerAbstract;
 
 /**
@@ -73,7 +76,28 @@ class ElementApiController extends BaseController
 		$pluginPath = craft()->path->getPluginsPath().'elementapi/';
 		require $pluginPath.'vendor/autoload.php';
 		$fractal = new Manager();
-		$fractal->setSerializer(new ArraySerializer());
+
+		// Set the serializer
+        $serializer = isset($config['serializer']) ? $config['serializer'] : null;
+        if (!$serializer instanceof SerializerAbstract)
+        {
+            switch ($serializer)
+            {
+                case 'dataArray':
+                    $serializer = new DataArraySerializer();
+                    break;
+                case 'jsonApi':
+                    $serializer = new JsonApiSerializer();
+                    break;
+                case 'jsonFeed':
+                    Craft::import('plugins.elementapi.ElementApi_JsonFeedV1Serializer');
+                    $serializer = new ElementApi_JsonFeedV1Serializer();
+                    break;
+                default:
+                    $serializer = new ArraySerializer();
+            }
+        }
+		$fractal->setSerializer($serializer);
 
 		// Define the transformer
 		if (is_callable($config['transformer']) || $config['transformer'] instanceof TransformerAbstract)
@@ -86,6 +110,8 @@ class ElementApiController extends BaseController
 			$transformer = Craft::createComponent($config['transformer']);
 		}
 
+		$resourceKey = isset($config['resourceKey']) ? $config['resourceKey'] : null;
+
 		if ($config['first'])
 		{
 			$element = $criteria->first();
@@ -95,7 +121,7 @@ class ElementApiController extends BaseController
 				throw new HttpException(404);
 			}
 
-			$resource = new Item($element, $transformer);
+			$resource = new Item($element, $transformer, $resourceKey);
 		}
 		else if ($config['paginate'])
 		{
@@ -109,15 +135,21 @@ class ElementApiController extends BaseController
 			$elements = $criteria->find();
 			$paginator->setCount(count($elements));
 
-			$resource = new Collection($elements, $transformer);
+			$resource = new Collection($elements, $transformer, $resourceKey);
 			$resource->setPaginator($paginator);
 		}
 		else
 		{
-			$resource = new Collection($criteria, $transformer);
+			$resource = new Collection($criteria, $transformer, $resourceKey);
 		}
 
-		JsonHelper::sendJsonHeaders();
+		// Set any custom meta values
+		if (isset($config['meta']))
+		{
+		    $resource->setMeta($config['meta']);
+        }
+
+        JsonHelper::sendJsonHeaders();
 
 		$data = $fractal->createData($resource);
 
@@ -126,7 +158,8 @@ class ElementApiController extends BaseController
 			'data' => $data,
 		]));
 
-		echo $data->toJson();
+		$jsonOptions = isset($config['jsonOptions']) ? $config['jsonOptions'] : 0;
+		echo json_encode($data->toArray(), $jsonOptions);
 
 		// End the request
 		craft()->end();

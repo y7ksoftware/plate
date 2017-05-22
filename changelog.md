@@ -1,5 +1,8 @@
 # Y7K Project Boilerplate Changelog
 
+## Version 0.8.*
+* Updated all Craft Plugins
+
 ## Version 0.7.*
 * Add Craft Prune Plugin
 * Fix Browsersync autoreload
@@ -17,6 +20,7 @@
 * Refactored Barba.js transitions
 * Refactored Vue Bootstrapping
 * Added Formatting options to Craft Redactor config
+* Added base_path to environment variables (craft config)
 
 
 ## Version 0.6.*

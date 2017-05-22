@@ -40,13 +40,16 @@
                         <div class="field">
                             <div class="input">
                                 <div class="select">
-                                    <select name="import[type]" id="types">
+                                    <select name="import[type]" id="types" required>
                                     {% for elementType in elementTypes %}
                                         <option value="{{ elementType.getClassHandle() }}">{{ elementType.getName() }}</option>
                                     {% endfor %}
                                     </select>
                                 </div>
                             </div>
+                            {% if not elementTypes|length %}
+                                <p class="warning">{{ "No Element Types found. Please create one first."|t }}</p>
+                            {% endif %}
                         </div>
                     </td>
                 </tr>
@@ -79,6 +82,35 @@
                                     </select>
                                 </div>
                             </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="importSource">
+                    <td>
+                        <div class="field">
+                            <div class="heading">
+                                <label>{{ "Asset Source"|t }}</label>
+                                <div class="instructions">
+                                    <p>{{ "Choose the asset source you want to upload the import file to."|t }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="field">
+                            {% set assetSources = craft.import.getAssetSources %}
+                            <div class="input">
+                                <div class="select">
+                                    <select name="import[assetsource]" id="assetsources" required>
+                                    {% for source in assetSources %}
+                                        <option value="{{ source.id }}">{{ source.name|t }}</option>
+                                    {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            {% if not assetSources|length %}
+                                <p class="warning">{{ "No Asset Sources found. Please create one first."|t }}</p>
+                            {% endif %}
                         </div>
                     </td>
                 </tr>

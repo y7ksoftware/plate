@@ -1,5 +1,26 @@
 Changelog
 =================
+###0.8.33###
+ - Require an asset source, closing #132
+
+###0.8.32###
+ - Fixed broken relative link for user (thanks to @timkelty)
+ - Fix for assets giving 404 on download (thanks to @MRolefes)
+ - Allow element fieldtypes to find disabled elements (thanks to @timkelty)
+
+###0.8.31###
+ - Make sure we have a unique filename to prevent conflict
+ - Cache opening of file to prevent a download on every step
+
+###0.8.30###
+ - Added the ability to upload the import file to an asset source for better persistency
+ - Save user id to settings so we can run the task without user session
+ - Fixed a bug where deleting/replacing didn't work on PHP7
+ - Fixed a bug where logs didn't show
+
+###0.8.29###
+ - All service code is now fully covered by unit tests (thanks to @bvangennep)
+
 ###0.8.28###
  - Fix history overview item url, closing issue #93 (thanks to @timkelty)
  - Fix for "only variables should be passed by reference" (PHP7), closing issue #96 (thanks to @ianshea)
