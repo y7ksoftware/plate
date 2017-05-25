@@ -1,6 +1,6 @@
 # Y7K Project Boilerplate Changelog
 
-## Version 0.8.*
+## Version 0.8.*
 * Updated all Craft Plugins
 * Updated ESLint Config
 * Craft CMS Config
