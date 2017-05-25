@@ -1,4 +1,5 @@
 <?php
+
 namespace Craft;
 
 class SproutForms_EntriesController extends BaseController
@@ -64,7 +65,14 @@ class SproutForms_EntriesController extends BaseController
 
 		if (sproutForms()->entries->forwardEntry($entry))
 		{
-			if ($this->form->savePayload)
+			// Adds support for notification
+			if (!craft()->request->isCpRequest() && $this->form->notificationEnabled)
+			{
+				$post = $_POST;
+				sproutForms()->forms->sendNotification($this->form, $entry, $post);
+			}
+
+			if ($this->form->saveData)
 			{
 				if (!sproutForms()->entries->saveEntry($entry))
 				{
@@ -124,7 +132,7 @@ class SproutForms_EntriesController extends BaseController
 
 		// Our SproutForms_EntryModel requires that we assign it a SproutForms_FormModel
 		$entry->formId = $this->form->id;
-		$statusId = craft()->request->getParam('statusId');
+		$statusId      = craft()->request->getParam('statusId');
 
 		if (isset($statusId))
 		{
@@ -141,27 +149,27 @@ class SproutForms_EntriesController extends BaseController
 		$this->form->notificationSenderEmail  = craft()->templates->renderObjectTemplate($this->form->notificationSenderEmail, $entry);
 		$this->form->notificationReplyToEmail = craft()->templates->renderObjectTemplate($this->form->notificationReplyToEmail, $entry);
 
-		if (sproutForms()->entries->saveEntry($entry))
+		$result   = true;
+		$saveData = sproutForms()->entries->isDataSaved($this->form);
+
+		if ($saveData)
+		{
+			$result = sproutForms()->entries->saveEntry($entry);
+		}
+		else
+		{
+			// call our save-entry event
+			$isNewEntry = !$entry->id;
+			sproutForms()->entries->callOnSaveEntryEvent($entry, $isNewEntry);
+		}
+
+		if ($result)
 		{
 			// Only send notification email for front-end submissions if they are enabled
 			if (!craft()->request->isCpRequest() && $this->form->notificationEnabled)
 			{
 				$post = $_POST;
 				sproutForms()->forms->sendNotification($this->form, $entry, $post);
-			}
-
-			// Only handle multi-page forms on the front-end
-			if (!craft()->request->isCpRequest())
-			{
-				// Store our Entry ID for a multi-step form
-				craft()->httpSession->add('multiStepFormEntryId', $entry->id);
-
-				// Remove our multiStepForm reference. It will be
-				// set by the template again if it needs to be.
-				craft()->httpSession->remove('multiStepForm');
-
-				// Store our new entry so we can recreate the Entry object on our thank you page
-				craft()->httpSession->add('lastEntryId', $entry->id);
 			}
 
 			if (craft()->request->isAjaxRequest())
@@ -244,7 +252,10 @@ class SproutForms_EntriesController extends BaseController
 			}
 		}
 
-		if (craft()->request->isCpRequest())
+		$sproutFormsSettings            = craft()->config->get('sproutForms');
+		$enableEditFormEntryViaFrontEnd = isset($sproutFormsSettings['enableEditFormEntryViaFrontEnd']) ? $sproutFormsSettings['enableEditFormEntryViaFrontEnd'] : false;
+
+		if (craft()->request->isCpRequest() || $enableEditFormEntryViaFrontEnd)
 		{
 			$entryId = craft()->request->getPost('entryId');
 		}
@@ -304,9 +315,23 @@ class SproutForms_EntriesController extends BaseController
 		else
 		{
 			$entry = sproutForms()->entries->getEntryById($entryId);
+
+			if (!$entry)
+			{
+				throw new HttpException(404);
+			}
 		}
 
-		$form          = sproutForms()->forms->getFormById($entry->formId);
+		$form     = sproutForms()->forms->getFormById($entry->formId);
+		$saveData = sproutForms()->entries->isDataSaved($form);
+
+		if (!$saveData)
+		{
+			craft()->userSession->setError(Craft::t("Unable to edit entry. Enable the 'Save Data' for this form to view, edit, or delete content."));
+
+			$this->renderTemplate('sproutforms/entries');
+		}
+
 		$entryStatus   = sproutForms()->entries->getEntryStatusById($entry->statusId);
 		$statuses      = sproutForms()->entries->getAllEntryStatuses();
 		$entryStatuses = array();
@@ -347,7 +372,7 @@ class SproutForms_EntriesController extends BaseController
 	private function _redirectOnError(SproutForms_EntryModel $entry)
 	{
 		$errors = json_encode($entry->getErrors());
-		SproutFormsPlugin::log("Couldn’t save form entry. Errors: ".$errors, LogLevel::Error, true);
+		SproutFormsPlugin::log('Unable to save form entry. Errors: ' . $errors, LogLevel::Error, true);
 
 		if (craft()->request->isAjaxRequest())
 		{
@@ -362,7 +387,7 @@ class SproutForms_EntriesController extends BaseController
 			if (craft()->request->isCpRequest())
 			{
 				// make errors available to variable
-				craft()->userSession->setError(Craft::t('Couldn’t save entry.'));
+				craft()->userSession->setError(Craft::t('Unable to save entry.'));
 
 				// Store this Entry Model in a variable in our Service layer
 				// so that we can access the error object from our actionEditEntryTemplate() method
@@ -383,7 +408,7 @@ class SproutForms_EntriesController extends BaseController
 				}
 				else
 				{
-					craft()->userSession->setError(Craft::t('Couldn’t save entry.'));
+					craft()->userSession->setError(Craft::t('Unable to save entry.'));
 					// Store this Entry Model in a variable in our Service layer
 					// so that we can access the error object from our displayForm() variable
 					sproutForms()->forms->activeEntries[$this->form->handle] = $entry;

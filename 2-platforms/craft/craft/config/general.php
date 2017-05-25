@@ -42,6 +42,7 @@ return [
         'environmentVariables' => [
             'basePath' => $_SERVER['DOCUMENT_ROOT'],
         ]
+
     ],
 
 ];

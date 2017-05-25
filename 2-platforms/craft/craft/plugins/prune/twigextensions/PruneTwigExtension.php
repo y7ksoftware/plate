@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace Craft;
 
 use Twig_Extension;
@@ -6,15 +6,6 @@ use Twig_Filter_Method;
 
 class PruneTwigExtension extends \Twig_Extension
 {
-	/**
-	 * @var array
-	 */
-	protected $input = array();
-
-	/**
-	 * @var array
-	 */
-	protected $fields = array();
 
 	/**
 	 * Get name of the Twig extension
@@ -56,8 +47,6 @@ class PruneTwigExtension extends \Twig_Extension
 			throw new Exception(Craft::t('Content passed is not an array.'));
 		}
 
-		$this->input = $input;
-		$this->fields = $fields;
 
 		$output = array();
 
@@ -66,7 +55,7 @@ class PruneTwigExtension extends \Twig_Extension
 				continue;
 			}
 
-			$output[] = $this->returnPrunedArray($element);
+			$output[] = $this->returnPrunedArray($element, $fields);
 		}
 
 		return $output;
@@ -78,18 +67,34 @@ class PruneTwigExtension extends \Twig_Extension
 	 * @param BaseModel $item
 	 * @return array
 	 */
-	protected function returnPrunedArray(BaseModel $item)
+	protected function returnPrunedArray(BaseModel $item, array $fields)
 	{
+
 		$new_item = array();
 
-		foreach ($this->fields as $key) {
+		foreach ($fields as $key) {
+
+            if(strpos($key, '.') !== false) {
+                $subFields = explode('.', $key);
+                $key = array_shift($subFields);
+                $subFields = [implode('.', $subFields)];
+            }
+
 			if (isset($item->{$key})) {
-				if(is_object($item->{$key}) && method_exists($item->{$key}, 'attributeNames')) {
-					$new_item[$key] = new \stdClass();
-					foreach($item->{$key}->attributeNames() as $attribute) {
-						 $new_item[$key]->$attribute = $item->{$key}->{$attribute};
-					} 
-				}
+
+                if(is_object($item->{$key}) && is_a($item->{$key}, 'Craft\ElementCriteriaModel')) {
+                    $children = $item->{$key}->find();
+                    $prunedChildren = [];
+                    foreach ($children as $child) {
+                        array_push($prunedChildren, $this->returnPrunedArray($child, $subFields));
+                    }
+
+                    if(array_key_exists($key, $new_item)) {
+                        $new_item[$key] = array_merge_recursive($new_item[$key], $prunedChildren);
+                    } else {
+                        $new_item[$key] = $prunedChildren;
+                    }
+                }
 				else {
 					$new_item[$key] = $item->{$key};
 				}

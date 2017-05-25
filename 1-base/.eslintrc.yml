@@ -22,6 +22,8 @@
     comma-dangle:
         - 1
         - "only-multiline"
+    semi:
+        - 1
 #    no-alert: 0
 #    no-bitwise: 0
 #    camelcase: 1
@@ -37,7 +39,11 @@
     Promise: true,
     Vue: true,
     axios: true,
-    Barba: true
+    Barba: true,
+    _: true,
+    store: true,
+    __dirname: true,
+    process: true
 
   env:
     browser: true

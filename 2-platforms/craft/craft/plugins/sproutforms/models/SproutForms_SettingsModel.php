@@ -9,7 +9,10 @@ class SproutForms_SettingsModel extends BaseModel
 			'pluginNameOverride'                  => AttributeType::String,
 			'templateFolderOverride'              => AttributeType::String,
 			'enablePerFormTemplateFolderOverride' => AttributeType::Bool,
-			'enablePayloadForwarding'             => AttributeType::Bool
+			'enablePayloadForwarding'             => AttributeType::Bool,
+			'enableSaveData'                      => AttributeType::Bool,
+			'enableSaveDataPerFormBasis'          => AttributeType::Bool,
+			'saveDataByDefault'                   => AttributeType::Bool,
 		);
 	}
 }
