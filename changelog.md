@@ -6,6 +6,7 @@
 * Craft CMS Config
     - Added config to set allowed filetypes in asset section
 * Updated Piwik Url to avoid redirect
+* Replaced Craft Cache Bust with Mix Plugin, to take account of mix-manifest.json
 
 ## Version 0.7.*
 * Add Craft Prune Plugin

@@ -1,9 +1,0 @@
-{#
- # Craft Bust
- # ---------------
- #
- # Returns the asset url and pipes it through craft bust plugin, if enabled
- #
- #}
-
-{% macro er(asset) %}{% set craftBustIsEnabled = craft.plugins.getPlugin('bust' , false).isEnabled() %}{{ craftBustIsEnabled ? craft.bust.er(asset) : asset }}{% endmacro %}

@@ -2,11 +2,11 @@
 
 namespace Craft;
 
-class BustPlugin extends BasePlugin
+class MixPlugin extends BasePlugin
 {
 	public function getName()
 	{
-		return Craft::t('Cache Bust Files');
+		return Craft::t('Mix Asset Loader');
 	}
 
 	public function getVersion()
@@ -16,11 +16,11 @@ class BustPlugin extends BasePlugin
 
 	public function getDeveloper()
 	{
-		return 'Trevor Davis';
+		return 'Joris Noordermeer';
 	}
 
 	public function getDeveloperUrl()
 	{
-		return 'http://trevordavis.net';
+		return 'https://y7k.com';
 	}
 }

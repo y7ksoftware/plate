@@ -54,14 +54,14 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
     {# Block to insert custom, component-specific vendor css files #}
     {{ block('include_vendor_css') }}
 
-    {# Load Craft Bust Macro #}
-    {% import "helpers/craft-bust.twig" as bust %}
+    {# Load Mix asset Macro #}
+    {% import "helpers/mix-assets.twig" as assets %}
 
     {# Vendor CSS from 3rd party plugins #}
-    {#<link rel="stylesheet" type="text/css" href="{{ bust.er('/build/css/vendor.css') }}">#}
+    {#<link rel="stylesheet" type="text/css" href="{{ assets.mix('build/css/vendor.css') }}">#}
 
     {# Main CSS #}
-    <link rel="stylesheet" type="text/css" href="{{ bust.er('/build/css/main.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ assets.mix('build/css/main.css') }}">
 
     {# Y7K Analytics #}
     {% include "helpers/piwik-analytics.twig" %}
@@ -86,9 +86,9 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
     {% include 'helpers/frontend-constants.twig' %}
 
     {# Javascript #}
-    <script type="text/javascript" src="{{ bust.er('/build/js/manifest.js') }}"></script>
-    <script type="text/javascript" src="{{ bust.er('/build/js/vendor.js') }}"></script>
-    <script type="text/javascript" src="{{ bust.er('/build/js/app.js') }}"></script>
+    <script type="text/javascript" src="{{ assets.mix('build/js/manifest.js') }}"></script>
+    <script type="text/javascript" src="{{ assets.mix('build/js/vendor.js') }}"></script>
+    <script type="text/javascript" src="{{ assets.mix('build/js/app.js') }}"></script>
 
     {# Block to insert custom, component-specific js block after all other code #}
     {{ block('include_component_js') }}
