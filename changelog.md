@@ -3,6 +3,8 @@
 ## Version 0.8.*
 * Updated all Craft Plugins
 * Updated ESLint Config
+* Craft CMS Config
+    - Added config to set allowed filetypes in asset section
 
 ## Version 0.7.*
 * Add Craft Prune Plugin
