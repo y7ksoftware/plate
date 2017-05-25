@@ -5,6 +5,7 @@
 * Updated ESLint Config
 * Craft CMS Config
     - Added config to set allowed filetypes in asset section
+* Updated Piwik Url to avoid redirect
 
 ## Version 0.7.*
 * Add Craft Prune Plugin

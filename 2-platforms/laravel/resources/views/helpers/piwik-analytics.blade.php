@@ -7,10 +7,10 @@
         _paq.push(['enableLinkTracking']);
         (function() {
             var u="//prism.y7k.com/";
-            _paq.push(['setTrackerUrl', u+'js']);
+            _paq.push(['setTrackerUrl', u+'js/']);
             _paq.push(['setSiteId', '{{ env('PIWIK_SITE_ID') }}']);
             var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-            g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'js'; s.parentNode.insertBefore(g,s);
+            g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'js/'; s.parentNode.insertBefore(g,s);
         })();
     </script>
     {{-- End Prism Code --}}
