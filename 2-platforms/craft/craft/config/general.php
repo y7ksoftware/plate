@@ -38,6 +38,10 @@ return [
             'en' => getenv('APP_URL') . '/',
             'de' => getenv('APP_URL') . '/de/',
         ],
+
+        'environmentVariables' => [
+            'basePath' => $_SERVER['DOCUMENT_ROOT'],
+        ]
     ],
 
 ];
