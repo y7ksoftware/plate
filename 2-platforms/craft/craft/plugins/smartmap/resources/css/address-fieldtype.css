@@ -1,0 +1,112 @@
+
+div.smartmap-no-heading {
+    padding-top: 18px;
+}
+
+div.smartmap-field {
+    position: relative;
+    z-index: 0;
+}
+
+div.smartmap-subfields div.field {
+    height: 34px;
+    clear: both;
+}
+
+div.smartmap-top-right {
+    z-index: 90;
+    position: absolute;
+    top: -23px;
+    width: 100%;
+    text-align: right;
+}
+
+table.superTable div.smartmap-field {
+    margin-top: 22px;
+    margin-bottom: 31px;
+}
+table.superTable div.smartmap-top-right {
+    top: -20px;
+}
+
+div.smartmap-top-right.cpFieldLinks {
+    top: -22px;
+    right: 22px;
+}
+
+span.smartmap-no-results {
+    display: none;
+    color: #d1202a;
+}
+span.smartmap-link {
+    color: #0d78f2;
+    cursor: pointer;
+    text-decoration: none;
+}
+span.smartmap-link:hover {
+    text-decoration: underline;
+}
+span.smartmap-search-addresses {}
+span.smartmap-drag-pin {}
+div.smartmap-matches {
+    display: none;
+    z-index: 1000;
+    position: absolute;
+    top: 3px;
+    left: 4px;
+    width: 96%;
+    min-width: 320px;
+    padding: 12px 3px 0;
+    background-color: #ffffff;
+    border: 2px solid #cccccc;
+    -webkit-box-shadow: 1px 2px 5px 0px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow:    1px 2px 5px 0px rgba(50, 50, 50, 0.75);
+    box-shadow:         1px 2px 5px 0px rgba(50, 50, 50, 0.75);
+}
+div.smartmap-matches-intro {
+    margin-left: 9px;
+}
+div.smartmap-matches-intro span {
+    float: right;
+    cursor: pointer;
+    margin-right: 9px;
+    font-weight: bold;
+}
+ul.smartmap-matches-options {
+    min-height: 68px;
+    max-height: 210px;
+    overflow: scroll;
+    margin-top: 5px;
+    margin-left: 0px;
+}
+ul.smartmap-matches-options li span {
+    display: inline-block;
+    color: #0d78f2;
+    padding: 1px 8px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+ul.smartmap-matches-options li span:hover {
+    background-color: #FFE796;
+}
+
+form.smartmap-modal-address-search .toolbar {
+    margin-bottom: 16px;
+    height: auto;
+}
+tr.smartmap-modal-row td {
+    cursor: pointer !important;
+}
+tr.smartmap-modal-row:hover td {
+    background: #f5f5f5;
+}
+th.smartmap-modal-coords,
+td.smartmap-modal-coords {
+    display: none;
+}
+
+form.smartmap-modal-drag-pin .body {
+    padding: 0px;
+}
