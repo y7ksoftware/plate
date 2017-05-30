@@ -14,7 +14,13 @@
 
 
 {% if not craft.plugins.getPlugin('sproutseo' , false).isEnabled() %}
-    <title>{% if title is defined %}{{ title }} - {% endif %}{{ siteName }}</title>
+
+    <title>{% if entry is defined %}{{ entry }} - {% endif %}{{ siteName }}</title>
+
+    {% if craft.config.appEnv != 'production' %}
+        <meta name="robots" content="noindex,nofollow">
+    {% endif %}
+
 {% else %}
 
     {# Prevent Search Engines from indexing the Staging Site #}

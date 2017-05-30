@@ -7,6 +7,7 @@
     - Added config to set allowed filetypes in asset section
 * Updated Piwik Url to avoid redirect
 * Replaced Craft Cache Bust with Mix Plugin, to take account of mix-manifest.json
+* Added `noindex & nofollow` tags, even if Sprout SEO is disabled
 
 ## Version 0.7.*
 * Add Craft Prune Plugin
