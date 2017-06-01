@@ -10,12 +10,12 @@
 return [
 
 	'*' => [
-		'server' => 'localhost',
+		'server' => '127.0.0.1',
 		'tablePrefix' => '',
         'driver' => 'mysql',
         'user' => getenv('DB_USER'),
         'password' => getenv('DB_PASSWORD'),
-        'database' => getenv('DB_DATABASE'),
+        'database' => getenv('DB_NAME'),
         'schema' => 'public',
 	],
 
