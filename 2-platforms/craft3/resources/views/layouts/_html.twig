@@ -30,14 +30,18 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
 
     {# Loading Optimization #}
     {#<link rel="dns-prefetch" href="//cloudflare.com">#}
-    {{ block('prefetch_resources') }}
+    {% if block('prefetch_resources') is defined %}
+        {{ block('prefetch_resources') }}
+    {% endif %}
 
     {#
      # SEO: Use SproutSEO Settings to specify SEO. You can override the block if you want
      # to disable SproutSEO for a specific page and add your own tags.
      # If you want your own SEO config per default, please still do this in "helpers/seo-data"
      #}
-    {% block seo_data %}{% include 'helpers/seo-data' %}{% endblock %}
+    {% block seo_data %}
+        {% include 'helpers/seo-data' %}
+    {% endblock %}
 
     {# Favicons #}
     <link rel="apple-touch-icon" sizes="180x180" href="/build/images/meta/apple-touch-icon.png">
@@ -52,10 +56,9 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
     {{ getHeadHtml() }}
 
     {# Block to insert custom, component-specific vendor css files #}
-    {{ block('include_vendor_css') }}
-
-    {# Load Mix asset Macro #}
-    {% import "helpers/mix-assets.twig" as assets %}
+    {% if block('include_vendor_css') is defined %}
+        {{ block('include_vendor_css') }}
+    {% endif %}
 
     {# Vendor CSS from 3rd party plugins #}
     {#<link rel="stylesheet" type="text/css" href="{{ assets.mix('build/css/vendor.css') }}">#}
@@ -68,19 +71,25 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
 
 </head>
 
-<body data-namespace="{{ block('namespace') }}">
+<body data-namespace="{% block namespace %}{% endblock %}">
 
     {# Main Content #}
-    {{ block('page') }}
+    {% if block('page') is defined %}
+        {{ block('page') }}
+    {% endif %}
 
     {# Block right before end of body. e.g. to add modal windows and other overlays #}
-    {{ block('before_body_ends') }}
+    {% if block('before_body_ends') is defined %}
+        {{ block('before_body_ends') }}
+    {% endif %}
 
     {# All footer stuff added by plugins #}
     {{ getFootHtml() }}
 
     {# Block to insert custom, component-specific vendor js files #}
-    {{ block('include_vendor_js') }}
+    {% if block('include_vendor_js') is defined %}
+        {{ block('include_vendor_js') }}
+    {% endif %}
 
     {# Output Config variables to the frontend #}
     {% include 'helpers/frontend-constants.twig' %}
@@ -91,7 +100,9 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
     <script type="text/javascript" src="{{ assets.mix('build/js/app.js') }}"></script>
 
     {# Block to insert custom, component-specific js block after all other code #}
-    {{ block('include_component_js') }}
+    {% if block('include_component_js') is defined %}
+        {{ block('include_component_js') }}
+    {% endif %}
 
 </body>
 </html>
