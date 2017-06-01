@@ -23,7 +23,7 @@ define( 'CRAFT_TRANSLATIONS_PATH', $root . '/resources/lang/' );
 define( 'CRAFT_STORAGE_PATH', $root . '/storage/' );
 
 // Tell Craft to serve the English content
-define( 'CRAFT_LOCALE' , 'en' );
+define( 'CRAFT_SITE' , 'en' );
 
 $app = require $root.'/vendor/craftcms/cms/bootstrap/web.php';
 $app->run();

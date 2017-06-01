@@ -12,7 +12,6 @@ return [
 
     '*' => [
         'omitScriptNameInUrls' => true,
-        'usePathInfo' => true,
         'convertFilenamesToAscii' => true, // Convert upload filenames to valid ascii chars
         'limitAutoSlugsToAscii' => true, // Converts Umlauts etc. in slugs to ascii
         'enableCsrfProtection' => true, // Enable CSRF protection (will be default in Craft 3)
@@ -32,7 +31,6 @@ return [
         'devMode' => (getenv('APP_DEBUG')=='true'),
         'enableTemplateCaching' => (getenv('TEMPLATE_CACHING')=='true'),
 
-        'appId' => getenv('APP_NAME'),
         'appEnv' => getenv('APP_ENV'),
         'piwikSiteId' => getenv('PIWIK_SITE_ID'),
 
