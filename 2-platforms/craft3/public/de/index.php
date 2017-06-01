@@ -4,11 +4,11 @@
  * Craft web bootstrap file
  */
 
-// Tell Craft to serve the English content
-define( 'CRAFT_SITE' , 'en' );
+// Tell Craft to serve the German content
+define( 'CRAFT_SITE' , 'de' );
 
 // Project root path
-$root = dirname(__DIR__);
+$root = dirname(dirname(__DIR__));
 
 // Composer autoloader
 require_once $root.'/vendor/autoload.php';
@@ -24,6 +24,7 @@ define('CRAFT_BASE_PATH', $root);
 define( 'CRAFT_TEMPLATES_PATH', $root . '/resources/views/' );
 define( 'CRAFT_TRANSLATIONS_PATH', $root . '/resources/lang/' );
 define( 'CRAFT_STORAGE_PATH', $root . '/storage/' );
+
 
 $app = require $root.'/vendor/craftcms/cms/bootstrap/web.php';
 $app->run();

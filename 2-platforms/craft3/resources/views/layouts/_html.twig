@@ -21,8 +21,8 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
         _______\///________\///______________\///________\///__
 
 -->
-<!--[if IE]><html lang="{{ craft.locale|slice(0,2) }}" class="ie old-ie"><![endif]-->
-<!--[if !IE]><!--><html class="no-js" lang="{{ craft.locale|slice(0,2) }}"><!--<![endif]-->
+<!--[if IE]><html lang="{{ craft.app.language|slice(0,2) }}" class="ie old-ie"><![endif]-->
+<!--[if !IE]><!--><html class="no-js" lang="{{ craft.app.language|slice(0,2) }}"><!--<![endif]-->
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="user-scalable=yes, initial-scale=1, width=device-width, height=device-height" />
@@ -52,8 +52,6 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
     <meta name="theme-color" content="#ffffff">
 
     {# CSS #}
-    {# All header stuff added by plugins #}
-    {{ getHeadHtml() }}
 
     {# Block to insert custom, component-specific vendor css files #}
     {% if block('include_vendor_css') is defined %}
@@ -61,10 +59,10 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
     {% endif %}
 
     {# Vendor CSS from 3rd party plugins #}
-    {#<link rel="stylesheet" type="text/css" href="{{ assets.mix('build/css/vendor.css') }}">#}
+    {#<link rel="stylesheet" type="text/css" href="{{ mix('build/css/vendor.css') }}">#}
 
     {# Main CSS #}
-    <link rel="stylesheet" type="text/css" href="{{ assets.mix('build/css/main.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ mix('build/css/main.css') }}">
 
     {# Y7K Analytics #}
     {% include "helpers/piwik-analytics.twig" %}
@@ -83,9 +81,6 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
         {{ block('before_body_ends') }}
     {% endif %}
 
-    {# All footer stuff added by plugins #}
-    {{ getFootHtml() }}
-
     {# Block to insert custom, component-specific vendor js files #}
     {% if block('include_vendor_js') is defined %}
         {{ block('include_vendor_js') }}
@@ -95,9 +90,9 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
     {% include 'helpers/frontend-constants.twig' %}
 
     {# Javascript #}
-    <script type="text/javascript" src="{{ assets.mix('build/js/manifest.js') }}"></script>
-    <script type="text/javascript" src="{{ assets.mix('build/js/vendor.js') }}"></script>
-    <script type="text/javascript" src="{{ assets.mix('build/js/app.js') }}"></script>
+    <script type="text/javascript" src="{{ mix('build/js/manifest.js') }}"></script>
+    <script type="text/javascript" src="{{ mix('build/js/vendor.js') }}"></script>
+    <script type="text/javascript" src="{{ mix('build/js/app.js') }}"></script>
 
     {# Block to insert custom, component-specific js block after all other code #}
     {% if block('include_component_js') is defined %}

@@ -13,18 +13,18 @@
  #}
 
 
-{% if not craft.plugins.getPlugin('sproutseo' , false).isEnabled() %}
+{% if not if craft.app.plugins.getPlugin('sproutseo') %}
 
     <title>{% if entry is defined %}{{ entry }} - {% endif %}{{ siteName }}</title>
 
-    {% if craft.config.appEnv != 'production' %}
+    {% if craft.app.config.general.appEnv != 'production' %}
         <meta name="robots" content="noindex,nofollow">
     {% endif %}
 
 {% else %}
 
     {# Prevent Search Engines from indexing the Staging Site #}
-    {% if craft.config.appEnv != 'production' %}
+    {% if craft.app.config.general.appEnv != 'production' %}
         {% do craft.sproutSeo.meta({
             robots: { 'noindex': 1, 'nofollow': 1 }
         }) %}
