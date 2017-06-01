@@ -1,0 +1,27 @@
+{
+    "name": "{name}",
+    "description": "Y7K Project",
+    "require": {
+        "php": ">=7.0.0",
+        "craftcms/cms": "^3.0.0-beta.10",
+        "craftcms/plugin-installer": "^1.0.0",
+        "vlucas/phpdotenv": "^2.4.0",
+        "roave/security-advisories": "dev-master"
+    },
+    "scripts": {
+        "post-root-package-install": [
+            "php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ]
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist"
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ],
+    "minimum-stability": "beta"
+}

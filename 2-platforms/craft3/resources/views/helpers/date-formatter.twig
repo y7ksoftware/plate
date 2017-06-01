@@ -1,0 +1,60 @@
+{#
+ # Date Formatter
+ # ---------------
+ #
+ # Returns different formated dates
+ #
+ #}
+
+{# With no dot on german #}
+{# DE: Di #}
+{# EN: Thu #}
+{% macro shortWeekDay(inputDate) %}
+    {% return inputDate|date('D')|replace('.','') %}
+{% endmacro %}
+
+
+{# DE: 20:00 Uhr #}
+{# EN: 08:00 pm #}
+{% macro time(inputDate) %}
+    {% switch craft.locale %}
+        {% case "de" %}
+            {% return inputDate|date('H:i') ~ ' Uhr' %}
+        {% case "en" %}
+            {% return inputDate|date('h:i a') %}
+        {% default %}
+            {% return inputDate %}
+    {% endswitch %}
+{% endmacro %}
+
+{# DE: Montag 17. September, 17:30 #}
+{# EN: Monday, September 18, 5:30 pm #}
+{% macro dateLong(inputDate) %}
+    {% switch craft.locale %}
+        {% case "de" %}
+            {% return inputDate|date('l j. F, H:i') %}
+        {% case "en" %}
+            {% return inputDate|date('l, F j, h:i a') %}
+        {% default %}
+            {% return inputDate %}
+    {% endswitch %}
+{% endmacro %}
+
+{# DE: Di. 12. Februar #}
+{# EN: Thu, February 12 #}
+{% macro dateHuman(inputDate) %}
+    {% if date(inputDate) >= date('today') %}
+        {% return 'Today'|t %}
+    {% elseif date(inputDate) >= date('yesterday') %}
+        {% return 'Yesterday'|t %}
+    {% else %}
+        {% switch craft.locale %}
+            {% case "de" %}
+                {% return inputDate|date('D j. F') %}
+            {% case "en" %}
+                {% return inputDate|date('D, F j') %}
+            {% default %}
+                {% return inputDate %}
+        {% endswitch %}
+    {% endif %}
+{% endmacro %}

@@ -1,0 +1,21 @@
+# Config
+.env
+
+# Craft License
+/craft/config/license.key
+
+# Dependencies
+/node_modules
+/vendor
+
+# Build folder
+/public/build
+mix-manifest.json
+
+# Uploads folder
+/public/storage
+/public/imager
+
+# General
+.idea
+.DS_Store
