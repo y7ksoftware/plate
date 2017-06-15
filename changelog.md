@@ -1,5 +1,10 @@
 # Y7K Project Boilerplate Changelog
 
+## Version 0.9.*
+* Moved SCSS folder to its own repo
+* Moved JS folder to its own repo
+
+
 ## Version 0.8.*
 * Updated all Craft Plugins
 * Updated ESLint Config
