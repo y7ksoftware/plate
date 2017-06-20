@@ -3,6 +3,7 @@
 ## Version 0.9.*
 * Moved SCSS folder to its own repo
 * Moved JS folder to its own repo
+* Allow SCSS Globbing (@Import *)
 
 
 ## Version 0.8.*

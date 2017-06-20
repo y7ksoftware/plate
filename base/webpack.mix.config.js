@@ -22,6 +22,15 @@ const config = {
                 baseDir + '/resources/assets/js',
                 baseDir + '/node_modules'
             ],
+        },
+
+        module: {
+            rules: [{
+                test: /\.scss/,
+                loader: 'import-glob',
+                exclude: /node_modules/,
+                enforce: 'pre'
+            }]
         }
     },
 
