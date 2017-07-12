@@ -1,5 +1,9 @@
 # Y7K Project Boilerplate Changelog
 
+## Version 0.10.*
+* Updated Babel Presets
+* Updated Laravel-Mix to 1.2.0
+
 ## Version 0.9.*
 * Moved SCSS folder to its own repo
 * Moved JS folder to its own repo
