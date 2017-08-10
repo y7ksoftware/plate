@@ -1,5 +1,17 @@
 # Y7K Project Boilerplate Changelog
 
+## Version 0.10.*
+* Update craft plugins and add new plugins:
+    - Neo (Create awesome Matrix fields with real fields)
+    - TheArchitect (Import/Export sections, structure, fields etc.)
+    - Supersort (Badass twig filters for array sorting)
+    - Redactor Inline Styles (Add CSS to redactor editor in backend)
+    - Quickfield (Create fields while in entry fieldlayout)
+    - CPBodyClasses (Add user group etc. css classes to CP body)
+    - CPSortCols (Entry Index: Sortable by custom fields)
+* Add more ESLint Globals
+* Add `.craft-cli.php`
+
 ## Version 0.9.*
 * Moved SCSS folder to its own repo
 * Moved JS folder to its own repo

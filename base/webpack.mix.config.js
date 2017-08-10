@@ -1,7 +1,8 @@
 // Load Dotenv
 require('dotenv').load();
 
-const baseDir = require('path').resolve(__dirname);
+const path = require('path');
+const baseDir = path.resolve(__dirname);
 
 const config = {
 

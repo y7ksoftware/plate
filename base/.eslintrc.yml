@@ -43,7 +43,9 @@
     _: true,
     store: true,
     __dirname: true,
-    process: true
+    process: true,
+    _paq: true,
+    Craft: true
 
   env:
     browser: true
