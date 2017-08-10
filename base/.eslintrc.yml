@@ -45,7 +45,8 @@
     __dirname: true,
     process: true,
     _paq: true,
-    Craft: true
+    Craft: true,
+    pjaxHistory: true
 
   env:
     browser: true
