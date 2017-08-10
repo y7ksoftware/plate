@@ -1,6 +1,6 @@
 # Y7K Project Boilerplate Changelog
 
-## Version 0.10.*
+## Version 0.11.*
 * Update craft plugins and add new plugins:
     - Neo (Create awesome Matrix fields with real fields)
     - TheArchitect (Import/Export sections, structure, fields etc.)
@@ -12,6 +12,10 @@
 * Add more ESLint Globals
 * Add `.craft-cli.php`
 
+## Version 0.10.*
+* Updated Babel Presets
+* Updated Laravel-Mix to 1.2.0
+* 
 ## Version 0.9.*
 * Moved SCSS folder to its own repo
 * Moved JS folder to its own repo
