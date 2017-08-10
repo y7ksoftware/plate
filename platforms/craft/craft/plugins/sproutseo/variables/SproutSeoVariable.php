@@ -53,13 +53,14 @@ class SproutSeoVariable
 	/**
 	 * Processes and outputs SEO meta tags
 	 *
+	 * @deprecated Remove in SproutSeo 4.x in Craft 3.0
 	 * @return \Twig_Markup
 	 */
 	public function optimize()
 	{
-		$output = sproutSeo()->optimize->getMetaTagHtml();
+		$output = "The craft.sproutseo.optimize() tag has been deprecated. Use {% sproutseo 'optimize' %} instead. See a list of all changes in Sprout SEO 3 here: https://sprout.barrelstrengthdesign.com/craft-plugins/seo/docs/getting-started/updating-to-sprout-seo-3";
 
-		return TemplateHelper::getRaw($output);
+		throw new Exception(Craft::t($output));
 	}
 
 	/**
@@ -196,7 +197,7 @@ class SproutSeoVariable
 	{
 		$element = craft()->elements->getElementById($id);
 
-		return $element != null ? $element : false;
+		return $element != null ? $element : null;
 	}
 
 	/**
@@ -1077,5 +1078,30 @@ class SproutSeoVariable
 		}
 
 		return false;
+	}
+
+	/**
+	 * Returns array of URL Enabled Section types and the name of Element ID associated with each
+	 *
+	 * @todo - rename this getElementIdName() or something like that
+	 *
+	 * @return array
+	 */
+	public function getVariableIdNames()
+	{
+		$registeredUrlEnabledSectionsTypes = craft()->plugins->call('registerSproutSeoUrlEnabledSectionTypes');
+
+		$variableTypes = array();
+
+		foreach ($registeredUrlEnabledSectionsTypes as $plugin => $urlEnabledSectionTypes)
+		{
+			foreach ($urlEnabledSectionTypes as $urlEnabledSectionType)
+			{
+				$idVariableName = $urlEnabledSectionType->getIdVariableName();
+				array_push($variableTypes, $idVariableName);
+			}
+		}
+
+		return $variableTypes;
 	}
 }

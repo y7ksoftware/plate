@@ -42,6 +42,7 @@ return array(
   'hashFilename' => 'postfix', // true, false, or 'postfix' (meaning only the generated part of the filename is hashed)
   'hashPath' => false, 
   'hashRemoteUrl' => false, // true, false, or 'host' (meaning only the host part of the url is hashed) 
+  'useRemoteUrlQueryString' => false,
   'instanceReuseEnabled' => false,
   'noop' => false,
   'suppressExceptions' => false,
@@ -74,6 +75,16 @@ return array(
   'optimizeType' => 'task',
   'skipExecutableExistCheck' => false,
   'logOptimizations' => false,
+    
+  'imgixEnabled' => false,
+  'imgixDomains' => null, // array of sources, ie array('your-source.imgix.net')
+  'imgixUseHttps' => true,
+  'imgixSignKey' => '', // this is also called `security token`, and you'll find it in your Imgix source details page
+  'imgixSourceIsWebProxy' => false,
+  'imgixUseCloudSourcePath' => true,
+  'imgixShardStrategy' => 'cycle', // 'cycle' or 'crc'
+  'imgixGetExternalImageDimensions' => true, // false disables download of external images, but makes the model less accurate 
+  'imgixDefaultParams' => null, // an array of default values that will be used for all imgix transforms (ie array('auto'=>'compress,format'))
   
   'awsEnabled' => false,
   'awsAccessKey' => '',

@@ -17,6 +17,14 @@ class SproutSeo_CommerceProductUrlEnabledSectionType extends SproutSeoBaseUrlEna
 	/**
 	 * @return string
 	 */
+	public function getIdVariableName()
+	{
+		return 'productId';
+	}
+
+	/**
+	 * @return string
+	 */
 	public function getIdColumnName()
 	{
 		if ($this->typeIdContext == 'matchedElementCheck')
@@ -128,7 +136,7 @@ class SproutSeo_CommerceProductUrlEnabledSectionType extends SproutSeoBaseUrlEna
 
 		$criteria = craft()->elements->getCriteria('Commerce_Product');
 
-		$productType = craft()->categories->getGroupById($elementGroupId);
+		$productType = craft()->commerce_productTypes->getProductTypeById($elementGroupId);
 		$locales = array_values($productType->getLocales());
 
 		if ($locales)

@@ -54,16 +54,6 @@ class ImportVariable
     }
 
     /**
-     * Get viewable asset sources.
-     *
-     * @return array
-     */
-    public function getAssetSources()
-    {
-        return craft()->assetSources->getViewableSources();
-    }
-
-    /**
      * Show history overview.
      *
      * @return array

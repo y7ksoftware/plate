@@ -15,6 +15,16 @@ class SproutSeo_SettingsService extends BaseApplicationComponent
 		$plugin      = craft()->plugins->getPlugin('sproutseo');
 		$seoSettings = $plugin->getSettings();
 
+		// Check if for some reason structureId is deleted
+		if (isset($seoSettings->structureId))
+		{
+			if (!$seoSettings->structureId || !is_numeric($seoSettings->structureId))
+			{
+				$structure = sproutSeo()->redirects->createStructureRecord();
+				$seoSettings->structureId  = $structure->id;
+			}
+		}
+
 		if (isset($settings["pluginNameOverride"]))
 		{
 			$seoSettings->pluginNameOverride = $settings["pluginNameOverride"] != null ?
@@ -48,6 +58,11 @@ class SproutSeo_SettingsService extends BaseApplicationComponent
 			$seoSettings->localeIdOverride = isset($settings["localeIdOverride"]) ?
 				$settings["localeIdOverride"] :
 				$seoSettings->localeIdOverride;
+		}
+
+		if (isset($settings['toggleLocaleOverride']) && !$settings['toggleLocaleOverride'])
+		{
+			$seoSettings->localeIdOverride = null;
 		}
 
 		if (isset($settings["displayFieldHandles"]))

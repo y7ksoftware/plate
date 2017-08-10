@@ -16,8 +16,7 @@ use League\Fractal\TransformerAbstract;
 class ElementApiController extends BaseController
 {
 	/**
-	 * @var Allows anonymous access to this controller's actions.
-	 * @access protected
+	 * @var bool Allows anonymous access to this controller's actions.
 	 */
 	protected $allowAnonymous = true;
 
@@ -46,13 +45,29 @@ class ElementApiController extends BaseController
 				'pageParam' => 'page',
 				'elementsPerPage' => 100,
 				'first' => false,
-				'transformer' => 'Craft\ElementApi_ElementTransformer',
+				'transformer' => [
+					'class' => 'Craft\ElementApi_ElementTransformer',
+				],
+				'cache' => false,
 			],
 			craft()->config->get('defaults', 'elementapi'),
 			$config
 		);
 
-		if ($config['pageParam'] == 'p')
+		// Before anything else, check the cache
+		if ($config['cache']) {
+			$cacheKey = 'elementapi:'.craft()->request->getPath().':'.craft()->request->getQueryStringWithoutPath();
+			$cache = craft()->cache->get($cacheKey);
+
+			if ($cache !== false)
+			{
+				JsonHelper::sendJsonHeaders();
+				echo $cache;
+				craft()->end();
+			}
+		}
+
+		if ($config['pageParam'] === 'p')
 		{
 			throw new Exception('The pageParam setting cannot be set to "p" because that’s the parameter Craft uses to check the requested path.');
 		}
@@ -78,26 +93,34 @@ class ElementApiController extends BaseController
 		$fractal = new Manager();
 
 		// Set the serializer
-        $serializer = isset($config['serializer']) ? $config['serializer'] : null;
-        if (!$serializer instanceof SerializerAbstract)
-        {
-            switch ($serializer)
-            {
-                case 'dataArray':
-                    $serializer = new DataArraySerializer();
-                    break;
-                case 'jsonApi':
-                    $serializer = new JsonApiSerializer();
-                    break;
-                case 'jsonFeed':
-                    Craft::import('plugins.elementapi.ElementApi_JsonFeedV1Serializer');
-                    $serializer = new ElementApi_JsonFeedV1Serializer();
-                    break;
-                default:
-                    $serializer = new ArraySerializer();
-            }
-        }
+		$serializer = isset($config['serializer']) ? $config['serializer'] : null;
+		if (!$serializer instanceof SerializerAbstract)
+		{
+			switch ($serializer)
+			{
+				case 'dataArray':
+					$serializer = new DataArraySerializer();
+					break;
+				case 'jsonApi':
+					$serializer = new JsonApiSerializer();
+					break;
+				case 'jsonFeed':
+					Craft::import('plugins.elementapi.ElementApi_JsonFeedV1Serializer');
+					$serializer = new ElementApi_JsonFeedV1Serializer();
+					break;
+				default:
+					$serializer = new ArraySerializer();
+			}
+		}
 		$fractal->setSerializer($serializer);
+
+		// Set the includes
+		$includes = isset($config['includes']) ? $config['includes'] : [];
+		$fractal->parseIncludes($includes);
+
+		// Set the excludes
+		$excludes = isset($config['excludes']) ? $config['excludes'] : [];
+		$fractal->parseExcludes($excludes);
 
 		// Define the transformer
 		if (is_callable($config['transformer']) || $config['transformer'] instanceof TransformerAbstract)
@@ -146,10 +169,8 @@ class ElementApiController extends BaseController
 		// Set any custom meta values
 		if (isset($config['meta']))
 		{
-		    $resource->setMeta($config['meta']);
-        }
-
-        JsonHelper::sendJsonHeaders();
+			$resource->setMeta($config['meta']);
+		}
 
 		$data = $fractal->createData($resource);
 
@@ -158,18 +179,41 @@ class ElementApiController extends BaseController
 			'data' => $data,
 		]));
 
+		// Serialize and JSON-encode the data
+		$data = $data->toArray();
+		JsonHelper::sendJsonHeaders();
 		$jsonOptions = isset($config['jsonOptions']) ? $config['jsonOptions'] : 0;
-		echo json_encode($data->toArray(), $jsonOptions);
+		$output = json_encode($data, $jsonOptions);
 
-		// End the request
+		// Cache it?
+		if ($config['cache'])
+		{
+			if (is_int($config['cache']))
+			{
+				$expire = $config['cache'];
+			}
+			else if (is_string($config['cache']))
+			{
+				$expire = DateTimeHelper::timeFormatToSeconds($config['cache']);
+			}
+			else
+			{
+				$expire = null;
+			}
+
+			craft()->cache->set($cacheKey, $output, $expire);
+		}
+
+		// Output and the request
+		echo $output;
 		craft()->end();
 	}
 
 	/**
 	 * Calls a given function. If any params are given, they will be mapped to the function's arguments.
 	 *
-	 * @param $func The function to call
-	 * @param $params Any params that should be mapped to function arguments
+	 * @param callable $func   The function to call
+	 * @param array    $params Any params that should be mapped to function arguments
 	 *
 	 * @return mixed The result of the function
 	 */

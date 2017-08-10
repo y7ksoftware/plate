@@ -3,6 +3,8 @@ namespace Craft;
 
 class SproutSeo_OptimizeService extends BaseApplicationComponent
 {
+	public $rawMetadata = false;
+
 	/**
 	 * @var array
 	 */
@@ -146,6 +148,11 @@ class SproutSeo_OptimizeService extends BaseApplicationComponent
 			'meta'    => $this->prioritizedMetadataModel->getMetaTagData(),
 			'schema'  => $this->getStructuredData()
 		);
+
+		if ($this->rawMetadata == true)
+		{
+			return $metadata;
+		}
 
 		// Output metadata
 		if ($settings->enableMetadataRendering)
@@ -436,6 +443,47 @@ class SproutSeo_OptimizeService extends BaseApplicationComponent
 			case SproutSeo_MetadataLevels::CodeMetadata:
 				$response = $this->codeMetadata;
 				break;
+		}
+
+		return $response;
+	}
+
+	/**
+	 * Returns the url enable section given the variable id
+	 *
+	 * @param $variableNameId string
+	 * @return array
+	 */
+	public function getContextByElementVariable($variableIdValue, $variableNameId)
+	{
+		$response = array();
+
+		$registeredUrlEnabledSectionsTypes = craft()->plugins->call('registerSproutSeoUrlEnabledSectionTypes');
+
+		foreach ($registeredUrlEnabledSectionsTypes as $plugin => $urlEnabledSectionTypes)
+		{
+			foreach ($urlEnabledSectionTypes as $urlEnabledSectionType)
+			{
+				// Let's get the optimized metadata model
+				$idVariableName = $urlEnabledSectionType->getIdVariableName();
+
+        if($idVariableName == $variableNameId)
+				{
+					// example: entry, category, etc.
+					$elementType = $urlEnabledSectionType->getMatchedElementVariable();
+					$locale      = craft()->i18n->getLocaleById(craft()->language);
+					$elementById = craft()->elements->getElementById($variableIdValue, $urlEnabledSectionType->getElementType(), $locale->id);
+
+					if ($elementById)
+					{
+						$response = array(
+							$elementType => $elementById
+						);
+
+						return $response;
+					}
+				}
+			}
 		}
 
 		return $response;

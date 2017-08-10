@@ -193,7 +193,15 @@ class SproutSeo_ElementMetadataFieldType extends BaseFieldType implements IPrevi
 			$urlEnabledSectionIdColumnName = $urlEnabledSectionType->getIdColumnName();
 			$type                          = $urlEnabledSectionType->getId();
 			$urlEnabledSectionId           = $this->element->{$urlEnabledSectionIdColumnName};
-			$urlEnabledSection             = $urlEnabledSectionType->urlEnabledSections[$type . '-' . $urlEnabledSectionId];
+
+			if (!isset($urlEnabledSectionType->urlEnabledSections[$type . '-' . $urlEnabledSectionId]))
+			{
+				return '<span class="error">' .
+					Craft::t('This field requires a URL-Enabled Element Type.') .
+					'</span>';
+			}
+
+			$urlEnabledSection = $urlEnabledSectionType->urlEnabledSections[$type . '-' . $urlEnabledSectionId];
 
 			sproutSeo()->optimize->urlEnabledSection          = $urlEnabledSection;
 			sproutSeo()->optimize->urlEnabledSection->element = $this->element;

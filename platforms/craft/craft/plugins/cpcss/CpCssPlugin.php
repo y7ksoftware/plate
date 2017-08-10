@@ -108,6 +108,9 @@ $(function () {
         $settings = $this->getSettings();
         if (trim($settings->cssFile)) {
             $filepath = craft()->config->parseEnvironmentString($settings->cssFile);
+
+            $filepath = $this->getVersionedFilepath($filepath);
+
             if ($hash = @sha1_file($filepath)) {
                 craft()->templates->includeCssFile($filepath.'?e='.$hash);
             } else {
@@ -117,6 +120,27 @@ $(function () {
         if (trim($settings->additionalCss)) {
             craft()->templates->includeCss($settings->additionalCss);
         }
+    }
+
+
+    private function getVersionedFilepath($file) {
+        // Prepend public folder to path
+        $path = "/public{$file}";
+
+        // Check if the manifest exists
+        if (! file_exists($manifestPath = $_SERVER['DOCUMENT_ROOT'] . '/../mix-manifest.json')) return $file;
+
+        // Read the manifest
+        $manifest = json_decode(file_get_contents($manifestPath), true);
+
+        // Check if the requested file is listed in the manifest
+        if (! array_key_exists($path, $manifest)) return $file;
+
+        // Check if the file was actually versioned
+        if($manifest[$path] == $path) return $file;
+
+        // Remove 'public' from the output
+        return str_replace('/public/', '/', $manifest[$path]);
     }
 
 }
