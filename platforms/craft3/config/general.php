@@ -23,6 +23,8 @@ return [
         'timezone' => 'Europe/Zurich', // Set Timezone to Zurich
         'cpTrigger' => 'admin',
 
+        'userSessionDuration' => (getenv('APP_ENV') == 'local') ? false : 'PT4H',
+
         // Restrict upload to certain extensions
 //        'allowedFileExtensions' => 'json, jpg, jpeg, png, gif, pdf, zip',
         // Allow upload of Json files, also used for external Video Plugin
