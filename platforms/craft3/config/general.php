@@ -33,6 +33,8 @@ return [
 
         'appEnv' => getenv('APP_ENV'),
         'piwikSiteId' => getenv('PIWIK_SITE_ID'),
+        'googleAnalyticsCode' => getenv('GOOGLE_ANALYTICS_CODE'),
+        'googleVerificationCode' => getenv('GOOGLE_VERIFICATION_CODE'),
 
         'siteUrl' => [
             'en' => getenv('APP_URL') . '/',

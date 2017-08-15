@@ -63,8 +63,8 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
     {# Main CSS #}
     <link rel="stylesheet" type="text/css" href="{{ assets.mix('build/css/main.css') }}">
 
-    {# Y7K Analytics #}
-    {% include "helpers/piwik-analytics.twig" %}
+    {# Piwik Analytics #}
+    {# {% include "helpers/piwik-analytics" %} #}
 
 </head>
 
@@ -94,7 +94,7 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
     {{ block('include_component_js') }}
 
     {# Google Analytic, if needed #}
-    {% include 'helpers/google-analytics' %}
+    {# {% include 'helpers/google-analytics' %} #}
 
 </body>
 </html>
