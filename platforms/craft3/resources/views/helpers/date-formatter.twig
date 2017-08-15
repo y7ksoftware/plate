@@ -17,7 +17,7 @@
 {# DE: 20:00 Uhr #}
 {# EN: 08:00 pm #}
 {% macro time(inputDate) %}
-    {% switch craft.locale %}
+    {% switch craft.app.language|slice(0,2)  %}
         {% case "de" %}
             {% return inputDate|date('H:i') ~ ' Uhr' %}
         {% case "en" %}
@@ -30,7 +30,7 @@
 {# DE: Montag 17. September, 17:30 #}
 {# EN: Monday, September 18, 5:30 pm #}
 {% macro dateLong(inputDate) %}
-    {% switch craft.locale %}
+    {% switch craft.app.language|slice(0,2)  %}
         {% case "de" %}
             {% return inputDate|date('l j. F, H:i') %}
         {% case "en" %}
@@ -48,7 +48,7 @@
     {% elseif date(inputDate) >= date('yesterday') %}
         {% return 'Yesterday'|t %}
     {% else %}
-        {% switch craft.locale %}
+        {% switch craft.app.language|slice(0,2)  %}
             {% case "de" %}
                 {% return inputDate|date('D j. F') %}
             {% case "en" %}
