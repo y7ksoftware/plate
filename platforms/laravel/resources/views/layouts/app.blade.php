@@ -18,7 +18,7 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
     <title>Get rollin'</title>
     <meta charset="utf-8">
     <meta name="viewport" content="user-scalable=no, initial-scale=1, width=device-width, height=device-height" />
-    <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     @if(env('APP_ENV')!=='production')
         <meta name="robots" content="noindex,nofollow">
