@@ -1,12 +1,3 @@
-
-{# Tell the browser to cache this page (every page) for 2 minutes, this is needed to allow link prefetching. And it also speeds up hopping between pages. #}
-{#
-    {% set expiry = now|date_modify('+2 minute') %}
-    {% header "Cache-Control: max-age=" ~ (expiry.timestamp - now.timestamp) %}
-    {% header "Pragma: cache" %}
-    {% header "Expires: " ~ expiry|date('D, d M Y H:i:s', 'GMT') ~ " GMT" %}
-#}
-
 <!doctype html>
 <!--
 
@@ -55,7 +46,7 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
     {{ block('include_vendor_css') }}
 
     {# Load Mix asset Macro #}
-    {% import "helpers/mix-assets.twig" as assets %}
+    {% import "helpers/mix-assets" as assets %}
 
     {# Vendor CSS from 3rd party plugins #}
     {#<link rel="stylesheet" type="text/css" href="{{ assets.mix('build/css/vendor.css') }}">#}
@@ -83,7 +74,7 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
     {{ block('include_vendor_js') }}
 
     {# Output Config variables to the frontend #}
-    {% include 'helpers/frontend-constants.twig' %}
+    {% include 'helpers/frontend-constants' %}
 
     {# Javascript #}
     <script type="text/javascript" src="{{ assets.mix('build/js/manifest.js') }}"></script>
