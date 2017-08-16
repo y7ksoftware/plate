@@ -20,5 +20,12 @@
             </main>
         </div>
 
+        {# Debug Grid #}
+        {#
+        {% if craft.config.devMode %}
+            {% include 'modules/debugGrid' %}
+        {% endif %}
+        #}
+
     </div>
 {% endblock %}
