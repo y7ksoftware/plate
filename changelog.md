@@ -1,6 +1,6 @@
 # Y7K Project Boilerplate Changelog
 
-## Version 0.11.*
+## Version 0.13.*
 * Update craft plugins and add new plugins:
     - Neo (Create awesome Matrix fields with real fields)
     - TheArchitect (Import/Export sections, structure, fields etc.)
@@ -11,6 +11,7 @@
     - CPSortCols (Entry Index: Sortable by custom fields)
 * Add more ESLint Globals
 * Add `.craft-cli.php`
+* Add dev npm packages that laravel mix needs (browsersync)
 
 ## Version 0.10.*
 * Updated Babel Presets
