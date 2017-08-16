@@ -1,0 +1,38 @@
+
+# Y/K CLI Config
+
+---
+
+# Environments:
+# -------------
+#
+# You can define multiple environments here, that can be used by the CLI to push & pull database and assets.
+# - host can be either the domain (xy.y7k.pizza) or the IP (less warnings)
+# - storage: Important that it does not end with a slash!
+#
+# run "y7k db:pull pizza" or "y7k assets:push casa" etc.
+environments:
+  local:
+    host: localhost
+    db: dbname
+    sshuser: vagrant
+    dbuser: homestead
+    password: secret
+    storage: storage/app
+
+  pizza:
+    host: 127.0.0.1
+    db: dbname
+    sshuser: forge
+    dbuser: forge
+    password: password
+    storage: /home/forge/pr01.y7k.pizza/shared/storage/app
+
+  production:
+    host: 127.0.0.1
+    db: dbname
+    sshuser: forge
+    dbuser: forge
+    password: password
+    storage: /home/forge/project.com/shared/storage/app
+    production: true
