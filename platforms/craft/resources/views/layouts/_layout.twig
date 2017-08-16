@@ -7,15 +7,17 @@
 {% extends "layouts/_html" %}
 
 {% block page %}
-    <div class="page-wrapper grid-container">
+    <div class="page-wrapper">
 
         <header class="header-page">
         </header>
 
         <div id="barba-wrapper" class="page-content">
             <main class="barba-container" data-namespace="{{ block('namespace') }}">
-                <div class="js-vueContainer">
-                    {{ block('main') }}
+                <div class="pageContainer">
+                    <div class="js-vueContainer">
+                        {{ block('main') }}
+                    </div>
                 </div>
             </main>
         </div>
