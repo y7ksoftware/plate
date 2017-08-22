@@ -22,6 +22,8 @@ return array(
     'imagerSystemPath' => $_SERVER['DOCUMENT_ROOT'] . '/imager/',
     'imagerUrl' => '/imager/',
     'jpegQuality' => 90,
+    'optipngEnabled' => false,
+    'jpegoptimEnabled' => false,
 
     'allowUpscale' => false,
     'cacheEnabled' => true,
@@ -47,7 +49,6 @@ return array(
     'noop' => false,
     'suppressExceptions' => false,
 
-    'jpegoptimEnabled' => false,
     'jpegoptimPath' => '/usr/bin/jpegoptim',
     'jpegoptimOptionString' => '-s',
     'jpegtranEnabled' => false,
@@ -56,7 +57,6 @@ return array(
     'mozjpegEnabled' => false,
     'mozjpegPath' => '/usr/bin/mozjpeg',
     'mozjpegOptionString' => '-optimize -copy none',
-    'optipngEnabled' => false,
     'optipngPath' => '/usr/bin/optipng',
     'optipngOptionString' => '-o5',
     'pngquantEnabled' => false,
