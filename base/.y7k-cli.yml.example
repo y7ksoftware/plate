@@ -13,7 +13,7 @@
 # run "y7k db:pull pizza" or "y7k assets:push casa" etc.
 environments:
   local:
-    host: localhost
+    host: 127.0.0.1
     db: dbname
     sshuser: vagrant
     dbuser: homestead
