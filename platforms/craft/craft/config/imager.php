@@ -22,8 +22,12 @@ return array(
     'imagerSystemPath' => $_SERVER['DOCUMENT_ROOT'] . '/imager/',
     'imagerUrl' => '/imager/',
     'jpegQuality' => 90,
+    // Use either jpegoptim OR mozjpeg. The dependencies must be installed via the Forge Recipe
     'optipngEnabled' => false,
     'jpegoptimEnabled' => false,
+    'mozjpegEnabled' => false,
+    // Optimize Images on Runtime, so they don't get cached by the cdn before optimisation
+    'optimizeType' => 'runtime',
 
     'allowUpscale' => false,
     'cacheEnabled' => true,
