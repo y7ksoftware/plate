@@ -5,6 +5,7 @@
     - Remove ManyToMany and Introvert Plugins, which are not working properly
     - Added Minify, HttpPrefix and GroupBy Plugins
 * Updated Laravel-Mix to 1.4.5
+* Added an imagetransforms config file
 
 ## Version 0.13.*
 * Update craft plugins and add new plugins:
