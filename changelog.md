@@ -3,7 +3,7 @@
 ## Version 0.14.*
 * Update Craft Plugins
     - Remove ManyToMany and Introvert Plugins, which are not working properly
-    - Added Minify Plugin
+    - Added Minify, HttpPrefix and GroupBy Plugins
 * Updated Laravel-Mix to 1.4.5
 
 ## Version 0.13.*
