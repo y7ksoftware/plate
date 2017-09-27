@@ -1,5 +1,11 @@
 # Y7K Project Boilerplate Changelog
 
+## Version 0.14.*
+* Update Craft Plugins
+    - Remove ManyToMany and Introvert Plugins, which are not working properly
+    - Added Minify Plugin
+* Updated Laravel-Mix to 1.4.5
+
 ## Version 0.13.*
 * Update craft plugins and add new plugins:
     - Neo (Create awesome Matrix fields with real fields)
@@ -16,7 +22,7 @@
 ## Version 0.10.*
 * Updated Babel Presets
 * Updated Laravel-Mix to 1.2.0
-* 
+
 ## Version 0.9.*
 * Moved SCSS folder to its own repo
 * Moved JS folder to its own repo
