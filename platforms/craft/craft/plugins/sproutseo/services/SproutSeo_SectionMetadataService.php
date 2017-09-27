@@ -87,7 +87,7 @@ class SproutSeo_SectionMetadataService extends BaseApplicationComponent
 
 					$sectionMetadata->name    = $urlEnabledSection->name;
 					$sectionMetadata->handle  = $urlEnabledSection->handle;
-					$sectionMetadata->url     = $model->getUrlFormat();
+					$sectionMetadata->uri     = $model->getUrlFormat();
 					$sectionMetadata->hasUrls = $urlEnabledSection->hasUrls;
 
 					$model->sectionMetadata = $sectionMetadata;
@@ -130,6 +130,11 @@ class SproutSeo_SectionMetadataService extends BaseApplicationComponent
 			$matchedElementVariable        = $urlEnabledSectionType->getMatchedElementVariable();
 			$urlEnabledSectionTypeIdColumn = $urlEnabledSectionType->getIdColumnName();
 
+			// Note: If a template uses a variable with the same name as a potential matched element
+			// (getMatchedElementVariable()) on a page where that element doesn't exists Sprout SEO
+			// can return the wrong metadata. For example, if an Entry page is loading and someone
+			// defines a 'category' variable {% set category = product.category.last() %}, the
+			// 'category' variable will be matched before the 'entry' variable.
 			if (isset($context[$matchedElementVariable]->{$urlEnabledSectionTypeIdColumn}))
 			{
 				// Add the current page load matchedElementVariable to our Element Group
@@ -356,6 +361,16 @@ class SproutSeo_SectionMetadataService extends BaseApplicationComponent
 			$record = $this->sectionMetadataRecord->create();
 		}
 
+		if ($model->isCustom)
+		{
+			$model->setScenario('customSection');
+
+			if (!$model->validate())
+			{
+				return false;
+			}
+		}
+
 		// @todo - Refactor
 		// is there a better way to do this flip/flop?
 		$model->dateUpdated = $record->dateUpdated;
@@ -423,7 +438,7 @@ class SproutSeo_SectionMetadataService extends BaseApplicationComponent
 		$record->handle              = $model->handle;
 		$record->type                = $model->type;
 		$record->urlEnabledSectionId = $model->urlEnabledSectionId;
-		$record->url                 = $model->url;
+		$record->uri                 = $model->uri;
 		$record->priority            = $model->priority;
 		$record->changeFrequency     = $model->changeFrequency;
 		$record->enabled             = $model->enabled;

@@ -120,15 +120,14 @@ class SproutSeo_EntryUrlEnabledSectionType extends SproutSeoBaseUrlEnabledSectio
 
 		if ($locales)
 		{
-			$primaryLocale = $locales[0];
-
+			$primaryLocale           = $locales[0];
 			$criteria->locale        = $primaryLocale->locale;
 			$criteria->sectionId     = $elementGroupId;
 			$criteria->status        = null;
 			$criteria->localeEnabled = null;
 			$criteria->limit         = null;
 
-			craft()->tasks->createTask('ResaveElements', Craft::t('Re-saving Entries and metadata'), array(
+			craft()->tasks->createTask('ResaveElements', Craft::t('Re-saving Entries and metadata.'), array(
 				'elementType' => ElementType::Entry,
 				'criteria'    => $criteria->getAttributes()
 			));

@@ -68,9 +68,7 @@
         }) }}
 
       </div>
-
       <hr>
-
       {{ forms.lightswitchField({
         label: "Override default locale behavior"|t,
         instructions: "Metadata is generated with the assumption that you are using Craft Locales to manage multiple languages on your site. Locales in Craft, however, can be used for multi-language or multi-site behavior. If you are using Craft's Locales for multi-site behavior, enable this setting and select your website locale."|t,
@@ -97,7 +95,7 @@
 
 	  {{ forms.lightswitchField({
 		  label: "Display Field Handles"|t,
-		  instructions: "Enable this setting to display field handle next to the field name in your Element Metadata field settings."|t,
+		  instructions: "Display field handles next to the field names in your Element Metadata field settings."|t,
 		  name: 'displayFieldHandles',
 		  on: settings.displayFieldHandles ? true : false,
 		  onLabel: "Enable"|t

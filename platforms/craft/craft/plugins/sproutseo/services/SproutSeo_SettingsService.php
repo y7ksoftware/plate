@@ -108,6 +108,26 @@ class SproutSeo_SettingsService extends BaseApplicationComponent
 			}
 		}
 
+		if (isset($settings["totalElementsPerSitemap"]))
+		{
+			$seoSettings->totalElementsPerSitemap = $settings["totalElementsPerSitemap"];
+		}
+
+		if (isset($settings["enableDynamicSitemaps"]))
+		{
+			$seoSettings->enableDynamicSitemaps = $settings["enableDynamicSitemaps"];
+		}
+
+		if (isset($settings["enable404RedirectLog"]))
+		{
+			$seoSettings->enable404RedirectLog = $settings["enable404RedirectLog"];
+		}
+
+		if (isset($settings["total404Redirects"]))
+		{
+			$seoSettings->total404Redirects = $settings["total404Redirects"];
+		}
+
 		$settings = JsonHelper::encode($seoSettings);
 
 		$affectedRows = craft()->db->createCommand()->update('plugins', array(

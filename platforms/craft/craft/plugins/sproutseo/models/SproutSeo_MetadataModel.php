@@ -48,7 +48,7 @@ class SproutSeo_MetadataModel extends BaseModel
 			'name'            => array(AttributeType::String),
 			'handle'          => array(AttributeType::String),
 			'hasUrls'         => array(AttributeType::Number),
-			'url'             => array(AttributeType::String),
+			'uri'             => array(AttributeType::String),
 			'priority'        => array(AttributeType::Number, 'maxLength' => 2, 'decimals' => 1, 'default' => '0.5', 'required' => true),
 			'changeFrequency' => array(AttributeType::String, 'maxLength' => 7, 'default' => 'weekly', 'required' => true),
 
@@ -489,7 +489,7 @@ class SproutSeo_MetadataModel extends BaseModel
 	 **/
 	public function getPreviewUrl()
 	{
-		$url = $this->url;
+		$url = $this->uri;
 
 		if ($this->elementId && $this->locale)
 		{
@@ -529,5 +529,40 @@ class SproutSeo_MetadataModel extends BaseModel
 		//}
 		//
 		//return $schema->getSchema();
+	}
+
+	/**
+	 * @return array validation rules for model attributes.
+	 */
+	public function rules()
+	{
+		return array(
+			array('uri', 'sectionUri', 'on' => 'customSection'),
+			array('uri', 'required', 'on' => 'customSection', 'message' => 'Uri cannot be blank.'),
+			array('name,handle', 'required', 'on' => 'customSection'),
+		);
+	}
+
+	/**
+	 * Check is the url saved on custom sections are URI's
+	 * This is the 'sectionUri' validator as declared in rules().
+	 */
+	public function sectionUri($attribute,$params)
+	{
+		if (UrlHelper::isAbsoluteUrl($this->$attribute))
+		{
+			$this->addError($attribute, 'Invalid URI');
+		}
+	}
+
+	/**
+	 * Updates "uri" to starts without a "/"
+	 *
+	 */
+	protected function beforeValidate()
+	{
+		$this->uri = sproutSeo()->sitemap->removeSlash($this->uri);
+
+		return true;
 	}
 }

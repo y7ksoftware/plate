@@ -5,6 +5,7 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  * @see       http://sprout.barrelstrengthdesign.com
  */
+
 namespace Craft;
 
 /**
@@ -37,7 +38,7 @@ class SproutSeoPlugin extends BasePlugin
 	 */
 	public function getVersion()
 	{
-		return '3.2.3';
+		return '3.3.4';
 	}
 
 	/**
@@ -45,7 +46,7 @@ class SproutSeoPlugin extends BasePlugin
 	 */
 	public function getSchemaVersion()
 	{
-		return '3.2.0';
+		return '3.3.4';
 	}
 
 	/**
@@ -158,9 +159,25 @@ class SproutSeoPlugin extends BasePlugin
 						// check if the request url needs redirect
 						$redirect = sproutSeo()->redirects->getRedirect($url);
 
+						$plugin      = craft()->plugins->getPlugin('sproutseo');
+						$seoSettings = $plugin->getSettings();
+
+						if (!$redirect && $seoSettings->enable404RedirectLog)
+						{
+							// Save new 404 Redirect
+							$redirect = sproutSeo()->redirects->save404Redirect($url);
+						}
+
 						if ($redirect)
 						{
-							craft()->request->redirect($redirect->newUrl, true, $redirect->method);
+							sproutSeo()->redirects->logRedirect($redirect->id);
+
+							// Use != instead of !== as 404 can be both as integer or string
+							if ($redirect->enabled && $redirect->method != 404)
+							{
+								// Redirect away
+								craft()->request->redirect($redirect->newUrl, true, $redirect->method);
+							}
 						}
 					}
 				}
@@ -202,6 +219,10 @@ class SproutSeoPlugin extends BasePlugin
 			'metadataVariable'        => array(AttributeType::String, 'default' => null),
 			'twitterTransform'        => array(AttributeType::String, 'default' => null),
 			'ogTransform'             => array(AttributeType::String, 'default' => null),
+			'totalElementsPerSitemap' => array(AttributeType::Number, 'default' => 500),
+			'enableDynamicSitemaps'   => array(AttributeType::Bool, 'default' => true),
+			'enable404RedirectLog'    => array(AttributeType::Bool, 'default' => false),
+			'total404Redirects'       => array(AttributeType::Number, 'default' => 500)
 		);
 	}
 
@@ -233,6 +254,33 @@ class SproutSeoPlugin extends BasePlugin
 				'action' => 'sproutSeo/settings/settingsIndex'
 			),
 		);
+	}
+
+	/**
+	 * Match dynamic sitemap URLs
+	 *
+	 * Example matches include:
+	 * - sitemap.xml
+	 * - singles-sitemap.xml
+	 * - custom-sections-sitemap.xml
+	 * - blog-entries-sitemap1.xml
+	 * - blog-entries-sitemap2.xml
+	 *
+	 * @return array
+	 */
+	public function registerSiteRoutes()
+	{
+		$plugin      = craft()->plugins->getPlugin('sproutseo');
+		$seoSettings = $plugin->getSettings();
+
+		if (isset($seoSettings->enableDynamicSitemaps) && $seoSettings->enableDynamicSitemaps)
+		{
+			return array(
+				'(.+-)?sitemap(\d+)?.xml'  => array(
+					'action' => 'sproutSeo/sitemap/index'
+				)
+			);
+		}
 	}
 
 	/**

@@ -1,4 +1,5 @@
 <?php
+
 namespace Craft;
 
 /**
@@ -51,11 +52,9 @@ class SproutSeo_RedirectsService extends BaseApplicationComponent
 		$redirectRecord->newUrl = $redirect->newUrl;
 		$redirectRecord->method = $redirect->method;
 		$redirectRecord->regex  = $redirect->regex;
+		$redirectRecord->count  = $redirect->count;
 
-		$redirectRecord->validate();
-		$redirect->addErrors($redirectRecord->getErrors());
-
-		if (!$redirect->hasErrors())
+		if ($redirect->validate())
 		{
 			$transaction = craft()->db->getCurrentTransaction() === null ? craft()->db->beginTransaction() : null;
 			try
@@ -69,7 +68,7 @@ class SproutSeo_RedirectsService extends BaseApplicationComponent
 						$redirectRecord->id = $redirect->id;
 					}
 
-					$redirectRecord->save(false);
+					$redirectRecord->save();
 
 					if ($isNewRedirect)
 					{
@@ -111,7 +110,10 @@ class SproutSeo_RedirectsService extends BaseApplicationComponent
 	{
 		$response = craft()->db->createCommand()->update(
 			'sproutseo_redirects',
-			array('method' => $newMethod),
+			array(
+				'method' => $newMethod,
+				'count' => 0
+			),
 			array('in', 'id', $ids)
 		);
 
@@ -128,7 +130,10 @@ class SproutSeo_RedirectsService extends BaseApplicationComponent
 	 */
 	public function findUrl($url)
 	{
-		$redirects = SproutSeo_RedirectRecord::model()->structured()->findAll();
+		$redirectRecords = SproutSeo_RedirectRecord::model()->structured()->findAll();
+
+		$redirects = SproutSeo_RedirectModel::populateModels($redirectRecords);
+		$url       = urldecode($url);
 
 		if ($redirects)
 		{
@@ -161,6 +166,94 @@ class SproutSeo_RedirectsService extends BaseApplicationComponent
 	}
 
 	/**
+	 * Save a 404 redirect and check total404Redirects setting
+	 *
+	 * @param $url string
+	 *
+	 * @return SproutSeo_RedirectModel|null
+	 */
+	public function save404Redirect($url)
+	{
+		$redirect    = new SproutSeo_RedirectModel();
+		$plugin      = craft()->plugins->getPlugin('sproutseo');
+		$seoSettings = $plugin->getSettings();
+
+		$redirect->oldUrl  = $url;
+		$redirect->newUrl  = '/';
+		$redirect->method  = SproutSeo_RedirectMethods::PageNotFound;
+		$redirect->regex   = 0;
+		$redirect->enabled = 0;
+		$redirect->count   = 0;
+
+		if (!sproutSeo()->redirects->saveRedirect($redirect))
+		{
+			$redirect = null;
+		}
+
+		// delete new one
+		if (isset($seoSettings['total404Redirects']) && $seoSettings['total404Redirects'] && $redirect)
+		{
+			$count = SproutSeo_RedirectRecord::model()->count('method=:method and id!=:redirectId', array(
+				':method' => SproutSeo_RedirectMethods::PageNotFound,
+				':redirectId' => $redirect->id
+				)
+			);
+
+			if ($count >= $seoSettings['total404Redirects'])
+			{
+				$totalToDelete = $count - $seoSettings['total404Redirects'];
+				$totalToDelete = $totalToDelete <= 0 ? 1 : $totalToDelete + 1;
+
+				// Call the delete redirects task
+				craft()->tasks->createTask('SproutSeo_Delete404', null,
+					array(
+						'totalToDelete' => $totalToDelete,
+						'redirectIdToExclude' => isset($redirect) ? $redirect->id : null
+					)
+				);
+			}
+		}
+
+		return $redirect;
+	}
+
+	/**
+	 * Logs a redirect when a match is found
+	 *
+	 * @todo - escape this log data when we output it
+	 *         https://stackoverflow.com/questions/13199095/escaping-variables
+	 *
+	 * @param $redirectId int
+	 *
+	 * @return bool
+	 */
+	public function logRedirect($redirectId)
+	{
+		$log = array();
+
+		try
+		{
+			$log['redirectId']  = $redirectId;
+			$log['referralURL'] = craft()->request->getUrlReferrer();
+			$log['ipAddress']   = $_SERVER["REMOTE_ADDR"];
+			$log['dateCreated'] = date('Y-m-d h:m:s');
+
+			SproutSeoPlugin::log('404 - Page Not Found: '.json_encode($log), LogLevel::Warning, true);
+
+			$redirect        = $this->getRedirectById($redirectId);
+			$redirect->count += 1;
+
+			$this->saveRedirect($redirect);
+		}
+		catch (\Exception $e)
+		{
+			SproutSeoPlugin::log('Unable to log redirect.', LogLevel::Info, true);
+		}
+
+		return true;
+	}
+
+	/**
 	 * Get methods
 	 *
 	 * @return array
@@ -171,6 +264,7 @@ class SproutSeo_RedirectsService extends BaseApplicationComponent
 		$newMethods = array();
 		foreach ($methods as $key => $value)
 		{
+			$value = preg_replace('/([a-z])([A-Z])/', '$1 $2', $value);
 			$newMethods[$key] = $key . ' - ' . $value;
 		}
 
@@ -263,10 +357,17 @@ class SproutSeo_RedirectsService extends BaseApplicationComponent
 		$structure = $this->createStructureRecord();
 
 		// Add our default plugin settings
-		$settings = '{"pluginNameOverride":"' . $pluginName . '", "structureId":"' . $structure->id . '"}';
+		$settings = array(
+			'pluginNameOverride' => $pluginName,
+			'structureId' => $structure->id,
+			'enableDynamicSitemaps' => 1,
+			'totalElementsPerSitemap' => 500,
+			'enable404RedirectLog' => 1,
+			'total404Redirects' => 500
+		);
 
 		craft()->db->createCommand()->update('plugins', array(
-			'settings' => $settings
+			'settings' => json_encode($settings)
 		),
 			'class=:class', array(':class' => 'SproutSeo')
 		);
@@ -287,5 +388,25 @@ class SproutSeo_RedirectsService extends BaseApplicationComponent
 		craft()->structures->saveStructure($structure);
 
 		return $structure;
+	}
+
+	/**
+	 * Returns the value for the total404Redirects setting. Default is 1000.
+	 *
+	 * @param int $total
+	 *
+	 * @return int
+	 */
+	public function getTotal404Redirects($total = 500)
+	{
+		$plugin      = craft()->plugins->getPlugin('sproutseo');
+		$seoSettings = $plugin->getSettings();
+
+		if (isset($seoSettings['total404Redirects']) && $seoSettings['total404Redirects'])
+		{
+			$total = $seoSettings['total404Redirects'];
+		}
+
+		return $total;
 	}
 }

@@ -120,8 +120,7 @@ class SproutSeo_CategoryUrlEnabledSectionType extends SproutSeoBaseUrlEnabledSec
 
 		if ($locales)
 		{
-			$primaryLocale = $locales[0];
-
+			$primaryLocale           = $locales[0];
 			$criteria->locale        = $primaryLocale->locale;
 			$criteria->groupId       = $elementGroupId;
 			$criteria->status        = null;

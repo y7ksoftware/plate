@@ -68,6 +68,7 @@
 					label: "Name <span class='info'>Human readable Section name</span>"|t,
 					id: "name",
 					name: 'sproutseo[metadata][name]',
+					required: sectionMetadata.isCustom,
 					value: sectionMetadata.name,
 					errors: sectionMetadata.getErrors('name'),
 					readonly: not isNew,
@@ -77,6 +78,7 @@
 				{{ forms.textField({
 					label: "Handle <span class='info'>Name you will use to refer to this meta-tag group in your templates</span>"|t,
 					id: "handle",
+					required: sectionMetadata.isCustom,
 					name: 'sproutseo[metadata][handle]',
 					value: sectionMetadata.handle,
 					errors: sectionMetadata.getErrors('handle'),
@@ -84,19 +86,16 @@
 					class: not isNew ? 'disabled' : ''
 				}) }}
 
-				{% if not isCustom %}
-
-					{{ forms.textField({
-						label: "URL"|t,
-						id: "url",
-						name: 'sproutseo[metadata][url]',
-						value: (sectionMetadata.url == '__home__') ? "/" : sectionMetadata.url,
-						errors: sectionMetadata.getErrors('url'),
-						readonly: not isNew,
-						class: not isNew ? 'disabled' : ''
-					}) }}
-
-				{% endif %}
+				{{ forms.textField({
+					label: "URI"|t,
+					id: "url",
+					required: sectionMetadata.isCustom,
+					name: 'sproutseo[metadata][uri]',
+					value: (sectionMetadata.uri == '__home__') ? "/" : sectionMetadata.uri,
+					errors: sectionMetadata.getErrors('uri'),
+					readonly: not isNew,
+					class: not isNew ? 'disabled' : ''
+				}) }}
 
 				<div class="field">
 					<div class="heading">
