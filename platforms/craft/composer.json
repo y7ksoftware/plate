@@ -1,6 +1,5 @@
 {
-    "name": "{name}",
-    "description": "Y7K Project",
+    "name": "{project}",
     "require": {
         "vlucas/phpdotenv": "^2.0"
     },
