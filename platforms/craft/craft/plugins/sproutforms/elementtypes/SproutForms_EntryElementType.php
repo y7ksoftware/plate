@@ -181,16 +181,22 @@ class SproutForms_EntryElementType extends BaseElementType
 	 */
 	public function getAvailableActions($source = null)
 	{
-		$deleteAction = craft()->elements->getAction('Delete');
+		$deleteAction    = array();
+		$setStatusAction = array();
 
-		$deleteAction->setParams(
-			array(
-				'confirmationMessage' => Craft::t('Are you sure you want to delete the selected entries?'),
-				'successMessage'      => Craft::t('Entries deleted.'),
-			)
-		);
+		if (craft()->userSession->checkPermission('editSproutFormsEntries'))
+		{
+			$deleteAction = craft()->elements->getAction('Delete');
 
-		$setStatusAction = craft()->elements->getAction('SproutForms_SetStatus');
+			$deleteAction->setParams(
+				array(
+					'confirmationMessage' => Craft::t('Are you sure you want to delete the selected entries?'),
+					'successMessage'      => Craft::t('Entries deleted.'),
+				)
+			);
+
+			$setStatusAction = craft()->elements->getAction('SproutForms_SetStatus');
+		}
 
 		return array($deleteAction, $setStatusAction);
 	}
@@ -276,8 +282,8 @@ class SproutForms_EntryElementType extends BaseElementType
 	{
 		return array(
 			'formName'    => Craft::t('Form Name'),
-			'dateCreated' => Craft::t('Date Created'),
-			'dateUpdated' => Craft::t('Date Updated'),
+			'elements.dateCreated' => Craft::t('Date Created'),
+			'elements.dateUpdated' => Craft::t('Date Updated'),
 		);
 	}
 
@@ -291,7 +297,7 @@ class SproutForms_EntryElementType extends BaseElementType
 	 */
 	public function getContentTableForElementsQuery(ElementCriteriaModel $criteria)
 	{
-		if ($criteria->id && $criteria->formId)
+		if ($criteria->formId)
 		{
 			$form = SproutForms_FormRecord::model()->findById($criteria->formId);
 
@@ -310,13 +316,14 @@ class SproutForms_EntryElementType extends BaseElementType
 	public function defineCriteriaAttributes()
 	{
 		return array(
-			'order'       => array(AttributeType::String, 'default' => 'dateCreated desc'),
-			'title'       => AttributeType::String,
-			'entryStatus' => AttributeType::Number,
-			'statusId'    => AttributeType::Number,
-			'formId'      => AttributeType::Number,
-			'formHandle'  => AttributeType::String,
-			'formGroupId' => AttributeType::Number,
+			'order'        => array(AttributeType::String, 'default' => 'dateCreated desc'),
+			'title'        => AttributeType::String,
+			'entryStatus'  => AttributeType::Number,
+			'statusId'     => AttributeType::Number,
+			'formId'       => AttributeType::Number,
+			'statusHandle' => AttributeType::String,
+			'formHandle'   => AttributeType::String,
+			'formGroupId'  => AttributeType::Number,
 		);
 	}
 
@@ -364,18 +371,16 @@ class SproutForms_EntryElementType extends BaseElementType
 			entries.ipAddress,
 			entries.userAgent,
 			entries.statusId,
-			entries.dateCreated,
-			entries.dateUpdated,
 			entries.uid,
 			forms.id as formId,
 			forms.name as formName,
-			forms.groupId as formGroupId';
+			forms.groupId as formGroupId,
+			entrystatuses.handle';
 
 		$query->join('sproutforms_entries entries', 'entries.id = elements.id');
 		$query->join('sproutforms_entrystatuses entrystatuses', 'entrystatuses.id = entries.statusId');
 		$query->join('sproutforms_forms forms', 'forms.id = entries.formId');
 
-		$this->joinContentTableAndAddContentSelects($query, $criteria, $select);
 		$query->addSelect($select);
 
 		if ($criteria->id)
@@ -390,19 +395,16 @@ class SproutForms_EntryElementType extends BaseElementType
 		{
 			$query->andWhere(DbHelper::parseParam('entries.statusId', $criteria->statusId, $query->params));
 		}
+		if ($criteria->statusHandle)
+		{
+			$query->andWhere(DbHelper::parseParam('entrystatuses.handle', $criteria->statusHandle, $query->params));
+		}
 		if ($criteria->formHandle)
 		{
 			$query->andWhere(DbHelper::parseParam('forms.handle', $criteria->formHandle, $query->params));
 		}
 		if ($criteria->order)
 		{
-			// Trying to order by date creates ambiguity errors
-			// Let's make sure mysql knows what we want to sort by
-			if (stripos($criteria->order, 'elements.') === false)
-			{
-				$criteria->order = str_replace('dateCreated', 'entries.dateCreated', $criteria->order);
-				$criteria->order = str_replace('dateUpdated', 'entries.dateUpdated', $criteria->order);
-			}
 
 			// If we are sorting by title and do not have a source
 			// We won't be able to sort, so bail on it
@@ -414,20 +416,17 @@ class SproutForms_EntryElementType extends BaseElementType
 	}
 
 	/**
-	 * Updates the query command, criteria, and select fields when a source is available
+	 * @inheritDoc IElementType::getFieldsForElementsQuery()
 	 *
-	 * @param DbCommand            $query
 	 * @param ElementCriteriaModel $criteria
-	 * @param string               $select
+	 *
+	 * @return FieldModel[]
 	 */
-	protected function joinContentTableAndAddContentSelects(
-		DbCommand &$query,
-		ElementCriteriaModel &$criteria,
-		&$select
-	)
+	public function getFieldsForElementsQuery(ElementCriteriaModel $criteria)
 	{
-		// Do we have a source selected in the sidebar?
-		// If so, we have a form id and we can use that to fetch the content table
+		// Now assemble the actual fields list
+		$fields = array();
+
 		if ($criteria->formId || $criteria->formHandle)
 		{
 			$form = null;
@@ -446,29 +445,11 @@ class SproutForms_EntryElementType extends BaseElementType
 
 			if ($form)
 			{
-				$fields             = $form->getFields();
-				$fieldPrefix        = craft()->content->fieldColumnPrefix;
-				$selectContentTable = "{$form->handle}.title";
-
-				// Added support for filtering any sproutform content table
-				foreach ($fields as $key => $field)
-				{
-					if ($field->hasContentColumn())
-					{
-						$selectContentTable .= ",{$form->handle}.{$fieldPrefix}{$field->handle} as {$field->handle}";
-						$handle = $field->handle;
-
-						if (isset($criteria->$handle))
-						{
-							$query->andWhere(DbHelper::parseParam($form->handle . "." . $fieldPrefix . $field->handle, $criteria->$handle, $query->params));
-						}
-					}
-				}
-
-				$select = empty($select) ? $selectContentTable : $select . ', ' . $selectContentTable;
-				$query->join($form->getContentTable() . ' as ' . $form->handle, $form->handle . '.elementId = elements.id');
+				$fields = $form->getFields();
 			}
 		}
+
+		return $fields;
 	}
 
 	/**

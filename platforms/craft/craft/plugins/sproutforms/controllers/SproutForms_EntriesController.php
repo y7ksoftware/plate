@@ -109,6 +109,11 @@ class SproutForms_EntriesController extends BaseController
 	{
 		$this->requirePostRequest();
 
+		if (craft()->request->isCpRequest())
+		{
+			sproutForms()->entries->userCanEditEntries();
+		}
+
 		$formHandle = craft()->request->getRequiredPost('handle');
 		$this->form = sproutForms()->forms->getFormByHandle($formHandle);
 
@@ -172,6 +177,12 @@ class SproutForms_EntriesController extends BaseController
 				sproutForms()->forms->sendNotification($this->form, $entry, $post);
 			}
 
+			if (!craft()->request->isCpRequest())
+			{
+				// Store our new entry so we can recreate the Entry object on our thank you page
+				craft()->httpSession->add('lastEntryId', $entry->id);
+			}
+
 			if (craft()->request->isAjaxRequest())
 			{
 				$return['success'] = true;
@@ -203,6 +214,7 @@ class SproutForms_EntriesController extends BaseController
 	public function actionDeleteEntry()
 	{
 		$this->requirePostRequest();
+		sproutForms()->entries->userCanEditEntries();
 
 		// Get the Entry
 		$entryId = craft()->request->getRequiredPost('entryId');
@@ -306,6 +318,7 @@ class SproutForms_EntriesController extends BaseController
 	 */
 	public function actionEditEntryTemplate(array $variables = array())
 	{
+		sproutForms()->entries->userCanViewEntries();
 		$entryId = craft()->request->getSegment(4);
 
 		if (sproutForms()->forms->activeCpEntry)
