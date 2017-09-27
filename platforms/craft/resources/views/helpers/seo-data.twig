@@ -39,6 +39,11 @@
         {#ogLocale: ogLocale#}
     {#}) %}#}
 
+    {# Apply custom meta info, when a meta variableis passed to the include #}
+    {% if meta is defined %}
+        {% do craft.sproutSeo.meta(meta) %}
+    {% endif %}
+
     {#
         Outputs all Sprout SEO Meta Data:
         If you want full control and output tags yourself, have a look at
