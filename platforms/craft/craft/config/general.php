@@ -22,6 +22,12 @@ return [
         'defaultWeekStartDay' => 1, // Start Week on Monday
         'allowAutoUpdates' => (getenv('APP_ENV') == 'local') ? 'minor-only' : false, // Disable auto-updates on servers
         'timezone' => 'Europe/Zurich', // Set Timezone to Zurich
+        'defaultSearchTermOptions' => [
+            'subLeft' => true,
+            'subRight' => true,
+        ],
+        'devMode' => (getenv('APP_DEBUG')=='true'),
+        'enableTemplateCaching' => (getenv('TEMPLATE_CACHING')=='true'),
 
         'userSessionDuration' => (getenv('APP_ENV') == 'local') ? false : 'PT4H',
 
@@ -29,9 +35,6 @@ return [
 //        'allowedFileExtensions' => 'json, jpg, jpeg, png, gif, pdf, zip',
         // Allow upload of Json files, also used for external Video Plugin
         'extraAllowedFileExtensions' => 'json',
-
-        'devMode' => (getenv('APP_DEBUG')=='true'),
-        'enableTemplateCaching' => (getenv('TEMPLATE_CACHING')=='true'),
 
         'appId' => getenv('APP_NAME'),
         'appEnv' => getenv('APP_ENV'),
