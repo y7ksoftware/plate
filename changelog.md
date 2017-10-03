@@ -4,6 +4,8 @@
 * Update Craft Plugins
     - Remove ManyToMany and Introvert Plugins, which are not working properly
     - Added Minify, HttpPrefix and GroupBy Plugins
+    - Added Kint Plugin
+    - Added Sprout Fields Plugin
 * Updated Laravel-Mix to 1.4.5
 * Added an imagetransforms config file
 
