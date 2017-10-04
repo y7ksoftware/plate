@@ -17,6 +17,9 @@ class CacheMonsterCommand extends BaseCommand
             return craft()->end();
         }
 
+        // Abort if tempalte caching is disabled
+        if(getenv('TEMPLATE_CACHING')!=='true') return  craft()->end();
+
         // Delete all the template caches!
         craft()->templateCache->deleteAllCaches();
 
@@ -43,8 +46,26 @@ class CacheMonsterCommand extends BaseCommand
         }
 
         // Exit
-        craft()->end();
+        return craft()->end();
+    }
 
+    /**
+     * Update our url cache and force run the warming Task
+     *
+     */
+    public function actionPurgeCache()
+    {
+
+        if(!craft()->isSystemOn()) {
+            echo 'System is turned off.';
+            // Exit
+            return craft()->end();
+        }
+
+        // Delete all the template caches!
+        craft()->templateCache->deleteAllCaches();
+
+        return craft()->end();
     }
 
 }

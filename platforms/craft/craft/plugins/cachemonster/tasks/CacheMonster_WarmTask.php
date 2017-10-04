@@ -2,12 +2,7 @@
 namespace Craft;
 
 /**
- * CacheMonster by Supercool
- *
- * @package   CacheMonster
- * @author    Josh Angell
- * @copyright Copyright (c) 2015, Supercool Ltd
- * @link      http://plugins.supercooldesign.co.uk
+ * CacheMonster
  */
 
 class CacheMonster_WarmTask extends BaseTask
