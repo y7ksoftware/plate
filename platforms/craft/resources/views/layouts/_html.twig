@@ -54,11 +54,7 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
     {# Main CSS #}
     <link rel="stylesheet" type="text/css" href="{{ assets.mix('build/css/main.css') }}">
 
-    {# Piwik Analytics #}
-    {# {% include "helpers/piwik-analytics" %} #}
-
 </head>
-
 <body data-namespace="{{ block('namespace') }}">
 
     {# Main Content #}
@@ -83,6 +79,9 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
 
     {# Block to insert custom, component-specific js block after all other code #}
     {{ block('include_component_js') }}
+
+    {# Piwik Analytics #}
+    {# {% include "helpers/piwik-analytics" %} #}
 
     {# Google Analytic, if needed #}
     {# {% include 'helpers/google-analytics' %} #}
