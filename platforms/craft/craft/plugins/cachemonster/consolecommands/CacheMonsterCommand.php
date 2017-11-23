@@ -1,71 +1,64 @@
 <?php
+
 namespace Craft;
 
 class CacheMonsterCommand extends BaseCommand
 {
 
+
     /**
-     * Update our url cache and force run the warming Task
-     *
+     * Delete all template caches and make a call to the Cache Warmer
      */
     public function actionCrawlAndWarm()
     {
-
-        if(!craft()->isSystemOn()) {
-            echo 'System is turned off.';
-            // Exit
-            return craft()->end();
-        }
-
-        // Abort if tempalte caching is disabled
-        if(getenv('TEMPLATE_CACHING')!=='true') return  craft()->end();
-
-        // Delete all the template caches!
+        $this->abortIfSystemIsOff();
+        craft()->cacheMonster->clearRuntimeFolders();
+        $this->abortIfTemplateCachingIsDisabled();
         craft()->templateCache->deleteAllCaches();
+        $this->abortIfOnLocalEnv();
+        craft()->cacheMonster->callCacheWarmer();
 
-        // Crawl the sitemap
-        $paths = craft()->cacheMonster->crawlSitemapForPaths();
-
-        // Check we have something and make warmer if we do
-        if ($paths)
-        {
-            craft()->cacheMonster->makeTask('CacheMonster_Warm', $paths);
-        }
-
-        // Run any pending tasks
-        if (!craft()->tasks->isTaskRunning())
-        {
-            // Is there a pending task?
-            $task = craft()->tasks->getNextPendingTask();
-
-            if ($task)
-            {
-                // Start running tasks
-                craft()->tasks->runPendingTasks();
-            }
-        }
-
-        // Exit
         return craft()->end();
     }
 
     /**
      * Update our url cache and force run the warming Task
-     *
      */
     public function actionPurgeCache()
     {
-
-        if(!craft()->isSystemOn()) {
-            echo 'System is turned off.';
-            // Exit
-            return craft()->end();
-        }
-
-        // Delete all the template caches!
+        $this->abortIfSystemIsOff();
+        craft()->cacheMonster->clearRuntimeFolders();
+        $this->abortIfTemplateCachingIsDisabled();
         craft()->templateCache->deleteAllCaches();
 
         return craft()->end();
+    }
+
+
+    private function abortIfSystemIsOff()
+    {
+        if (!craft()->isSystemOn()) {
+            echo 'System is turned off.';
+            return craft()->end();
+        }
+    }
+
+    private function abortIfTemplateCachingIsDisabled()
+    {
+        if (!craft()->config->get('enableTemplateCaching')) {
+            echo 'Template Caching is turned off. Abort.';
+            return craft()->end();
+        }
+    }
+
+    private function abortIfOnLocalEnv()
+    {
+        $hostNames = explode(".", parse_url(craft()->getSiteUrl(), PHP_URL_HOST));
+        $appTld = end($hostNames);
+        if (craft()->config->get('appEnv') === 'local' || $appTld === 'dev' || $appTld === 'localhost') {
+            echo 'We are on localhost. Abort.';
+            return craft()->end();
+        }
     }
 
 }

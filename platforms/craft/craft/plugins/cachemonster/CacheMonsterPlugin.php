@@ -14,17 +14,22 @@ class CacheMonsterPlugin extends BasePlugin
 
     public function getName()
     {
-        return Craft::t('CacheMonster');
+        return Craft::t('Y7K Cache Monster');
     }
 
     public function getVersion()
     {
-        return '1.1.0';
+        return '1.0.2';
     }
 
     public function getSchemaVersion()
     {
         return '1.0.0';
+    }
+
+    public function getCacheWarmerVersion()
+    {
+        return '0.0.2';
     }
 
     public function getDeveloper()
@@ -34,7 +39,7 @@ class CacheMonsterPlugin extends BasePlugin
 
     public function getDescription()
     {
-        return 'Y7K Fork replaces the crawlandwarm command with a console command';
+        return 'Fresh and warm cache.';
     }
 
     public function getDeveloperUrl()
