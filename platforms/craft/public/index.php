@@ -1,6 +1,6 @@
 <?php
 
-$basePath = __DIR__ . '/..';
+$basePath = dirname(__DIR__);
 
 // Set path to craft folders
 $craftPath = $basePath . '/craft';
