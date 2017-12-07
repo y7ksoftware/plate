@@ -3,11 +3,11 @@
     "description": "Y7K Project",
     "require": {
         "php": ">=7.0.0",
-        "craftcms/cms": "^3.0.0-beta.10",
+        "craftcms/cms": "^3.0.0-RC1",
         "craftcms/plugin-installer": "^1.0.0",
         "vlucas/phpdotenv": "^2.4.0",
         "misterbk/mix": "^1.0",
-        "marionnewlevant/twig-perversion": "^1.0",
+        "marionnewlevant/twig-perversion": "^2.0",
         "roave/security-advisories": "dev-master"
     },
     "scripts": {
