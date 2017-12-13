@@ -5,7 +5,7 @@
  */
 
 // Tell Craft to serve the English content
-define( 'CRAFT_SITE' , 'en' );
+//define( 'CRAFT_SITE' , 'en' );
 
 // Project root path
 $root = dirname(__DIR__);
