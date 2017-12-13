@@ -1,4 +1,3 @@
-*
-!app/
-!imager/
-!.gitignore
+backups
+logs
+runtime
