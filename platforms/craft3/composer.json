@@ -14,17 +14,20 @@
         "post-root-package-install": [
             "php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
             "php -r \"file_exists('.y7k-cli.yml') || copy('.y7k-cli.yml.example', '.y7k-cli.yml');\""
+        ],
+        "post-create-project-cmd": [
+            "@composer dump-autoload -o",
+            "@php craft setup/welcome"
         ]
     },
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist"
     },
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://asset-packagist.org"
+    "autoload": {
+        "psr-4": {
+            "modules\\": "modules/"
         }
-    ],
+    },
     "minimum-stability": "beta"
 }
