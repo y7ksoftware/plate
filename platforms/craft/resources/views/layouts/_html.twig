@@ -38,6 +38,10 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
     <link rel="mask-icon" href="/build/images/meta/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="theme-color" content="#ffffff">
 
+    {% if craft.config.googleVerificationCode %}
+        <meta name="google-site-verification" content="{{ craft.config.googleVerificationCode }}"/>
+    {% endif %}
+
     {# CSS #}
     {# All header stuff added by plugins #}
     {{ getHeadHtml() }}
