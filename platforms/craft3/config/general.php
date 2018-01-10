@@ -11,6 +11,9 @@
 return [
 
     '*' => [
+        'devMode' => (getenv('APP_DEBUG')=='true'),
+        'enableTemplateCaching' => (getenv('TEMPLATE_CACHING')=='true'),
+        'securityKey' => getenv('APP_KEY'),
         'omitScriptNameInUrls' => true,
         'convertFilenamesToAscii' => true, // Convert upload filenames to valid ascii chars
         'limitAutoSlugsToAscii' => true, // Converts Umlauts etc. in slugs to ascii
@@ -22,7 +25,6 @@ return [
         'allowAutoUpdates' => (getenv('APP_ENV') == 'local') ? 'minor-only' : false, // Disable auto-updates on servers
         'timezone' => 'Europe/Zurich', // Set Timezone to Zurich
         'cpTrigger' => 'admin',
-
         'userSessionDuration' => (getenv('APP_ENV') == 'local') ? false : 'PT4H',
 
         // Restrict upload to certain extensions
@@ -30,22 +32,26 @@ return [
         // Allow upload of Json files, also used for external Video Plugin
         'extraAllowedFileExtensions' => 'json',
 
-        'devMode' => (getenv('APP_DEBUG')=='true'),
-        'enableTemplateCaching' => (getenv('TEMPLATE_CACHING')=='true'),
-
-        'appEnv' => getenv('APP_ENV'),
-        'piwikSiteId' => getenv('PIWIK_SITE_ID'),
-        'googleAnalyticsCode' => getenv('GOOGLE_ANALYTICS_CODE'),
-        'googleVerificationCode' => getenv('GOOGLE_VERIFICATION_CODE'),
-
         'siteUrl' => [
-            'en' => getenv('APP_URL') . '/',
+            'default' => getenv('APP_URL') . '/',
 //            'de' => getenv('APP_URL') . '/de/',
         ],
 
         'environmentVariables' => [
             'basePath' => $_SERVER['DOCUMENT_ROOT'],
-        ]
+        ],
+
+        /*
+         * Custom Settings
+         */
+        'appEnv' => getenv('APP_ENV'),
+        'bugsnagFrontendApiKey' => getenv('BUGSNAG_API_KEY_JS'),
+
+        'analytics' => [
+            'piwikSiteId' => getenv('PIWIK_SITE_ID'),
+            'googleAnalyticsCode' => getenv('GOOGLE_ANALYTICS_CODE'),
+            'googleVerificationCode' => getenv('GOOGLE_VERIFICATION_CODE'),
+        ],
 
     ],
 

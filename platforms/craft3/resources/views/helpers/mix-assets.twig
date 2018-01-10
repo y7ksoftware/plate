@@ -1,9 +1,0 @@
-{#
- # Mix Assets
- # ---------------
- #
- # Returns the versioned asset url or adds a timestampt
- #
- #}
-
-{% macro mix(asset) %}{% set craftMixIsEnabled = craft.plugins.getPlugin('mix' , false).isEnabled() %}{{ craftMixIsEnabled ? craft.mix.mix(asset) : asset }}{% endmacro %}
