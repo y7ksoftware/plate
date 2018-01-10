@@ -57,7 +57,7 @@ class EnvIndicatorPlugin extends BasePlugin
                 craft()->templates->includeCssResource('envindicator/css/style.css');
                 craft()->templates->includeJsResource("envindicator/js/cp.js");
 
-        } elseif(craft()->request->isSiteRequest() && in_array($appEnv, ['local', 'develop', 'staging']) && !craft()->httpSession->get('hide_envindicator')) {
+        } elseif(craft()->request->isSiteRequest() && in_array($appEnv, ['local', 'develop', 'staging']) && !craft()->httpSession->get('hide_envindicator') && !craft()->request->isAjaxRequest()) {
 
                 craft()->templates->includeJs("window.envText = \"{$envText}\"; window.appEnv = \"{$appEnv}\";");
                 craft()->templates->includeCssResource('envindicator/css/style.css');
