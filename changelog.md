@@ -1,7 +1,7 @@
 # Y7K Project Boilerplate Changelog
 
 
-## Version 0.15.*
+## Version 0.17.*
 * Craft Plugins
     - Removed Kint Plugin
     - Updated SproutSeo to 3.3.9
