@@ -44,25 +44,21 @@ You can use [localtunnel](http://http://localtunnel.me/) to serve your local dev
 
 ## Multilanguage Setup
 
-For Multilanguage support, add following entries to the servers *nginx* config (replace current `location`).
-Example with 'de' folder for german:
+For Multilanguage support, add following entries to the servers *nginx* config.
+Example with 'de' folder for German:
 
 ```
-location @rewrites {
-    rewrite ^(.*) /index.php?p=$1 last;
-}
-
-location / {
-    try_files $uri $uri/ @rewrites;
+ # Start Localization Rewrites
+ 
+location /de/ {
+        try_files $uri $uri/ @derewrites;
 }
 
 location @derewrites {
-    rewrite ^(.*)$ /de/index.php?p=$1 last;
+        rewrite ^/de/(.*)$ /de/index.php?p=$1? last;
 }
 
-location /de/ {
-    try_files $uri $uri/ @derewrites;
-}
+# End Localization Rewrites
 ```
 
 ## Console
