@@ -1,5 +1,13 @@
 # Y7K Project Boilerplate Changelog
 
+
+## Version 0.15.*
+* Craft Plugins
+    - Removed Kint Plugin
+    - Updated SproutSeo to 3.3.9
+* Updated npm Packages
+* Updated Craft CMS Readme: Ngix configuration for multilanguage Projects
+
 ## Version 0.14.*
 * Update Craft Plugins
     - Remove ManyToMany and Introvert Plugins, which are not working properly
