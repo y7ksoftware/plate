@@ -55,7 +55,7 @@ location /de/ {
 }
 
 location @derewrites {
-        rewrite ^/de/(.*)$ /de/index.php?p=$1? last;
+        rewrite ^/de/(.*)$ /de/index.php?$query_string;
 }
 
 # End Localization Rewrites

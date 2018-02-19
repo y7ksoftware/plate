@@ -22,7 +22,7 @@ return [
         'generateTransformsBeforePageLoad' => true, // Generate Image Transforms before page load. Else caching may be a problem
         'sendPoweredByHeader' => false, // Disable sending a "Powered by Craft" header
         'defaultWeekStartDay' => 1, // Start Week on Monday
-        'allowAutoUpdates' => (getenv('APP_ENV') == 'local') ? 'minor-only' : false, // Disable auto-updates on servers
+        'allowUpdates' => (getenv('APP_ENV') == 'local') ? 'minor-only' : false, // Disable auto-updates on servers
         'timezone' => 'Europe/Zurich', // Set Timezone to Zurich
         'cpTrigger' => 'admin',
         'userSessionDuration' => (getenv('APP_ENV') == 'local') ? false : 'PT4H',
@@ -37,7 +37,7 @@ return [
 //            'de' => getenv('APP_URL') . '/de/',
         ],
 
-        'environmentVariables' => [
+        'aliases' => [
             'basePath' => $_SERVER['DOCUMENT_ROOT'],
         ],
 
