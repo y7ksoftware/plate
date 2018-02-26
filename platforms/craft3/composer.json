@@ -6,7 +6,12 @@
         "craftcms/plugin-installer": "^1.0.0",
         "vlucas/phpdotenv": "^2.4.0",
         "misterbk/mix": "^1.0",
-        "marionnewlevant/twig-perversion": "^2.0"
+        "marionnewlevant/twig-perversion": "^2.0",
+        "verbb/field-manager": "^2.0.2",
+        "mmikkel/cp-field-inspect": "^1.0.2",
+        "craftcms/redactor": "^1.0.1",
+        "nystudio107/craft-minify": "^1.2.7",
+        "dolphiq/sitemap": "^1.0"
     },
     "scripts": {
         "post-root-package-install": [
