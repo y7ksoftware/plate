@@ -38,7 +38,7 @@ return [
 
         'appId' => getenv('APP_NAME'),
         'appEnv' => getenv('APP_ENV'),
-        'piwikSiteId' => getenv('PIWIK_SITE_ID'),
+        'matomoSiteId' => getenv('MATOMO_SITE_ID'),
         'googleAnalyticsCode' => getenv('GOOGLE_ANALYTICS_CODE'),
         'googleVerificationCode' => getenv('GOOGLE_VERIFICATION_CODE'),
 

@@ -1,12 +1,12 @@
 # Y7K Project Boilerplate Changelog
 
-
 ## Version 0.17.*
 * Craft Plugins
     - Removed Kint Plugin
     - Updated SproutSeo to 3.3.9
 * Updated npm Packages
 * Updated Craft CMS Readme: Ngix configuration for multilanguage Projects
+* Renamed Piwik to Matomo
 
 ## Version 0.14.*
 * Update Craft Plugins

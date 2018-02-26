@@ -2,7 +2,7 @@
  # Piwik Analytics
  #}
 
-{% if craft.app.config.general.analytics.piwikSiteId %}
+{% if craft.config.matomoSiteId %}
     <!-- Prism -->
     <script type="text/javascript">
         var _paq = _paq || [];
@@ -12,7 +12,7 @@
         (function() {
             var u="//prism.y7k.com/";
             _paq.push(['setTrackerUrl', u+'js/']);
-            _paq.push(['setSiteId', '{{ craft.app.config.general.analytics.piwikSiteId }}']);
+            _paq.push(['setSiteId', '{{ craft.config.matomoSiteId }}']);
             var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
             g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'js/'; s.parentNode.insertBefore(g,s);
         })();

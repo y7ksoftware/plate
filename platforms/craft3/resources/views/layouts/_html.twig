@@ -55,9 +55,6 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
     {# Main CSS #}
     <link rel="stylesheet" type="text/css" href="{{ mix('build/css/main.css') }}">
 
-    {# Piwik Analytics #}
-    {# {% include "helpers/piwik-analytics" %} #}
-
 </head>
 
 <body data-namespace="{% block namespace %}{% endblock %}">
@@ -90,7 +87,11 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
         {{ block('include_component_js') }}
     {% endif %}
 
-    {# Google Analytic, if needed #}
+
+    {# Matomo Analytics #}
+    {# {% include "helpers/matomo-analytics" %} #}
+
+    {# Google Analytic, if can't be avoided #}
     {# {% include 'helpers/google-analytics' %} #}
 
 </body>
