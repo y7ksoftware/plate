@@ -1,7 +1,4 @@
----
-
-# Y/K CLI Config
-
+# Y7K CLI Config
 
 # Environments:
 # -------------
@@ -11,6 +8,7 @@
 # - storage: Important that it does not end with a slash!
 #
 # run "y7k db:pull pizza" or "y7k assets:push casa" etc.
+
 environments:
   local:
     host: 127.0.0.1
