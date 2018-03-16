@@ -1,5 +1,6 @@
 {
-    "name": "{project}",
+    "name": "y7k/plate",
+    "license": "Unlicense",
     "require": {
         "vlucas/phpdotenv": "^2.0"
     },

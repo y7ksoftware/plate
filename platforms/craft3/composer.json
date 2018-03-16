@@ -1,5 +1,5 @@
 {
-    "name": "{name}",
+    "name": "y7k/plate",
     "description": "Y7K Project",
     "require": {
         "craftcms/cms": "^3.0.0-RC10.1",
@@ -19,8 +19,7 @@
             "php -r \"file_exists('.y7k-cli.yml') || copy('.y7k-cli.yml.example', '.y7k-cli.yml');\""
         ],
         "post-create-project-cmd": [
-            "@composer dump-autoload -o",
-            "@php craft setup/welcome"
+            "@composer dump-autoload -o"
         ]
     },
     "config": {

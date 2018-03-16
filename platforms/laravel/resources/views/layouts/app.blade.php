@@ -36,9 +36,6 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
     <link rel="stylesheet" type="text/css" href="{{ mix('build/css/vendor.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ mix('build/css/main.css') }}">
 
-    {{-- Piwik --}}
-    @include('helpers/piwik-analytics')
-
 </head>
 <body>
 
@@ -54,7 +51,10 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
 <script type="text/javascript" src="{{ mix('/build/js/vendor.js') }}"></script>
 <script type="text/javascript" src="{{ mix('/build/js/app.js') }}"></script>
 
-@include('helpers/google-analytics')
+
+{{-- Analytics --}}
+{{--@include('helpers/google-analytics')--}}
+@include('helpers/matomo-analytics')
 
 </body>
 </html>

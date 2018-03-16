@@ -1,0 +1,7 @@
+{
+    "scripts": {
+        "post-root-package-install": [
+            "php -r \"file_exists('.y7k-cli.yml') || copy('.y7k-cli.yml.example', '.y7k-cli.yml');\""
+        ]
+    }
+}
