@@ -11,9 +11,9 @@
 return [
 
     '*' => [
-        'devMode' => (getenv('APP_DEBUG')=='true'),
-        'enableTemplateCaching' => (getenv('TEMPLATE_CACHING')=='true'),
-        'securityKey' => getenv('APP_KEY'),
+        'devMode' => (getenv('APP_DEBUG') === 'true'),
+        'enableTemplateCaching' => (getenv('TEMPLATE_CACHING') === 'true'),
+        'securityKey' => getenv('SECURITY_KEY'),
         'omitScriptNameInUrls' => true,
         'convertFilenamesToAscii' => true, // Convert upload filenames to valid ascii chars
         'limitAutoSlugsToAscii' => true, // Converts Umlauts etc. in slugs to ascii
@@ -22,10 +22,10 @@ return [
         'generateTransformsBeforePageLoad' => true, // Generate Image Transforms before page load. Else caching may be a problem
         'sendPoweredByHeader' => false, // Disable sending a "Powered by Craft" header
         'defaultWeekStartDay' => 1, // Start Week on Monday
-        'allowUpdates' => (getenv('APP_ENV') == 'local') ? 'minor-only' : false, // Disable auto-updates on servers
+        'allowUpdates' => (getenv('APP_ENV') === 'local') ? 'minor-only' : false, // Disable auto-updates on servers
         'timezone' => 'Europe/Zurich', // Set Timezone to Zurich
         'cpTrigger' => 'admin',
-        'userSessionDuration' => (getenv('APP_ENV') == 'local') ? false : 'PT4H',
+        'userSessionDuration' => (getenv('APP_ENV') === 'local') ? false : 'PT4H',
 
         // Restrict upload to certain extensions
 //        'allowedFileExtensions' => 'json, jpg, jpeg, png, gif, pdf, zip',
