@@ -4,18 +4,19 @@
 # -------------
 #
 # You can define multiple environments here that can be used by the CLI to push & pull database and assets.
-# The host value can be either the domain (xy.y7k.pizza) or the IP (less warnings)
+# The host value can be either the domain (xy.y7k.pizza) or the IP (less warnings).
 #
 # Run "y7k db:pull pizza" or "y7k assets:push casa" etc.
 
 environments:
   local:
     host: 127.0.0.1
-    posrt: 2222
-    db: dbname
     sshuser: vagrant
+    port: 2222
+    db: dbname
     dbuser: homestead
-    password: secret
+    dbpassword: secret
+    path: /home/vagrant/pr01-project
     storage: storage/app
 
   pizza:
@@ -23,14 +24,16 @@ environments:
     sshuser: forge
     db: dbname
     dbuser: forge
-    password: password
-    storage: /home/forge/pr01.y7k.pizza/shared/storage/app
+    dbpassword: password
+    path: /home/forge/pr01.y7k.pizza
+    storage: shared/storage/app
 
   production:
     host: 127.0.0.1
     sshuser: forge
     db: dbname
     dbuser: forge
-    password: password
-    storage: /home/forge/project.com/shared/storage/app
+    dbpassword: password
+    path: /home/forge/project.com
+    storage: shared/storage/app
     production: true
