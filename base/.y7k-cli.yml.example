@@ -20,7 +20,7 @@ environments:
     storage: storage/app
 
   pizza:
-    host: 127.0.0.1
+    host: 5.102.146.133
     sshuser: forge
     db: dbname
     dbuser: forge
