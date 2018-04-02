@@ -1,30 +1,24 @@
 <?php
-
 /**
  * Craft web bootstrap file
  */
 
-// Tell Craft to serve the English content
-define( 'CRAFT_SITE' , 'default' );
+// Set path constants
+define('CRAFT_BASE_PATH', dirname(__DIR__));
+define('CRAFT_TEMPLATES_PATH', CRAFT_BASE_PATH . '/resources/views');
+define('CRAFT_TRANSLATIONS_PATH', CRAFT_BASE_PATH . '/resources/lang');
+define('CRAFT_STORAGE_PATH', CRAFT_BASE_PATH . '/storage');
+define('CRAFT_VENDOR_PATH', CRAFT_BASE_PATH . '/vendor');
 
-// Project root path
-$root = dirname(__DIR__);
+// Load Composer's autoloader
+require_once CRAFT_VENDOR_PATH . '/autoload.php';
 
-// Composer autoloader
-require_once $root.'/vendor/autoload.php';
-
-// dotenv?
-if (file_exists($root.'/.env')) {
-    $dotenv = new Dotenv\Dotenv($root);
-    $dotenv->load();
+// Load dotenv?
+if (file_exists(CRAFT_BASE_PATH . '/.env')) {
+    (new Dotenv\Dotenv(CRAFT_BASE_PATH))->load();
 }
 
-// Craft
-define('CRAFT_BASE_PATH', $root);
-define( 'CRAFT_TEMPLATES_PATH', $root . '/resources/views/' );
-define( 'CRAFT_TRANSLATIONS_PATH', $root . '/resources/lang/' );
-define( 'CRAFT_STORAGE_PATH', $root . '/storage/' );
-
-$app = require $root.'/vendor/craftcms/cms/bootstrap/web.php';
+// Load and run Craft
+define('CRAFT_ENVIRONMENT', getenv('APP_ENV') ?: 'production');
+$app = require CRAFT_VENDOR_PATH . '/craftcms/cms/bootstrap/web.php';
 $app->run();
-
