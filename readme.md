@@ -34,6 +34,12 @@ Plain PHP or HTML index file as starting point (with environment Variables loade
 
 ## Javascript
 
+Use the separate (script plate)[https://github.com/Y7K/scripts] for that
+
+## CSS
+Use the separate (script plate)[https://github.com/Y7K/style] for that
+
+
 ### Default
 
 A Full setup with Router, Vuex and Localisation, as well as Page-Transitions with [Barba.js](http://barbajs.org).
