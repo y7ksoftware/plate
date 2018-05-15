@@ -5,7 +5,6 @@
 * Updates Cachemonster Plugin
 * Updates Craft 3 Plugins
 
-
 ## Version 0.18.*
 * Add new Eslint Rules (based in AirBnb)
 * Added npm packages needed for linting
