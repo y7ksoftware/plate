@@ -21,7 +21,7 @@ Changelog: See [changelog.md](changelog.md)
 ## Favicons
 
 - Replace all Favicons in `public/assets/images/meta/`
-- Replace `favicon.ico` and `browserconfig.xml` in `public/` and `public/de/` 
+- Replace `favicon.ico` and `browserconfig.xml` in `public/`
 - Use correct file-paths in `browserconfig.xml` and `public/assets/images/meta/manifest.json` 
 
 ## Development

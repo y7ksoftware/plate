@@ -17,7 +17,7 @@ Changelog: See [changelog.md](changelog.md)
 4. Install node packages with `npm install`
 5. Run `composer run-script project-created-cmd`
 6. Set Project Domain and Database in `.env`
-7. Install Craft at `yourdomain.dev/admin`
+7. Install Craft at `yourdomain.test/admin`
 8. If you're building a multi-language page, configure nginx accordingly (see [Multilanguage NGINX Setup](#user-content-multilanguage-nginx-setup) or example below)
 
 ## Favicons
@@ -48,7 +48,7 @@ For Multilanguage support, add following entries to the servers *nginx* config.
 Example with 'de' folder for German:
 
 ```
- # Start Localization Rewrites
+# Start Localization Rewrites
  
 location /de/ {
         try_files $uri $uri/ @derewrites;
