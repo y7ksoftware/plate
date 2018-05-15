@@ -3,6 +3,7 @@
 ## Version 0.19.*
 * Upgrades npm packages
 * Updates Cachemonster Plugin
+* Updates Craft 3 Plugins
 
 
 ## Version 0.18.*
