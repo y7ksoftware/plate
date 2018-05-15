@@ -3,7 +3,7 @@
 .y7k-cli.yml
 
 # Craft License
-/craft/config/license.key
+/config/license.key
 
 # Dependencies
 /node_modules
