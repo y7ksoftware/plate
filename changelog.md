@@ -2,6 +2,7 @@
 
 ## Version 0.19.*
 * Upgrades npm packages
+* Updates Cachemonster Plugin
 
 
 ## Version 0.18.*
