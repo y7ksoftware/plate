@@ -1,5 +1,9 @@
 # Y7K Project Boilerplate Changelog
 
+## Version 0.19.*
+* Upgrades npm packages
+
+
 ## Version 0.18.*
 * Add new Eslint Rules (based in AirBnb)
 * Added npm packages needed for linting
