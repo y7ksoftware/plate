@@ -11,8 +11,8 @@
 return [
 
     '*' => [
-        'devMode' => (getenv('APP_DEBUG') === 'true'),
-        'enableTemplateCaching' => (getenv('TEMPLATE_CACHING') === 'true'),
+        'devMode' => getenv('APP_DEBUG') === 'true',
+        'enableTemplateCaching' => getenv('TEMPLATE_CACHING') === 'true',
         'securityKey' => getenv('SECURITY_KEY'),
         'omitScriptNameInUrls' => true,
         'convertFilenamesToAscii' => true, // Convert upload filenames to valid ascii chars
@@ -28,17 +28,13 @@ return [
         'userSessionDuration' => (getenv('APP_ENV') === 'local') ? false : 'PT4H',
 
         // Restrict upload to certain extensions
-//        'allowedFileExtensions' => 'json, jpg, jpeg, png, gif, pdf, zip',
+        // 'allowedFileExtensions' => 'json, jpg, jpeg, png, gif, pdf, zip',
         // Allow upload of Json files, also used for external Video Plugin
         'extraAllowedFileExtensions' => 'json',
 
         'siteUrl' => [
             'default' => getenv('APP_URL') . '/',
-//            'de' => getenv('APP_URL') . '/de/',
-        ],
-
-        'aliases' => [
-            'basePath' => $_SERVER['DOCUMENT_ROOT'],
+            // 'de' => getenv('APP_URL') . '/de/',
         ],
 
         /*
