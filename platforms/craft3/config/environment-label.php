@@ -4,7 +4,7 @@ $envirnomentLabels = [
     'local' => [
         'labelColor' => '#D8D8D8',
         'textColor' => '#000000',
-        'labelText' => "{{ 'Lokal' | t }} 🐐",
+        'labelText' => "{{ 'Local' | t }} 🐐",
     ],
     'develop' => [
         'labelColor' => '#7720FC',
