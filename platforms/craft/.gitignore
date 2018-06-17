@@ -11,7 +11,7 @@
 
 # Build folder
 /public/build
-mix-manifest.json
+/mix-manifest.json
 
 # Uploads folder
 /public/storage
