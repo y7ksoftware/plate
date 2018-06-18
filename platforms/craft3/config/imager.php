@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Imager by André Elvan
+ * Configuration file for Imager by André Elvan
  *
  * @author      André Elvan <http://vaersaagod.no>
  * @package     Imager
@@ -10,76 +10,57 @@
  * @link        https://github.com/aelvan/Imager-Craft
  */
 
+return [
+    /*
+     * System Path and urls
+     */
+    'imagerSystemPath' => '@webroot/imager/',
+    'imagerUrl' => '@web/imager/',
 
-/**
- * Configuration file for Imager
- *
- * Override this by placing a file named 'imager.php' inside your config folder and override variables as needed.
- * Multi-environment settings work in this file the same way as in general.php or db.php
- */
-
-return array(
-    'imagerSystemPath' => $_SERVER['DOCUMENT_ROOT'] . '/imager/',
-    'imagerUrl' => '/imager/',
-    'jpegQuality' => 90,
-
-    'allowUpscale' => false,
+    /*
+     * Image Cache
+     */
     'cacheEnabled' => true,
     'cacheDuration' => 1209600, // 14 days
-    'cacheDurationRemoteFiles' => 1209600, // 14 days
+
+    /*
+     * Automatically fill a transform array with additional transforms based on fillAttribute ["width"] and fillInterval [200]
+     */
+    'fillTransforms' => true,
+
+    /*
+     * Disable Image upscaling
+     */
+    'allowUpscale' => false,
+
+    /*
+     * Default: 2
+     * Defines the PNG compression level. PNG compression is always lossless, so this setting doesn't have any
+     * effect on quality. It only affects speed and filesize. A lower value means faster compression, but bigger
+     * filesizes. A value of 0 means "no compression", which is the preferred setting if you're doing any post
+     * optimizations of png images (with Optipng or TinyPNG).
+     */
     'pngCompressionLevel' => 2,
-    'webpQuality' => 80,
-    'webpImagickOptions' => array(), // additional options you want to pass to Imagick via '$instance->setOption('webp:option', 'value')'.
-    'useCwebp' => false,
-    'cwebpPath' => '/usr/bin/cwebp',
-    'cwebpOptions' => '', // additional options you want to pass to cwebp. Quality is set automatically.
-    'interlace' => false, // false, true ('line'), 'none', 'line', 'plane', 'partition'
-    'resizeFilter' => 'lanczos',
-    'smartResizeEnabled' => false,
-    'removeMetadata' => false,
-    'bgColor' => '',
-    'position' => '50% 50%',
-    'letterbox' => array('color' => '#000', 'opacity' => 0),
-    'hashFilename' => 'postfix', // true, false, or 'postfix' (meaning only the generated part of the filename is hashed)
-    'hashPath' => false,
-    'hashRemoteUrl' => false, // true, false, or 'host' (meaning only the host part of the url is hashed)
-    'instanceReuseEnabled' => false,
-    'noop' => false,
-    'suppressExceptions' => false,
 
-    'jpegoptimEnabled' => false,
-    'jpegoptimPath' => '/usr/bin/jpegoptim',
-    'jpegoptimOptionString' => '-s',
-    'jpegtranEnabled' => false,
-    'jpegtranPath' => '/usr/bin/jpegtran',
-    'jpegtranOptionString' => '-optimize -copy none',
-    'mozjpegEnabled' => false,
-    'mozjpegPath' => '/usr/bin/mozjpeg',
-    'mozjpegOptionString' => '-optimize -copy none',
-    'optipngEnabled' => false,
-    'optipngPath' => '/usr/bin/optipng',
-    'optipngOptionString' => '-o5',
-    'pngquantEnabled' => false,
-    'pngquantPath' => '/usr/bin/pngquant',
-    'pngquantOptionString' => '--strip --skip-if-larger',
-    'tinyPngEnabled' => false,
-    'tinyPngApiKey' => '',
-    'optimizeType' => 'task',
-    'logOptimizations' => false,
+    /*
+     * Default jpg Quality
+     */
+    'jpegQuality' => 85,
 
-    'awsEnabled' => false,
-    'awsAccessKey' => '',
-    'awsSecretAccessKey' => '',
-    'awsBucket' => '',
-    'awsFolder' => '',
-    'awsCacheDuration' => 1209600, // 14 days
-    'awsRequestHeaders' => array(),
-    'awsStorageType' => 'standard', // 'standard' or 'rrs' (reduced redundancy storage)
+    /* --------- Image Optimisations --------- */
 
-    'cloudfrontInvalidateEnabled' => false,
-    'cloudfrontDistributionId' => '',
+    /*
+     * Optimise images via craft job
+     */
+    'optimizeType' => 'job',
 
-    'curlOptions' => array(),
-    'runTasksImmediatelyOnAjaxRequests' => true,
-    'clearKey' => '', // Key that should be passed to the clear controller action. Empty string means clearing is disabled.
-);
+    /*
+     * Enabled Optimisers: Need to be installed on Server
+     */
+    'optimizers' => [
+        'mozjpeg',
+        'optipng',
+        'gifsicle'
+    ]
+
+];
