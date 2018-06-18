@@ -5,16 +5,17 @@
         "craftcms/cms": "^3.0.7",
         "craftcms/plugin-installer": "^1.0.0",
         "vlucas/phpdotenv": "^2.4.0",
-        "misterbk/mix": "^1.4.3",
+        "misterbk/mix": "^1.4",
         "marionnewlevant/twig-perversion": "^2.0",
-        "verbb/field-manager": "^2.0.2",
-        "mmikkel/cp-field-inspect": "^1.0.2",
-        "craftcms/redactor": "^1.0.1",
+        "verbb/field-manager": "^2.0",
+        "mmikkel/cp-field-inspect": "^1.0",
+        "craftcms/redactor": "^2.0",
         "nystudio107/craft-minify": "^1.2.7",
         "verbb/super-table": "2.0.4",
         "sebastianlenz/linkfield": "1.0.7",
-        "aelvan/imager": "^2.0@beta",
-        "nystudio107/craft-seomatic": "^3.0.0-beta.20"
+        "aelvan/imager": "^2.0",
+        "nystudio107/craft-seomatic": "^3.0.0-beta.20",
+        "verbb/expanded-singles": "^1.0"
     },
     "scripts": {
         "post-root-package-install": [
