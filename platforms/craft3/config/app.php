@@ -9,7 +9,7 @@ return [
             'class' => \Y7K\MaintenanceModule\MaintenanceModule::class,
             'components' => [
                 'cachewarmer' => [
-                    'class' => 'Y7K\MaintenanceModule\services\Cachewarmer',
+                    'class' => \Y7K\MaintenanceModule\services\Cachewarmer::class,
                 ],
             ],
         ],
