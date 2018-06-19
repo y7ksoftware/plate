@@ -1,5 +1,10 @@
 # Y7K Project Boilerplate Changelog
 
+
+## Version 0.20.* - 2018-06-19
+* Updated Craft 3 boilerplate
+* Added Y7K Modules to Craft 3 boilerplate
+
 ## Version 0.19.*
 * Upgrades npm packages
 * Updates Cachemonster Plugin

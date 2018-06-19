@@ -80,5 +80,8 @@ module.exports = {
 
         // allow console log during development
         'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+        
+        // allow padded blocks
+        'padded-blocks': ["off", "always"]
     }
 }

@@ -15,7 +15,9 @@
         "sebastianlenz/linkfield": "1.0.7",
         "aelvan/imager": "^2.0",
         "nystudio107/craft-seomatic": "^3.0.0-beta.20",
-        "verbb/expanded-singles": "^1.0"
+        "verbb/expanded-singles": "^1.0",
+        "y7k/environmentindicatormodule": "^1.0",
+        "y7k/maintenancemodule": "^2.0"
     },
     "scripts": {
         "post-root-package-install": [
@@ -36,5 +38,15 @@
             "modules\\": "modules/"
         }
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:Y7K/craft-envindicator-module.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:Y7K/craft-maintenance-module.git"
+        }
+    ],
     "minimum-stability": "beta"
 }
