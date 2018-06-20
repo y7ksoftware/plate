@@ -9,17 +9,19 @@
 {% block page %}
     <div class="page-wrapper">
 
-        <header class="header-page">
-        </header>
+        <div class="js-vueContainer">
+            <header class="header-page"></header>
+        </div>
 
-        <div id="barba-wrapper" class="page-content">
-            <main class="barba-container" data-namespace="{{ block('namespace') }}">
-                <div class="pageContainer">
-                    <div class="js-vueContainer">
-                        {{ block('main') }}
-                    </div>
+        <div id="js-barbaWrapper" class="page-content">
+            <main class="js-barbaContainer" data-namespace="{{ block('namespace') }}">
+                <div class="js-vueContainerBarba">
+                    {{ block('main') }}
                 </div>
             </main>
+        </div>
+
+        <div class="js-vueContainer">
         </div>
 
         {# Debug Grid #}
