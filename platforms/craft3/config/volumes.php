@@ -2,11 +2,11 @@
 
 return [
     'images' => [
-        'path' => '@web/storage/images',
-        'url' => '@webroot/storage/images',
+        'path' => '@webroot/storage/images',
+        'url' => '@web/storage/images',
     ],
     'documents' => [
-        'path' => '@web/storage/documents',
-        'url' => '@webroot/storage/documents',
+        'path' => '@webroot/storage/documents',
+        'url' => '@web/storage/documents',
     ],
 ];
