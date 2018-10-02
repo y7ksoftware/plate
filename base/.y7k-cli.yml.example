@@ -24,7 +24,6 @@ environments:
     sshuser: forge
     db: dbname
     dbuser: forge
-    dbpassword: password
     path: /home/forge/pr01.y7k.pizza
     storage: shared/storage/app
 
@@ -33,7 +32,6 @@ environments:
     sshuser: forge
     db: dbname
     dbuser: forge
-    dbpassword: password
     path: /home/forge/project.com
     storage: shared/storage/app
     production: true
