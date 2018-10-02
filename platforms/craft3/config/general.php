@@ -40,7 +40,8 @@ return [
      * Custom Settings
      */
     'appEnv' => getenv('APP_ENV'),
-    'bugsnagFrontendApiKey' => getenv('BUGSNAG_API_KEY_JS'),
+    'bugsnagApiKey' => getenv('BUGSNAG_API_KEY'),
+    'apiPrefix' => getenv('API_PREFIX'),
 
     'analytics' => [
         'matomoSiteId' => getenv('MATOMO_SITE_ID'),
