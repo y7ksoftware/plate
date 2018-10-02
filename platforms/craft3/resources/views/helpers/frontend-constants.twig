@@ -13,10 +13,11 @@
 
 <script type="text/javascript">
 
-    window.App = {};
-    window.App.constants = {{ {
+    window.backendConfig = {{ {
+        'APP_ENV': craft.app.config.general.appEnv,
         'APP_DEBUG': craft.app.config.general.devMode,
-        'BUGSNAG_API_KEY_JS': craft.app.config.general.bugsnagFrontendApiKey,
+        'BUGSNAG_API_KEY': craft.app.config.general.bugsnagApiKey,
+        'API_PREFIX': craft.app.config.general.apiPrefix,
     }|json_encode|raw }};
 
 </script>

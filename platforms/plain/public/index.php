@@ -59,12 +59,11 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
 <div id="app"></div>
 
 <script>
-    window.App = {
-        constants: {
-            APP_DEBUG: <?php echo getenv('APP_DEBUG'); ?>,
-            APP_ENV: '<?php echo getenv('APP_ENV'); ?>',
-            BUGSNAG_API_KEY_JS: '<?php echo getenv('BUGSNAG_API_KEY_JS'); ?>',
-        }
+    window.backendConfig = {
+        APP_DEBUG: <?php echo getenv('APP_DEBUG'); ?>,
+        APP_ENV: '<?php echo getenv('APP_ENV'); ?>',
+        BUGSNAG_API_KEY: '<?php echo getenv('BUGSNAG_API_KEY'); ?>',
+        API_PREFIX: '<?php echo getenv('API_PREFIX'); ?>',
     }
 </script>
 
