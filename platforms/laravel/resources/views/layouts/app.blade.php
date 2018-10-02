@@ -33,8 +33,8 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
     <meta name="theme-color" content="#ffffff">
 
     {{-- Stylesheets --}}
-    <link rel="stylesheet" type="text/css" href="{{ mix('build/css/vendor.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ mix('build/css/main.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ mix('css/vendor.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ mix('css/main.css') }}">
 
 </head>
 <body>
@@ -47,9 +47,9 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
 @include('helpers/frontend-constants')
 
 {{-- JS --}}
-<script type="text/javascript" src="{{ mix('/build/js/manifest.js') }}"></script>
-<script type="text/javascript" src="{{ mix('/build/js/vendor.js') }}"></script>
-<script type="text/javascript" src="{{ mix('/build/js/app.js') }}"></script>
+<script type="text/javascript" src="{{ mix('js/manifest.js') }}"></script>
+<script type="text/javascript" src="{{ mix('js/vendor.js') }}"></script>
+<script type="text/javascript" src="{{ mix('js/app.js') }}"></script>
 
 
 {{-- Analytics --}}
