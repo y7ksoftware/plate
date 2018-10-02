@@ -15,8 +15,14 @@ const { config } = require('./webpack.mix.config');
 
 mix
 
+    .setPublicPath('./public/build')
+    .webpackConfig(config.webpack)
+    .options({
+        processCssUrls: false,
+    })
+
     // Build Javascript
-    .js('resources/assets/js/app.js', 'public/build/js')
+    .js('resources/assets/js/app.js', 'js')
 
     // Extract libraries to vendor.js file
     .extract(['vue', /*'barba.js', 'bugsnag-js', 'lazysizes', 'axios'*/])
@@ -26,11 +32,10 @@ mix
     .copyDirectory('resources/assets/images', 'public/build/images')
 
     // Copy whole js vendor folders
-    //.copy('resources/assets/js/vendor/modernizr', 'public/build/js/vendor/modernizr', false)
+    //.copy('resources/assets/js/vendor/modernizr', 'public/js/vendor/modernizr', false)
 
     // Build Stylesheets
-    .sass('resources/assets/scss/main.scss', 'public/build/css', config.sass)
-    .options({ processCssUrls: false })
+    .sass('resources/assets/scss/main.scss', 'css', config.sass)
 
     // Build sourcemaps
     .sourceMaps()
@@ -38,9 +43,9 @@ mix
     // Start BrowserSync
     .browserSync(config.browserSync)
 
-    .webpackConfig(config.webpack);
+
 
 // Version Files
 if (mix.inProduction()) {
-    // mix.version();
+    mix.version();
 }

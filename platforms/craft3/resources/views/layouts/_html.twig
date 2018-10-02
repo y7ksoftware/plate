@@ -54,10 +54,10 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
     {% endif %}
 
     {# Vendor CSS from 3rd party plugins #}
-    {#<link rel="stylesheet" type="text/css" href="{{ mix('build/css/vendor.css') }}">#}
+    {#<link rel="stylesheet" type="text/css" href="{{ mix('css/vendor.css') }}">#}
 
     {# Main CSS #}
-    <link rel="stylesheet" type="text/css" href="{{ mix('build/css/main.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ mix('css/main.css') }}">
 
 </head>
 
@@ -82,9 +82,9 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
     {% include 'helpers/frontend-constants' %}
 
     {# Javascript #}
-    <script type="text/javascript" src="{{ mix('build/js/manifest.js') }}"></script>
-    <script type="text/javascript" src="{{ mix('build/js/vendor.js') }}"></script>
-    <script type="text/javascript" src="{{ mix('build/js/app.js') }}"></script>
+    <script type="text/javascript" src="{{ mix('js/manifest.js') }}"></script>
+    <script type="text/javascript" src="{{ mix('js/vendor.js') }}"></script>
+    <script type="text/javascript" src="{{ mix('js/app.js') }}"></script>
 
     {# Block to insert custom, component-specific js block after all other code #}
     {% if block('include_component_js') is defined %}
