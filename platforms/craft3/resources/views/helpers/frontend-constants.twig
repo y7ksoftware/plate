@@ -18,6 +18,7 @@
         'APP_DEBUG': craft.app.config.general.devMode,
         'BUGSNAG_API_KEY': craft.app.config.general.bugsnagApiKey,
         'API_PREFIX': craft.app.config.general.apiPrefix,
+        'CSRF_TOKEN': craft.request.csrfToken|e('js'),
     }|json_encode|raw }};
 
 </script>
