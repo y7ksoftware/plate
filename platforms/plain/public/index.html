@@ -13,7 +13,7 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
 
 -->
 <!--[if lt IE 11]><html lang="en" class="ie old-ie"><![endif]-->
-<!--[if !IE]><!--><html class="no-js"><!--<![endif]-->
+<!--[if !IE]><!--><html class="no-js no-fouc"><!--<![endif]-->
 <head>
     <title>Get rollin'</title>
     <meta charset="utf-8">
