@@ -1,3 +1,4 @@
+
 // https://eslint.org/docs/user-guide/configuring
 
 module.exports = {
@@ -14,14 +15,6 @@ module.exports = {
     plugins: [
         'html'
     ],
-    // check if imports actually resolve
-    // settings: {
-    //     'import/resolver': {
-    //         webpack: {
-    //             config: 'build/webpack.base.conf.js'
-    //         }
-    //     }
-    // },
 
     globals: {
         axios: true,
@@ -66,21 +59,14 @@ module.exports = {
         // disallow reassignment of function parameters
         // disallow parameter object manipulation except for specific exclusions
         'no-param-reassign': ['error', {
-            props: true,
-            ignorePropertyModificationsFor: [
-                'state', // for vuex state
-            ]
+            props: false,
         }],
-        // allow optionalDependencies
-        // 'import/no-extraneous-dependencies': ['error', {
-        //     optionalDependencies: ['test/unit/index.js']
-        // }],
         // allow debugger during development
         'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
 
         // allow console log during development
         'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-        
+
         // allow padded blocks
         'padded-blocks': ["off", "always"]
     }
