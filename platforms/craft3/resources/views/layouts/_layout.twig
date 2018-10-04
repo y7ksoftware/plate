@@ -7,21 +7,19 @@
 {% extends "layouts/_html" %}
 
 {% block page %}
-    <div class="page-wrapper">
 
-        <div class="js-vueContainer">
-            <header class="header-page"></header>
-        </div>
-
-        <div id="js-barbaWrapper" class="page-content">
-            <main class="js-barbaContainer" data-namespace="{{ block('namespace') }}">
-                <div class="js-vueContainerBarba">
-                    {{ block('main') }}
-                </div>
-            </main>
-        </div>
-
-        {# $cli-hook-layout-footer$ #}
-
+    <div class="js-vueContainer">
+        <header class="pageHeader"></header>
     </div>
+
+    <div id="js-barbaWrapper" class="pageContent">
+        <main class="js-barbaContainer" data-namespace="{{ block('namespace') }}">
+            <div class="js-vueContainerBarba">
+                {{ block('main') }}
+            </div>
+        </main>
+    </div>
+
+    {# $cli-hook-layout-footer$ #}
+
 {% endblock %}
