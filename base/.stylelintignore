@@ -1,0 +1,5 @@
+resources/assets/scss/vendor/**/*.scss
+resources/assets/scss/vendor/**/*.css
+resources/assets/scss/boot/normalize.scss
+resources/assets/scss/boot/print.scss
+resources/assets/scss/boot/reset.scss
