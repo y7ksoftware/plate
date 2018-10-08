@@ -1,5 +1,17 @@
 # Y7K Project Boilerplate Changelog
 
+## Version 1.0.* - 2018-10-08
+* Updated Versioning to include major releases
+* Fix laravel mix and webpack to work with hot reloading and correct paths
+* Rename twig "modules" to "components"
+* Refactor _layout.twig -> correct maintainableCSS naming
+* Refactor frontend constants (now "window.backendConfig" instead of "window.App.constants")
+* Remove unnecessary, outdated configs including bugsnag
+* Add and streamline backend->frontend constants
+* Add "no-fuoc" to html element initially
+* Remove debuggrid from plate code (it is a component)
+* Update eslint, add stylelint
+
 
 ## Version 0.20.* - 2018-06-19
 * Updated Craft 3 boilerplate
