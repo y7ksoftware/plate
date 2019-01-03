@@ -1,7 +1,5 @@
 # Config
 .env
-.y7k-cli.yml
-
 # Dependencies
 /node_modules
 /vendor

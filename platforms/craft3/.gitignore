@@ -1,6 +1,5 @@
 # Config
 .env
-.y7k-cli.yml
 
 # Craft License
 /config/license.key

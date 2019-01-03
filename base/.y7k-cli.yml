@@ -15,7 +15,6 @@ environments:
     port: 2222
     db: dbname
     dbuser: homestead
-    dbpassword: secret
     path: /home/vagrant/pr01-project
     storage: storage/app
 
