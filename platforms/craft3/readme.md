@@ -13,7 +13,7 @@ Changelog: See [changelog.md](changelog.md)
 2. Change into the new directory
 3. Install composer packages with `composer install`
 4. Install node packages with `npm install`
-5. Run `composer run-script project-created-cmd`
+5. Run `composer run-script post-root-package-install`
 6. Set Project Domain and Database in `.env`
 7. Install Craft at `yourdomain.test/admin`
 
