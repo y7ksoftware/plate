@@ -26,7 +26,7 @@ return [
     /*
      * Automatically fill a transform array with additional transforms based on fillAttribute ["width"] and fillInterval [200]
      */
-    'fillTransforms' => true,
+    // 'fillTransforms' => true,
 
     /*
      * Disable Image upscaling
