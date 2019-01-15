@@ -7,5 +7,5 @@
  #}
 
 {% macro gerLocalizedEntryUrl(entry, targetLocale) %}
-    {% return craft.entries.id(entry.id).locale(targetLocale).first().getUrl() %}
+    {% return craft.entries.id(entry.id).locale(targetLocale).one().getUrl() %}
 {% endmacro %}
