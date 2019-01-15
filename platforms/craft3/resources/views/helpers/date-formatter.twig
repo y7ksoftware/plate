@@ -16,10 +16,10 @@
 
 {# DE: 20:00 Uhr #}
 {# EN: 08:00 pm #}
-{% macro time(inputDate) %}
+{% macro time(inputDate, disableSuffix) %}
     {% switch craft.app.language|slice(0,2)  %}
         {% case "de" %}
-            {% return inputDate|date('H:i') ~ ' Uhr' %}
+            {% return inputDate|date('H:i') ~ (disableSuffix ? '' : ' Uhr') %}
         {% case "en" %}
             {% return inputDate|date('h:i a') %}
         {% default %}
@@ -27,26 +27,43 @@
     {% endswitch %}
 {% endmacro %}
 
-{# DE: Montag 17. September, 17:30 #}
-{# EN: Monday, September 18, 5:30 pm #}
+{# DE: 17. September 2018 #}
+{# EN: September 18 2018 #}
 {% macro dateLong(inputDate) %}
     {% switch craft.app.language|slice(0,2)  %}
         {% case "de" %}
-            {% return inputDate|date('l j. F, H:i') %}
+            {% return inputDate|date('j. F Y') %}
         {% case "en" %}
-            {% return inputDate|date('l, F j, h:i a') %}
+            {% return inputDate|date('F j Y') %}
         {% default %}
             {% return inputDate %}
     {% endswitch %}
 {% endmacro %}
 
+
+{# DE: 17. September #}
+{# EN: September 18 #}
+{% macro dayAndMonth(inputDate) %}
+    {% switch craft.app.language|slice(0,2)  %}
+        {% case "de" %}
+            {% return inputDate|date('j. F') %}
+        {% case "en" %}
+            {% return inputDate|date('F j') %}
+        {% default %}
+            {% return inputDate %}
+    {% endswitch %}
+{% endmacro %}
+
+
 {# DE: Di. 12. Februar #}
 {# EN: Thu, February 12 #}
 {% macro dateHuman(inputDate) %}
-    {% if date(inputDate) >= date('today') %}
-        {% return 'Today'|t %}
-    {% elseif date(inputDate) >= date('yesterday') %}
-        {% return 'Yesterday'|t %}
+    {% if date(inputDate) >= date('today') and date(inputDate) <= date('today 23:59:59') %}
+        {% return 'Heute'|t %}
+    {% elseif date(inputDate) >= date('tomorrow') and date(inputDate) < date('tomorrow  23:59:59') %}
+        {% return 'Morgen'|t %}
+    {% elseif date(inputDate) >= date('yesterday') and date(inputDate) < date('today') %}
+        {% return 'Gestern'|t %}
     {% else %}
         {% switch craft.app.language|slice(0,2)  %}
             {% case "de" %}
