@@ -9,7 +9,14 @@ This repository contains the boilerplate code, which is fetched by the [Y7K CLI]
 
 ## Platforms
 
-### Craft CMS
+### Craft CMS 3
+
+Installs Craft CMS 3.* along with some Magic.
+
+1. [Base](base) Files
+2. [Craft](platforms/craft3) Boilerplate Files
+
+### Craft CMS 2 (Deprecated)
 
 Installs Craft CMS along with some Magic.
 
@@ -48,8 +55,7 @@ Ideal for CMS-based sites and Singe Page Applications – just remove the parts 
 ## Roadmap
 
 - Add Error Pages for 404/503/500 to Craft Plate
-
-
+- Add Craft3 `project.yaml` config
 
 
 

@@ -1,5 +1,13 @@
 # Y7K Project Boilerplate Changelog
 
+## Version 1.0.* - 2019-01-15
+* Set Craft to fixed composer version (prevent beta updates)
+* add Locale to frontend constants
+* Improve _layout structure
+* Disable barba by default
+* Add polyfills.io
+* Minor improvements
+
 ## Version 1.0.* - 2018-10-08
 * Updated Versioning to include major releases
 * Fix laravel mix and webpack to work with hot reloading and correct paths
