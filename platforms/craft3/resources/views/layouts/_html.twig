@@ -81,6 +81,9 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
     {# Output Config variables to the frontend #}
     {% include 'helpers/frontend-constants' %}
 
+    {# Polyfills #}
+    <script src="https://cdn.polyfill.io/v2/polyfill.js?features=default,es6"></script>
+
     {# Javascript #}
     <script type="text/javascript" src="{{ mix('js/manifest.js') }}"></script>
     <script type="text/javascript" src="{{ mix('js/vendor.js') }}"></script>
