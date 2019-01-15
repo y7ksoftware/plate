@@ -2,7 +2,7 @@
     "name": "y7k/plate",
     "description": "Y7K Project",
     "require": {
-        "craftcms/cms": "^3.0.7",
+        "craftcms/cms": "3.0.37",
         "craftcms/plugin-installer": "^1.0.0",
         "vlucas/phpdotenv": "^2.4.0",
         "misterbk/mix": "^1.4",
