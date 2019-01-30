@@ -34,7 +34,7 @@
         {% case "de" %}
             {% return inputDate|date('j. F Y') %}
         {% case "en" %}
-            {% return inputDate|date('F j Y') %}
+            {% return inputDate|date('F j, Y') %}
         {% default %}
             {% return inputDate %}
     {% endswitch %}
@@ -74,4 +74,23 @@
                 {% return inputDate %}
         {% endswitch %}
     {% endif %}
+{% endmacro %}
+
+
+{# DE: Montag #}
+{# EN: Monday #}
+{% macro weekDayFull(inputDate) %}
+    {% return inputDate|date('l') %}
+{% endmacro %}
+
+{# 01., 02. #}
+{% macro dayOfMonth(inputDate) %}
+    {% return inputDate|date('d') ~ '.' %}
+{% endmacro %}
+
+
+{# DE: Juli 2018 #}
+{# EN: July 2018 #}
+{% macro monthAndYear(inputDate) %}
+    {% return inputDate|date('F Y') %}
 {% endmacro %}
