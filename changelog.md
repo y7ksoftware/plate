@@ -1,6 +1,16 @@
 # Y7K Project Boilerplate Changelog
 
-## Version 1.0.* - 2019-01-15
+
+## Version 3.0.* - 2019-01-30
+* define CRAFT_LICENCE_KEY via env
+* disable beta releases in composer
+* add craft plugins: agnostic-fetch, image-resizer
+* remove craft plugins: craft-minify
+* refactor redactor config files
+* update date-formatter helper
+* remove sprout-seo imports and config
+
+## Version 2.0.* - 2019-01-15
 * Set Craft to fixed composer version (prevent beta updates)
 * add Locale to frontend constants
 * Improve _layout structure
