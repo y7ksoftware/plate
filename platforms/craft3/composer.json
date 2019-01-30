@@ -41,5 +41,4 @@
         { "type": "vcs", "url": "git@github.com:Y7K/craft-envindicator-module.git" },
         { "type": "vcs", "url": "git@github.com:Y7K/craft-maintenance-module.git" }
     ],
-    "minimum-stability": "beta"
 }
