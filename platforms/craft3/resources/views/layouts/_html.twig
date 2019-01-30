@@ -25,14 +25,6 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
         {{ block('prefetch_resources') }}
     {% endif %}
 
-    {#
-     # SEO: Use SproutSEO Settings to specify SEO. You can override the block if you want
-     # to disable SproutSEO for a specific page and add your own tags.
-     # If you want your own SEO config per default, please still do this in "helpers/seo-data"
-     #}
-    {% block seo_data %}
-        {% include 'helpers/seo-data' %}
-    {% endblock %}
 
     {# Favicons #}
     <link rel="apple-touch-icon" sizes="180x180" href="/build/images/meta/apple-touch-icon.png">
@@ -82,7 +74,7 @@ __/\\\________/\\\__/\\\\\\\\\\\\\\\__/\\\________/\\\_
     {% include 'helpers/frontend-constants' %}
 
     {# Polyfills #}
-    <script src="https://cdn.polyfill.io/v2/polyfill.js?features=default,es6"></script>
+    <script crossorigin="anonymous" src="https://cdn.polyfill.io/v3/polyfill.js?features=default%2Ces6%2Ces7%2CCustomEvent%2CElement.prototype.closest"></script>
 
     {# Javascript #}
     <script type="text/javascript" src="{{ mix('js/manifest.js') }}"></script>
