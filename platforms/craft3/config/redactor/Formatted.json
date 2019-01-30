@@ -1,0 +1,5 @@
+{
+	"buttons": ["formatting", "unorderedlist", "orderedlist", "link"],
+	"toolbarFixed": true,
+    "formatting": ["p", "h2", "h3"]
+}
