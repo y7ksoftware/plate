@@ -2,10 +2,10 @@
     "name": "y7k/plate",
     "description": "Y7K Project",
     "require": {
-        "aelvan/imager": "^2.0",
-        "craftcms/cms": "3.0.37",
+        "aelvan/imager": "^2.1",
+        "craftcms/cms": "^3.1.3",
         "craftcms/plugin-installer": "^1.0.0",
-        "craftcms/redactor": "^2.0",
+        "craftcms/redactor": "^2.2",
         "marionnewlevant/agnostic-fetch": "^2.0",
         "marionnewlevant/twig-perversion": "^2.0",
         "misterbk/mix": "^1.4",
@@ -15,7 +15,7 @@
         "verbb/expanded-singles": "^1.0",
         "verbb/field-manager": "^2.0",
         "verbb/image-resizer": "^2.0",
-        "verbb/super-table": "2.0.4",
+        "verbb/super-table": "^2.1",
         "vlucas/phpdotenv": "^2.4.0",
         "y7k/environmentindicatormodule": "^1.0",
         "y7k/maintenancemodule": "^2.0"
